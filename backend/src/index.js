@@ -13,6 +13,11 @@ app.use(express.json());
 // Create the API endpoint
 app.get("/api/reviews", async (req, res) => {
   try {
+    const { url, reviewsStartDate } = req.query;
+
+    if (!url) {
+      return res.status(400).json({ error: "URL is required" });
+    }
     const client = new ApifyClient({
       token:process.env.APIFY_TOKEN,
     });
@@ -20,11 +25,11 @@ app.get("/api/reviews", async (req, res) => {
     const input = {
       startUrls: [
         {
-          url: process.env.URL,
+          url: url || process.env.URL,
           method: "GET",
         },
       ],
-      maxReviews: 20,
+      reviewsStartDate: reviewsStartDate || '2024-01-05',
       language: "en",
       personalData: true,
       reviewsSort: "newest",

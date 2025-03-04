@@ -40,14 +40,22 @@ export function Dashboard() {
 
   // const chartData = categorizeReviewsByMonth(rawData);
   const [placeInfo, setPlaceInfo] = useState(null);
-  // const placeInfo = data;
-  // const [reviews, setReviews] = useState(null);
+  const [url, setUrl] = useState("https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D");
+  const [selectedOption, setSelectedOption] = useState("last-7-Days");
+  const [selectedPlace, setSelectedPlace] = useState("simple-bar");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [positive, setPositive] = useState(0);
   const [negative, setNegative] = useState(0);
   const [posiper, setPosiper] = useState(0);
   const [negaper, setNegaper] = useState(0);
+
+  const placeOptions = {
+    "simple-bar": "https://www.google.com/maps/place/Delhi+Public+School,+Howrah/@22.6237042,88.2364392,17z/data=!3m1!4b1!4m6!3m5!1s0x39f881f0284314c3:0x5f399ba9470866d7!8m2!3d22.6237042!4d88.2364392!16s%2Fg%2F11g6bl0wrv?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
+    "complex-bar": "https://www.google.com/maps/search/iem/@22.456918,88.3197996,12z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
+    "bad-bar": "https://www.google.com/maps/place/Techno+Main+Salt+Lake/@22.5760866,88.4251959,17z/data=!4m10!1m2!2m1!1stechno+india+main+salt+lake!3m6!1s0x3a02751a9d9c9e85:0x7fe665c781b10383!8m2!3d22.5761707!4d88.4270293!15sCht0ZWNobm8gaW5kaWEgbWFpbiBzYWx0IGxha2VaHSIbdGVjaG5vIGluZGlhIG1haW4gc2FsdCBsYWtlkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VOeGNuQlhlSHBSUlJBQuABAPoBBQi-AhAt!16s%2Fg%2F11fml2v54k?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
+  }
+  
   // const fetchData = async () => {
   //   try {
   //     const response = await fetch("http://localhost:3000/api/reviews");
@@ -63,49 +71,88 @@ export function Dashboard() {
   //     setLoading(false);
   //   }
   // };
+  const getStartDate = (option) => {
+    const today = new Date();
+    switch (option) {
+      case "last-7-days":
+        return new Date(today.setDate(today.getDate() - 7)).toISOString().split("T")[0];
+      case "last-30-days":
+        return new Date(today.setDate(today.getDate() - 30)).toISOString().split("T")[0];
+      case "last-90-days":
+        return new Date(today.setDate(today.getDate() - 90)).toISOString().split("T")[0];
+      default:
+        return null;
+    }
+  };
+
+  // Function to calculate sentiment
+  const calculateSentiment = (reviews) => {
+    let positive = 0;
+    let negative = 0;
+
+    reviews.forEach((review) => {
+      if (review.stars >= 3) {
+        positive++;
+      } else {
+        negative++;
+      }
+    });
+
+    return { positive, negative };
+  };
+
+  // Fetch reviews when the component mounts or when the URL/selectedOption changes
   useEffect(() => {
-    // Fetch from your backend API
-    fetch("http://localhost:3000/api/reviews")
-      .then((response) => {
+    const fetchReviews = async () => {
+      try {
+        const reviewsStartDate = getStartDate(selectedOption);
+        const response = await fetch(
+          `/api/reviews?url=${encodeURIComponent(url)}&reviewsStartDate=${reviewsStartDate}`
+        );
+
         if (!response.ok) {
           throw new Error("Failed to fetch reviews");
         }
-        return response.json();
-      })
-      .then((data) => {
+
+        const data = await response.json();
+
         // Separate place info from reviews
         const placeData = data.filter((item) => item.type === "placeInfo");
-        const calculateSentiment = (reviews) => {
-          let positive = 0;
-          let negative = 0;
 
+        // Calculate sentiment
+        const { positive: pos, negative: neg } = calculateSentiment(placeData);
 
-          reviews.forEach(review => {
-            if (review.stars >= 3) {
-              positive++;
-            } else {
-              negative++;
-            }
-          }
-          );
-          return {positive, negative}
-        }
+        // Calculate percentages
+        const numReview = pos + neg;
+        const percP = (pos / numReview) * 100;
+        const percN = (neg / numReview) * 100;
+
+        // Update state
         setPlaceInfo(placeData);
-        const obj= calculateSentiment(placeData);
-        setPositive(obj.positive);
-        setNegative(obj.negative);
-        const numReview= obj.positive + obj.negative;
-        const percP = (obj.positive / numReview) * 100;
-        const percN = (obj.negative / numReview) * 100;
+        setPositive(pos);
+        setNegative(neg);
         setPosiper(percP);
         setNegaper(percN);
         setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         setError(err.message);
         setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    // Call fetchReviews only if a URL is provided
+    
+      fetchReviews();
+    
+  }, [url, selectedOption]);
+
+  const handleFilterClick = () => {
+    // Trigger useEffect by updating the state
+    setUrl(placeOptions[selectedPlace])
+    setLoading(true); // Show loading state
+    setError(""); // Clear any previous errors
+  };
+
 
   if (loading)
     return (
@@ -139,7 +186,8 @@ export function Dashboard() {
         <div className="flex justify-between items-center">
           <div className="flex gap-2">
             <div className="w-48">
-              <Select defaultValue="simple-bar">
+              <Select defaultValue="simple-bar"
+              onValueChange={(value) => setSelectedBar(value)}>
                 <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
                   <SelectValue placeholder="Simple Bar" />
                 </SelectTrigger>
@@ -150,11 +198,11 @@ export function Dashboard() {
               </Select>
             </div>
             <div className="w-48">
-              <Select defaultValue="last-7-days">
+              <Select defaultValue="last-7-days" onValueChange={(value) => setSelectedOption(value)}>
                 <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
                   <SelectValue placeholder="Last 7 days" />
                 </SelectTrigger>
-                <SelectContent className='bg-white'>
+                <SelectContent className='bg-white' >
                   <SelectItem value="last-7-days">Last 7 days</SelectItem>
                   <SelectItem value="last-30-days">Last 30 days</SelectItem>
                   <SelectItem value="last-90-days">Last 90 days</SelectItem>
@@ -165,6 +213,7 @@ export function Dashboard() {
           <Button
             variant="outline"
             className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+            onClick={handleFilterClick}
           >
             Filter
           </Button>
