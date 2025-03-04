@@ -107,13 +107,16 @@ export function Dashboard() {
       try {
         const reviewsStartDate = getStartDate(selectedOption);
         const response = await fetch(
-          `/api/reviews?url=${encodeURIComponent(url)}&reviewsStartDate=${reviewsStartDate}`
+          `http://localhost:3000/api/reviews?url=${encodeURIComponent(url)}&reviewsStartDate=${reviewsStartDate}`
         );
 
         if (!response.ok) {
           throw new Error("Failed to fetch reviews");
         }
-
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Invalid response format: Expected JSON");
+        }
         const data = await response.json();
 
         // Separate place info from reviews
