@@ -81,7 +81,7 @@ export function Dashboard() {
       case "last-90-days":
         return new Date(today.setDate(today.getDate() - 90)).toISOString().split("T")[0];
       default:
-        return null;
+        return new Date(today.setDate(today.getDate() - 7)).toISOString().split("T")[0];
     }
   };
 
@@ -190,13 +190,14 @@ export function Dashboard() {
           <div className="flex gap-2">
             <div className="w-48">
               <Select defaultValue="simple-bar"
-              onValueChange={(value) => setSelectedBar(value)}>
+              onValueChange={(value) => setSelectedPlace(value)}>
                 <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
                   <SelectValue placeholder="Simple Bar" />
                 </SelectTrigger>
                 <SelectContent className='bg-white'>
                   <SelectItem value="simple-bar">Simple Bar</SelectItem>
-                  <SelectItem value="other-option">Other Option</SelectItem>
+                  <SelectItem value="complex-bar">Complex Bar</SelectItem>
+                  <SelectItem value="bad-bar">Bad Bar</SelectItem>
                 </SelectContent>
               </Select>
             </div>
