@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Star,
   Info,
@@ -8,13 +8,19 @@ import {
   ChevronDown,
   Calendar,
   ArrowUpRight,
-  ArrowDownRight
-} from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Progress } from './ui/progress';
-import { Button } from './ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-
+  ArrowDownRight,
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Progress } from "./ui/progress";
+import { Button } from "./ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { cn } from "../lib/utils";
 export function Dashboard() {
   // const categorizeReviewsByMonth = (data) => {
   //   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -34,6 +40,7 @@ export function Dashboard() {
 
   // const chartData = categorizeReviewsByMonth(rawData);
   const [placeInfo, setPlaceInfo] = useState(null);
+  // const placeInfo = data;
   // const [reviews, setReviews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,7 +48,21 @@ export function Dashboard() {
   const [negative, setNegative] = useState(0);
   const [posiper, setPosiper] = useState(0);
   const [negaper, setNegaper] = useState(0);
-
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:3000/api/reviews");
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch reviews");
+  //     }
+  //     const data = await response.json();
+  //     const placeData = data.filter((item) => item.type === "placeInfo");
+  //     setPlaceInfo(placeData);
+  //   } catch (error) {
+  //     console.error(error);
+  //     setError(error);
+  //     setLoading(false);
+  //   }
+  // };
   useEffect(() => {
     // Fetch from your backend API
     fetch("http://localhost:3000/api/reviews")
@@ -73,7 +94,7 @@ export function Dashboard() {
         const obj= calculateSentiment(placeData);
         setPositive(obj.positive);
         setNegative(obj.negative);
-        const numReview= placeData[0].reviewsCount;
+        const numReview= obj.positive + obj.negative;
         const percP = (obj.positive / numReview) * 100;
         const percN = (obj.negative / numReview) * 100;
         setPosiper(percP);
@@ -87,7 +108,9 @@ export function Dashboard() {
   }, []);
 
   if (loading)
-    return <p className="text-center text-gray-500 text-lg">Loading reviews...</p>;
+    return (
+      <p className="text-center text-gray-500 text-lg">Loading reviews...</p>
+    );
   if (error)
     return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
 
@@ -97,7 +120,10 @@ export function Dashboard() {
         {/* Header */}
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <Button variant="outline" className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700 flex items-center gap-2">
+          <Button
+            variant="outline"
+            className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700 flex items-center gap-2"
+          >
             <Download size={16} />
             Export Report
           </Button>
@@ -117,7 +143,7 @@ export function Dashboard() {
                 <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
                   <SelectValue placeholder="Simple Bar" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className='bg-white'>
                   <SelectItem value="simple-bar">Simple Bar</SelectItem>
                   <SelectItem value="other-option">Other Option</SelectItem>
                 </SelectContent>
@@ -128,7 +154,7 @@ export function Dashboard() {
                 <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
                   <SelectValue placeholder="Last 7 days" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className='bg-white'>
                   <SelectItem value="last-7-days">Last 7 days</SelectItem>
                   <SelectItem value="last-30-days">Last 30 days</SelectItem>
                   <SelectItem value="last-90-days">Last 90 days</SelectItem>
@@ -136,7 +162,10 @@ export function Dashboard() {
               </Select>
             </div>
           </div>
-          <Button variant="outline" className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
+          <Button
+            variant="outline"
+            className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+          >
             Filter
           </Button>
         </div>
@@ -144,7 +173,7 @@ export function Dashboard() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Total Ratings Card */}
-          <Card className="bg-neutral-800 border-none text-white">
+          <Card className="bg-neutral-800 border-none text-white ">
             <CardHeader className="pb-2 flex flex-row justify-between items-start">
               <CardTitle className="text-sm font-medium flex items-center">
                 <Star className="h-4 w-4 mr-2 text-blue-400" />
@@ -153,20 +182,22 @@ export function Dashboard() {
               <Info className="h-4 w-4 text-neutral-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold">{placeInfo[0].reviewsCount}</div>
+              <div className="text-4xl font-bold">
+                {placeInfo[0].reviewsCount}
+              </div>
               <div className="text-xs text-neutral-400 mt-1">in a week</div>
 
               <div className="mt-4 h-[120px]">
                 {/* Chart representation */}
-                <div className="flex items-end justify-between h-full gap-1">
+                <div className="flex items-end justify-between h-full gap-x-3">
                   {Array.from({ length: 12 }).map((_, i) => (
                     <div
                       key={i}
                       className="w-full bg-blue-400"
                       style={{
                         height: `${Math.random() * 70 + 10}%`,
-                        borderTopLeftRadius: '2px',
-                        borderTopRightRadius: '2px'
+                        borderTopLeftRadius: "2px",
+                        borderTopRightRadius: "2px",
                       }}
                     />
                   ))}
@@ -199,7 +230,9 @@ export function Dashboard() {
               <Info className="h-4 w-4 text-neutral-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold">{placeInfo[0].totalScore}</div>
+              <div className="text-4xl font-bold">
+                {placeInfo[0].totalScore}
+              </div>
               <div className="flex items-center mt-2 text-xs text-green-500">
                 <ArrowUpRight className="h-3 w-3 mr-1" />
                 <span>+15% From Last Week</span>
@@ -242,7 +275,14 @@ export function Dashboard() {
                   <span className="text-sm">Positive Review</span>
                   <span className="text-sm">{posiper}%</span>
                 </div>
-                <Progress value={posiper} className="h-2 bg-neutral-700 text-green-500"  />
+                <Progress
+                  value={posiper}
+                  className={cn(
+                    "h-2",
+                    "bg-neutral-500", // background of the progress bar
+                    "[&>div]:bg-green-500" // targets the inner div to color the progress indicator
+                  )}
+                />
               </div>
 
               <div className="space-y-2">
@@ -250,7 +290,14 @@ export function Dashboard() {
                   <span className="text-sm">Negative Review</span>
                   <span className="text-sm">{negaper}%</span>
                 </div>
-                <Progress value={30} className="h-2 bg-neutral-700" indicatorClassName="bg-red-500" />
+                <Progress
+                  value={negaper}
+                  className={cn(
+                    "h-2",
+                    "bg-neutral-500", // background of the progress bar
+                    "[&>div]:bg-red-500" // targets the inner div to color the progress indicator
+                  )}
+                />
               </div>
             </div>
           </CardContent>
@@ -268,7 +315,10 @@ export function Dashboard() {
           <CardContent>
             <div className="flex justify-between items-center">
               <div className="text-4xl font-bold">{negative}</div>
-              <Button variant="outline" className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
+              <Button
+                variant="outline"
+                className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+              >
                 Manage
               </Button>
             </div>
