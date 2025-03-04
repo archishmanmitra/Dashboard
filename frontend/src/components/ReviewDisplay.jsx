@@ -8,7 +8,7 @@ const ReviewsDisplay = () => {
 
   useEffect(() => {
     // Fetch from your backend API
-    fetch("http://localhost:3000/api/yellowstone-reviews")
+    fetch("http://localhost:3000/api/reviews")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch reviews");

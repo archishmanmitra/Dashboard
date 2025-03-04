@@ -11,10 +11,10 @@ app.use(cors());
 app.use(express.json());
 
 // Create the API endpoint
-app.get('/api/yellowstone-reviews', async (req, res) => {
+app.get('/api/reviews', async (req, res) => {
   try {
     const client = new ApifyClient({
-      token: process.env.APIFY_TOKEN || 'apify_api_ZfxP10yNPOuAHDbNibSlUOBbcWdOTJ2eb2B6',
+      token: 'apify_api_mYE768NcuWmCx6C8N5YmGegdmgtC630Tlg2u',
     });
 
     const input = {
@@ -24,7 +24,7 @@ app.get('/api/yellowstone-reviews', async (req, res) => {
           "method": "GET",
         }
       ],
-      "maxReviews": 5,
+      "maxReviews": 20,
       "language": "en",
       "personalData": true,
       "reviewsSort": "newest"
@@ -39,7 +39,7 @@ app.get('/api/yellowstone-reviews', async (req, res) => {
     // Process data for frontend
     const simplifiedReviews = items.map(item => {
       // For place data
-      if (item.placeId) {
+      if (item) {
         return {
           type: 'placeInfo',
           name: item.name,
@@ -50,19 +50,11 @@ app.get('/api/yellowstone-reviews', async (req, res) => {
           author: item.author,
           stars: item.stars,
           text: item.text,
-          publishedAtDate: item.publishedAtDate
+          publishedAtDate: item.publishedAtDate,
+          publishAt: item.publishAt,
         };
       } 
-      // For review data
-       if (item.reviewerId) {
-        return {
-          type: 'review',
-          author: item.author,
-          stars: item.stars,
-          text: item.text,
-          publishedAtDate: item.publishedAtDate
-        };
-      }
+      
       return item;
     });
     
