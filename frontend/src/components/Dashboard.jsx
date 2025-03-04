@@ -9,6 +9,7 @@ import {
   Calendar,
   ArrowUpRight,
   ArrowDownRight,
+  Store,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Progress } from "./ui/progress";
@@ -179,6 +180,8 @@ export function Dashboard() {
           </Button>
         </div>
 
+
+      <div className="flex items-center justify-between">
         {/* Overview Section */}
         <div>
           <h2 className="text-2xl font-semibold">Overview</h2>
@@ -186,12 +189,14 @@ export function Dashboard() {
         </div>
 
         {/* Filters */}
-        <div className="flex justify-between items-center">
-          <div className="flex gap-2">
+        <div className="flex justify-between gap-6 items-center">
+          <div className="flex gap-6">
             <div className="w-48">
-              <Select defaultValue="simple-bar"
+              <Select 
+              value={selectedPlace}
               onValueChange={(value) => setSelectedPlace(value)}>
-                <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
+                <SelectTrigger className="bg-neutral-800 gap-2 border-white rounded-full text-white">
+                  <Calendar/>
                   <SelectValue placeholder="Simple Bar" />
                 </SelectTrigger>
                 <SelectContent className='bg-white'>
@@ -202,8 +207,9 @@ export function Dashboard() {
               </Select>
             </div>
             <div className="w-48">
-              <Select defaultValue="last-7-days" onValueChange={(value) => setSelectedOption(value)}>
-                <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
+              <Select value={selectedOption} defaultValue="last-7-days" onValueChange={(value) => setSelectedOption(value)}>
+                <SelectTrigger className="bg-neutral-800 rounded-full border-white text-white">
+                  <Store/>
                   <SelectValue placeholder="Last 7 days" />
                 </SelectTrigger>
                 <SelectContent className='bg-white' >
@@ -215,12 +221,13 @@ export function Dashboard() {
             </div>
           </div>
           <Button
-            variant="outline"
-            className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+            variant="primary"
+            className="bg-white border-neutral-700 rounded-full text-black hover:bg-gray-500"
             onClick={handleFilterClick}
           >
             Filter
           </Button>
+        </div>
         </div>
 
         {/* Stats Cards */}

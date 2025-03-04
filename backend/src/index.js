@@ -29,7 +29,7 @@ app.get("/api/reviews", async (req, res) => {
           method: "GET",
         },
       ],
-      reviewsStartDate: reviewsStartDate || '2024-01-05',
+      reviewsStartDate: reviewsStartDate || '2025-01-05',
       language: "en",
       personalData: true,
       reviewsSort: "newest",
