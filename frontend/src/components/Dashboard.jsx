@@ -242,7 +242,7 @@ export function Dashboard() {
                   <span className="text-sm">Positive Review</span>
                   <span className="text-sm">{posiper}%</span>
                 </div>
-                <Progress value={70} className="h-2 bg-neutral-700" indicatorClassName="bg-green-500" />
+                <Progress value={posiper} className="h-2 bg-neutral-700 text-green-500"  />
               </div>
 
               <div className="space-y-2">
