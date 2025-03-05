@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import {
   Star,
@@ -21,6 +22,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { cn } from "../lib/utils";
+import ReviewsChart from "./ReviewChart";
 export function Dashboard() {
   // const categorizeReviewsByMonth = (data) => {
   //   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -49,6 +51,7 @@ export function Dashboard() {
   const [negative, setNegative] = useState(0);
   const [posiper, setPosiper] = useState(0);
   const [negaper, setNegaper] = useState(0);
+  const [chartData, setChartData] = useState([]);
 
   const placeOptions = {
     "simple-bar": "https://www.google.com/maps/place/Delhi+Public+School,+Howrah/@22.6237042,88.2364392,17z/data=!3m1!4b1!4m6!3m5!1s0x39f881f0284314c3:0x5f399ba9470866d7!8m2!3d22.6237042!4d88.2364392!16s%2Fg%2F11g6bl0wrv?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
@@ -120,15 +123,16 @@ export function Dashboard() {
         const data = await response.json();
 
         // Separate place info from reviews
-        const placeData = data.filter((item) => item.type === "placeInfo");
+        const placeData = data.simplifiedReviews.filter((item) => item.type === "placeInfo");
+        setChartData(data.reviewsChartData)
 
         // Calculate sentiment
         const { positive: pos, negative: neg } = calculateSentiment(placeData);
 
         // Calculate percentages
         const numReview = pos + neg;
-        const percP = (pos / numReview) * 100;
-        const percN = (neg / numReview) * 100;
+        const percP = ((pos / numReview) * 100).toFixed(2);
+        const percN = ((neg / numReview) * 100).toFixed(2);
 
         // Update state
         setPlaceInfo(placeData);
@@ -189,7 +193,7 @@ export function Dashboard() {
         <div className="flex justify-between items-center">
           <div className="flex gap-2">
             <div className="w-48">
-              <Select defaultValue="simple-bar"
+              <Select
               onValueChange={(value) => setSelectedPlace(value)}>
                 <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
                   <SelectValue placeholder="Simple Bar" />
@@ -202,7 +206,7 @@ export function Dashboard() {
               </Select>
             </div>
             <div className="w-48">
-              <Select defaultValue="last-7-days" onValueChange={(value) => setSelectedOption(value)}>
+              <Select  onValueChange={(value) => setSelectedOption(value)}>
                 <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
                   <SelectValue placeholder="Last 7 days" />
                 </SelectTrigger>
@@ -242,8 +246,8 @@ export function Dashboard() {
 
               <div className="mt-4 h-[120px]">
                 {/* Chart representation */}
-                <div className="flex items-end justify-between h-full gap-x-3">
-                  {Array.from({ length: 12 }).map((_, i) => (
+                <div className="flex items-end justify-between h-full">
+                  {/* {Array.from({ length: 12 }).map((_, i) => (
                     <div
                       key={i}
                       className="w-full bg-blue-400"
@@ -253,9 +257,10 @@ export function Dashboard() {
                         borderTopRightRadius: "2px",
                       }}
                     />
-                  ))}
+                  ))} */}
+                  <ReviewsChart data={chartData} />
                 </div>
-                <div className="flex justify-between text-[10px] text-neutral-400 mt-2">
+                {/* <div className="flex justify-between text-[10px] text-neutral-400 mt-2">
                   <div>Jan</div>
                   <div>Feb</div>
                   <div>Mar</div>
@@ -268,7 +273,7 @@ export function Dashboard() {
                   <div>Oct</div>
                   <div>Nov</div>
                   <div>Dec</div>
-                </div>
+                </div> */}
               </div>
             </CardContent>
           </Card>

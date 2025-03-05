@@ -19,7 +19,7 @@ app.get("/api/reviews", async (req, res) => {
       return res.status(400).json({ error: "URL is required" });
     }
     const client = new ApifyClient({
-      token:process.env.APIFY_TOKEN,
+      token: process.env.APIFY_TOKEN,
     });
 
     const input = {
@@ -29,7 +29,7 @@ app.get("/api/reviews", async (req, res) => {
           method: "GET",
         },
       ],
-      reviewsStartDate: reviewsStartDate || '2024-01-05',
+      reviewsStartDate: reviewsStartDate || "2024-01-05",
       language: "en",
       personalData: true,
       reviewsSort: "newest",
@@ -65,7 +65,18 @@ app.get("/api/reviews", async (req, res) => {
       return item;
     });
 
-    res.json(simplifiedReviews);
+    const reviewsByMonth = items.reduce((acc, item) => {
+      if (item.publishedAtDate) {
+        const month = item.publishedAtDate.substring(0, 7); // Extract "YYYY-MM"
+        acc[month] = (acc[month] || 0) + 1;
+      }
+      return acc;
+    }, {});
+    const reviewsChartData = Object.keys(reviewsByMonth).map((month) => ({
+      month,
+      reviews: reviewsByMonth[month],
+    }));
+    res.json({ simplifiedReviews, reviewsChartData });
   } catch (error) {
     console.error("Error occurred:", error);
     res.status(500).json({ error: "Failed to fetch reviews" });
