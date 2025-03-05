@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { Avatar } from './ui/avatar';
 import { Separator } from './ui/separator';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const SidebarItem = ({ icon, label, to, active }) => {
   return (
@@ -30,7 +30,7 @@ const SidebarItem = ({ icon, label, to, active }) => {
   );
 };
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const location = useLocation();
   const path = location.pathname;
 
@@ -48,11 +48,11 @@ const Layout = ({ children }) => {
         {/* Navigation */}
         <div className="flex-1 px-3 py-2">
           <nav className="space-y-1">
-            <SidebarItem 
-              icon={<Star size={18} />} 
-              label="Overview" 
-              to="/" 
-              active={path === '/'} 
+            <SidebarItem
+              icon={<Star size={18} />}
+              label="Overview"
+              to="/dashboard"
+              active={path === '/dashboard'}
             />
             <SidebarItem
               icon={<ChevronRight size={18} />}
@@ -60,15 +60,15 @@ const Layout = ({ children }) => {
               to="/breakdown"
               active={path === '/breakdown'}
             />
-            <SidebarItem 
-              icon={<BarChart3 size={18} />} 
-              label="Performance" 
+            <SidebarItem
+              icon={<BarChart3 size={18} />}
+              label="Performance"
               to="/performance"
               active={path === '/performance'}
             />
-            <SidebarItem 
-              icon={<MessageSquare size={18} />} 
-              label="Notification" 
+            <SidebarItem
+              icon={<MessageSquare size={18} />}
+              label="Notification"
               to="/notification"
               active={path === '/notification'}
             />
@@ -77,15 +77,15 @@ const Layout = ({ children }) => {
           <Separator className="my-4 bg-neutral-800" />
 
           <nav className="space-y-1">
-            <SidebarItem 
-              icon={<Settings size={18} />} 
-              label="Settings" 
+            <SidebarItem
+              icon={<Settings size={18} />}
+              label="Settings"
               to="/settings"
               active={path === '/settings'}
             />
-            <SidebarItem 
-              icon={<HelpCircle size={18} />} 
-              label="Help & Support" 
+            <SidebarItem
+              icon={<HelpCircle size={18} />}
+              label="Help & Support"
               to="/help"
               active={path === '/help'}
             />
@@ -110,7 +110,7 @@ const Layout = ({ children }) => {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
-        {children}
+        <Outlet />
       </div>
     </div>
   );

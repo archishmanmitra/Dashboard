@@ -55,26 +55,12 @@ export function Dashboard() {
   const [chartData, setChartData] = useState([]);
 
   const placeOptions = {
-    "simple-bar": "https://www.google.com/maps/place/Delhi+Public+School,+Howrah/@22.6237042,88.2364392,17z/data=!3m1!4b1!4m6!3m5!1s0x39f881f0284314c3:0x5f399ba9470866d7!8m2!3d22.6237042!4d88.2364392!16s%2Fg%2F11g6bl0wrv?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
+    "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
     "complex-bar": "https://www.google.com/maps/search/iem/@22.456918,88.3197996,12z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
     "bad-bar": "https://www.google.com/maps/place/Techno+Main+Salt+Lake/@22.5760866,88.4251959,17z/data=!4m10!1m2!2m1!1stechno+india+main+salt+lake!3m6!1s0x3a02751a9d9c9e85:0x7fe665c781b10383!8m2!3d22.5761707!4d88.4270293!15sCht0ZWNobm8gaW5kaWEgbWFpbiBzYWx0IGxha2VaHSIbdGVjaG5vIGluZGlhIG1haW4gc2FsdCBsYWtlkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VOeGNuQlhlSHBSUlJBQuABAPoBBQi-AhAt!16s%2Fg%2F11fml2v54k?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
   }
+
   
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:3000/api/reviews");
-  //     if (!response.ok) {
-  //       throw new Error("Failed to fetch reviews");
-  //     }
-  //     const data = await response.json();
-  //     const placeData = data.filter((item) => item.type === "placeInfo");
-  //     setPlaceInfo(placeData);
-  //   } catch (error) {
-  //     console.error(error);
-  //     setError(error);
-  //     setLoading(false);
-  //   }
-  // };
   const getStartDate = (option) => {
     const today = new Date();
     switch (option) {
@@ -149,14 +135,15 @@ export function Dashboard() {
     };
 
     // Call fetchReviews only if a URL is provided
-    
-      fetchReviews();
-    
-  }, [url, selectedOption]);
+
+    fetchReviews();
+
+  }, [url, selectedOption, selectedPlace]);
 
   const handleFilterClick = () => {
     // Trigger useEffect by updating the state
     setUrl(placeOptions[selectedPlace])
+    setSelectedOption(selectedOption)
     setLoading(true); // Show loading state
     setError(""); // Clear any previous errors
   };
@@ -185,51 +172,51 @@ export function Dashboard() {
         </div>
 
 
-      <div className="flex items-center justify-between">
-        {/* Overview Section */}
-        <div>
-          <h2 className="text-2xl font-semibold">Overview</h2>
-          <p className="text-sm text-neutral-400">Overall weekly performance</p>
-        </div>
-
-        {/* Filters */}
-        <div className="flex justify-between gap-6 items-center">
-          <div className="flex gap-6">
-            <div className="w-48">
-              <Select defaultValue="simple-bar"
-              onValueChange={(value) => setSelectedPlace(value)}>
-                <SelectTrigger className="bg-neutral-800 gap-2 border-white rounded-full text-white">
-                  <Calendar/>
-                  <SelectValue placeholder="Simple Bar" />
-                </SelectTrigger>
-                <SelectContent className='bg-white'>
-                  <SelectItem value="simple-bar">Simple Bar</SelectItem>
-                  <SelectItem value="complex-bar">Complex Bar</SelectItem>
-                  <SelectItem value="bad-bar">Bad Bar</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="w-48">
-              <Select defaultValue="last-7-days" onValueChange={(value) => setSelectedOption(value)}>
-                <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                  <SelectValue placeholder="Last 7 days" />
-                </SelectTrigger>
-                <SelectContent className='bg-white' >
-                  <SelectItem value="last-7-days">Last 7 days</SelectItem>
-                  <SelectItem value="last-30-days">Last 30 days</SelectItem>
-                  <SelectItem value="last-90-days">Last 90 days</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+        <div className="flex items-center justify-between">
+          {/* Overview Section */}
+          <div>
+            <h2 className="text-2xl font-semibold">Overview</h2>
+            <p className="text-sm text-neutral-400">Overall weekly performance</p>
           </div>
-          <Button
-            variant="primary"
-            className="bg-white border-neutral-700 rounded-full text-black hover:bg-gray-500"
-            onClick={handleFilterClick}
-          >
-            Filter
-          </Button>
-        </div>
+
+          {/* Filters */}
+          <div className="flex justify-between gap-6 items-center">
+            <div className="flex gap-6">
+              <div className="w-48">
+                <Select value={selectedPlace}
+                  onValueChange={setSelectedPlace}>
+                  <SelectTrigger className="bg-neutral-800 gap-2 border-white rounded-full text-white">
+                    <Calendar />
+                    <SelectValue placeholder="Simple Bar" />
+                  </SelectTrigger>
+                  <SelectContent className='bg-white'>
+                    <SelectItem value="simple-bar">Simple Bar</SelectItem>
+                    <SelectItem value="complex-bar">Complex Bar</SelectItem>
+                    <SelectItem value="bad-bar">Bad Bar</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="w-48">
+                <Select value={selectedOption} onValueChange={setSelectedOption}>
+                  <SelectTrigger className="bg-neutral-800 gap-2 border-white rounded-full text-white">
+                    <SelectValue placeholder="Last 7 days" />
+                  </SelectTrigger>
+                  <SelectContent className='bg-white' >
+                    <SelectItem value="last-7-days">Last 7 days</SelectItem>
+                    <SelectItem value="last-30-days">Last 30 days</SelectItem>
+                    <SelectItem value="last-90-days">Last 90 days</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <Button
+              variant="primary"
+              className="bg-white border-neutral-700 rounded-full text-black hover:bg-gray-500"
+              onClick={handleFilterClick}
+            >
+              Filter
+            </Button>
+          </div>
         </div>
 
         {/* Stats Cards */}
