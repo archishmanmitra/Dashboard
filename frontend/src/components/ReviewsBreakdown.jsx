@@ -1,10 +1,11 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Star, Info, RefreshCcw, MapPin, Download } from 'lucide-react';
-import { Button } from './ui/button';
-import { Progress } from './ui/progress';
-import FilterBar from './FilterBar';
-import { useFilterContext } from '../context/FilterContext';
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Star, Info, RefreshCcw, MapPin, Download } from "lucide-react";
+import { Button } from "./ui/button";
+import { Progress } from "./ui/progress";
+import FilterBar from "./FilterBar";
+import { useFilterContext } from "../context/FilterContext";
+import { cn } from "../lib/utils";
 
 const Review = ({ author, rating, content }) => {
   return (
@@ -15,8 +16,19 @@ const Review = ({ author, rating, content }) => {
           {Array.from({ length: 5 }).map((_, i) => (
             <Star
               key={i}
-              size={14}
-              className={i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-neutral-600'}
+              size={20}
+              className={cn(
+                "text-transparent",
+                i < rating
+                  ? ` ${
+                      rating > 3
+                        ? " fill-[#1EC928]"
+                        : rating == 3
+                        ? " fill-[#F7C73B]"
+                        : "fill-[#FF3838]"
+                    }`
+                  : "fill-[#393939]"
+              )}
             />
           ))}
         </div>
@@ -31,13 +43,11 @@ export default function ReviewsBreakdown() {
 
   // Function to get recent reviews
   const getRecentReviews = () => {
-    return reviews
-      .slice(0, 5)
-      .map(review => ({
-        author: review.name || "Anonymous",
-        rating: review.stars,
-        content: review.text || "No text content"
-      }));
+    return reviews.map((review) => ({
+      author: review.name || "Anonymous",
+      rating: review.stars,
+      content: review.text || "No text content",
+    }));
   };
 
   // Function to calculate star distribution
@@ -47,22 +57,25 @@ export default function ReviewsBreakdown() {
       4: 0,
       3: 0,
       2: 0,
-      1: 0
+      1: 0,
     };
 
-    reviews
-      .forEach(review => {
-        const stars = review.stars;
-        if (stars >= 1 && stars <= 5) {
-          starCounts[stars]++;
-        }
-      });
+    reviews.forEach((review) => {
+      const stars = review.stars;
+      if (stars >= 1 && stars <= 5) {
+        starCounts[stars]++;
+      }
+    });
 
     return starCounts;
   };
 
-  if (loading) return <p className="text-center text-gray-500 text-lg">Loading reviews...</p>;
-  if (error) return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
+  if (loading)
+    return (
+      <p className="text-center text-gray-500 text-lg">Loading reviews...</p>
+    );
+  if (error)
+    return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
 
   const recentReviews = getRecentReviews();
   const starDistribution = calculateStarDistribution();
@@ -70,8 +83,8 @@ export default function ReviewsBreakdown() {
   return (
     <div className="flex-1 overflow-auto">
       <div className="p-6 space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
+        {/* Header */}
+        <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <Button
             variant="outline"
@@ -82,20 +95,21 @@ export default function ReviewsBreakdown() {
           </Button>
         </div>
 
-
         <div className="flex items-center justify-between">
           {/* Overview Section */}
           <div>
             <h2 className="text-2xl font-semibold">Review Breakdown</h2>
-            <p className="text-sm text-neutral-400">Detailed analysis of your reviews</p>
+            <p className="text-sm text-neutral-400">
+              Detailed analysis of your reviews
+            </p>
           </div>
 
           {/* Filters */}
-          <FilterBar/>
+          <FilterBar />
         </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Sentiment Analysis
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Sentiment Analysis
         <Card className="bg-neutral-800 border-none text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium">
@@ -114,53 +128,55 @@ export default function ReviewsBreakdown() {
           </CardContent>
         </Card> */}
 
-        {/* Recent Reviews */}
-        <Card className="bg-neutral-800 border-none text-white">
-          <CardHeader className="pb-2 flex flex-row justify-between items-start">
-            <CardTitle className="text-sm font-medium">
-              💬 Recent Reviews
-            </CardTitle>
-            <Info className="h-4 w-4 text-neutral-500" />
-          </CardHeader>
-          <CardContent className="space-y-1">
-            {recentReviews.map((review, index) => (
-              <Review
-                key={index}
-                author={review.author}
-                rating={review.rating}
-                content={review.content}
-              />
-            ))}
-          </CardContent>
-        </Card>
-
-        {/* Star Distribution */}
-        <Card className="bg-neutral-800 border-none text-white">
-          <CardHeader className="pb-2 flex flex-row justify-between items-start">
-            <CardTitle className="text-sm font-medium">
-              ≡ Star Distribution
-            </CardTitle>
-            <Info className="h-4 w-4 text-neutral-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {[5, 4, 3, 2, 1].map((stars) => (
-                <div key={stars} className="flex items-center gap-2">
-                  <span className="w-4 text-sm">{stars}</span>
-                  <Progress 
-                    value={(starDistribution[stars] / reviews.length) * 100} 
-                    className="h-2 bg-neutral-700" 
-                    indicatorClassName="bg-blue-400" 
-                  />
-                  <span className="w-8 text-sm text-right">{starDistribution[stars]}</span>
-                </div>
+          {/* Recent Reviews */}
+          <Card className="bg-neutral-800 border-none text-white">
+            <CardHeader className="pb-2 flex flex-row justify-between items-start">
+              <CardTitle className="text-sm font-medium">
+                💬 Recent Reviews
+              </CardTitle>
+              <Info className="h-4 w-4 text-neutral-500" />
+            </CardHeader>
+            <CardContent className="space-y-1">
+              {recentReviews.map((review, index) => (
+                <Review
+                  key={index}
+                  author={review.author}
+                  rating={review.rating}
+                  content={review.content}
+                />
               ))}
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* Best Performing Locations */}
-        {/* <Card className="bg-neutral-800 border-none text-white">
+          {/* Star Distribution */}
+          <Card className="bg-neutral-800 border-none text-white">
+            <CardHeader className="pb-2 flex flex-row justify-between items-start">
+              <CardTitle className="text-sm font-medium">
+                ≡ Star Distribution
+              </CardTitle>
+              <Info className="h-4 w-4 text-neutral-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {[5, 4, 3, 2, 1].map((stars) => (
+                  <div key={stars} className="flex items-center gap-2">
+                    <span className="w-4 text-sm">{stars}</span>
+                    <Progress
+                      value={(starDistribution[stars] / reviews.length) * 100}
+                      className="h-2 bg-neutral-700"
+                      indicatorClassName="bg-blue-400"
+                    />
+                    <span className="w-8 text-sm text-right">
+                      {starDistribution[stars]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Best Performing Locations */}
+          {/* <Card className="bg-neutral-800 border-none text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium">
               <MapPin className="h-4 w-4 inline mr-2" />
@@ -195,8 +211,8 @@ export default function ReviewsBreakdown() {
             </div>
           </CardContent>
         </Card> */}
+        </div>
       </div>
-    </div>
     </div>
   );
 }

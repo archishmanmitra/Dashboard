@@ -225,14 +225,16 @@ export function Dashboard() {
                 </CardTitle>
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold mb-1">
+              <CardContent className=''>
+                {/* <div>
+                <div className="text-3xl  font-bold mb-1">
                   {placeInfo[0].reviewsCount}
-                </div>
-                <div className="text-sm text-neutral-400 mb-6">in a week</div>
-                <div className="h-[200px]">
+                </div> */}
+                {/* <div className="text-sm text-neutral-400 mb-6">in a week</div>
+                <div className="h-[200px]"> */}
                   <ReviewsChart data={chartData} selectedOption={selectedOption} />
-                </div>
+                  {/* </div> */}
+                {/* </div> */}
               </CardContent>
             </Card>
           </div>
