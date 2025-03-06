@@ -11,6 +11,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Store,
+  Timer,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Progress } from "./ui/progress";
@@ -44,7 +45,7 @@ export function Dashboard() {
   // const chartData = categorizeReviewsByMonth(rawData);
   const [placeInfo, setPlaceInfo] = useState(null);
   const [url, setUrl] = useState("https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D");
-  const [selectedOption, setSelectedOption] = useState("last-7-Days");
+  const [selectedOption, setSelectedOption] = useState("last-7-days");
   const [selectedPlace, setSelectedPlace] = useState("simple-bar");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -98,6 +99,7 @@ export function Dashboard() {
       setSelectedPlace(selectedPlace)
     setSelectedOption(selectedOption)
       const reviewsStartDate = getStartDate(selectedOption);
+      const url = placeOptions[selectedPlace];
       const response = await fetch(
         `http://localhost:3000/api/reviews?url=${encodeURIComponent(url)}&reviewsStartDate=${reviewsStartDate}`
       );
@@ -201,8 +203,15 @@ export function Dashboard() {
                 </Select>
               </div>
               <div className="w-48">
-                <Select value={selectedOption} onValueChange={setSelectedOption}>
+                <Select
+                  value={selectedOption}
+                  onValueChange={(value) => {
+                    console.log("Selected option:", value);
+                    setSelectedOption(value);
+                  }}
+                >
                   <SelectTrigger className="bg-neutral-800 gap-2 border-white rounded-full text-white">
+                    <Timer />
                     <SelectValue placeholder="Last 7 days" />
                   </SelectTrigger>
                   <SelectContent className='bg-white' >
@@ -216,7 +225,7 @@ export function Dashboard() {
             <Button
               variant="primary"
               className="bg-white border-neutral-700 rounded-full text-black hover:bg-gray-500"
-              onClick={()=>handleFilterClick()}
+              onClick={() => handleFilterClick()}
             >
               Filter
             </Button>
