@@ -87,8 +87,7 @@ export function Dashboard() {
     });
 
     return { positive, negative };
-  };
-
+  };  
   const fetchReviews = async () => {
     try {
       setUrl(placeOptions[selectedPlace]);
@@ -119,8 +118,8 @@ export function Dashboard() {
       const { positive: pos, negative: neg } = calculateSentiment(placeData);
 
       const numReview = pos + neg;
-      const percP = ((pos / numReview) * 100).toFixed(2);
-      const percN = ((neg / numReview) * 100).toFixed(2);
+      const percP = ((pos / numReview) * 100).toFixed(0);
+      const percN = ((neg / numReview) * 100).toFixed(0);
 
       setPlaceInfo(placeData);
       setPositive(pos);
@@ -232,7 +231,7 @@ export function Dashboard() {
                 </div>
                 <div className="text-sm text-neutral-400 mb-6">in a week</div>
                 <div className="h-[200px]">
-                  <ReviewsChart data={chartData} />
+                  <ReviewsChart data={chartData} selectedOption={selectedOption} />
                 </div>
               </CardContent>
             </Card>
@@ -272,7 +271,7 @@ export function Dashboard() {
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold">198</div>
+                <div className="text-3xl font-bold">{placeInfo[0].reviewsCount}</div>
                 <div className="flex items-center mt-2 text-xs text-red-500">
                   <ArrowDownRight className="h-3 w-3 mr-1" />
                   <span>-5% reduced from last week</span>

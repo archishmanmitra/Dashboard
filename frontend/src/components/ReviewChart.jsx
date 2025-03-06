@@ -1,35 +1,105 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { useMemo } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 
-const ReviewsChart = ({ data }) => {
-    // console.log(data);
+// Helper function to get month name
+const getMonthName = (date) => {
+  return date.toLocaleString("default", { month: "long" });
+};
+
+// Helper function to get day name
+const getDayName = (date) => {
+  return date.toLocaleString("default", { weekday: "long" });
+};
+
+const ReviewsChart = ({ data, selectedOption }) => {
+  const chartData = useMemo(() => {
+    if (!data || !data.length) return [];
+
+    // const currentDate = new Date();
+    const reviewDates = data
+      .map((review) => new Date(review.day))
+      .filter((date) => !isNaN(date));
+
+    if (!reviewDates.length) return [];
+
+    // Find the earliest review date
+    const minDate = new Date(Math.min(...reviewDates));
+
+    const groupedData = {};
+
+    data.forEach((review) => {
+      if (!review.day) return;
+
+      const publishedDate = new Date(review.day);
+      if (isNaN(publishedDate)) return;
+
+      let key;
+      switch (selectedOption) {
+        case "last-7-days":
+          key = getDayName(publishedDate); // Label with day name (e.g., "Monday")
+          break;
+        case "last-30-days": {
+          // Calculate relative week number from the earliest review date
+          const daysSinceMinDate = Math.floor(
+            (publishedDate - minDate) / (1000 * 60 * 60 * 24)
+          );
+          key = `Week ${Math.ceil(daysSinceMinDate / 7) + 1}`; // Weeks start from 1
+          break;
+        }
+        case "last-90-days":
+          key = getMonthName(publishedDate); // Label with month name (e.g., "March")
+          break;
+        default:
+          key = getDayName(publishedDate);
+      }
+
+      groupedData[key] = (groupedData[key] || 0) + 1;
+    });
+
+    return Object.entries(groupedData)
+      .map(([key, reviews]) => ({ interval: key, reviews }))
+      .sort((a, b) => a.interval.localeCompare(b.interval, undefined, { numeric: true }));
+  }, [data, selectedOption]);
+
   return (
-    <ResponsiveContainer width="100%" height={200}>
+    <ResponsiveContainer width="100%" height={250}>
       <BarChart
-        data={data}
-        margin={{ top: 20, right:20, left: -20, bottom: 20 }}
-        barCategoryGap={20} // Ensures even spacing
+        data={chartData}
+        margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
       >
-        {/* Grid Lines */}
         <CartesianGrid strokeDasharray="3 3" stroke="#2D3748" />
-
-        {/* X-Axis Labels */}
         <XAxis
-          dataKey="month"
+          dataKey="interval"
           tick={{ fontSize: 12, fill: "#A0AEC0" }}
           axisLine={{ stroke: "#4A5568" }}
           tickLine={false}
+          label={{
+            value:
+              selectedOption === "last-90-days"
+                ? "Months"
+                : selectedOption === "last-30-days"
+                ? "Weeks"
+                : "Days",
+            position: "insideBottom",
+            offset: -10,
+            fill: "#A0AEC0",
+          }}
         />
-
-        {/* Y-Axis Labels */}
         <YAxis
           dataKey="reviews"
           tick={{ fontSize: 12, fill: "#A0AEC0" }}
           axisLine={{ stroke: "#4A5568" }}
           tickLine={false}
-          domain={[0, "dataMax + 5"]} // Ensures bars fit well
+          domain={[0, "dataMax + 2"]}
         />
-
-        {/* Tooltip */}
         <Tooltip
           cursor={{ fill: "rgba(255, 255, 255, 0.1)" }}
           contentStyle={{
@@ -39,16 +109,12 @@ const ReviewsChart = ({ data }) => {
             border: "none",
           }}
         />
-
-        {/* Bar Chart */}
         <Bar
           dataKey="reviews"
           fill="url(#barGradient)"
-          radius={[6, 6, 0, 0]} // Rounded top bars
-          barSize={14} // Adjusted bar width
+          radius={[4, 4, 0, 0]}
+          barSize={15}
         />
-
-        {/* Gradient Color */}
         <defs>
           <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#60A5FA" stopOpacity={1} />

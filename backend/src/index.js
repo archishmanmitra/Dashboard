@@ -68,14 +68,14 @@ app.get("/api/reviews", async (req, res) => {
 
     const reviewsByMonth = items.reduce((acc, item) => {
       if (item.publishedAtDate) {
-        const month = item.publishedAtDate.substring(0, 7); // Extract "YYYY-MM"
-        acc[month] = (acc[month] || 0) + 1;
+        const days = item.publishedAtDate.substring(0, 10); // Extract "YYYY-MM-DD"
+        acc[days] = (acc[days] || 0) + 1;
       }
       return acc;
     }, {});
-    const reviewsChartData = Object.keys(reviewsByMonth).map((month) => ({
-      month,
-      reviews: reviewsByMonth[month],
+    const reviewsChartData = Object.keys(reviewsByMonth).map((day) => ({
+      day,
+      reviews: reviewsByMonth[day],
     }));
     res.json({ simplifiedReviews, reviewsChartData });
   } catch (error) {
