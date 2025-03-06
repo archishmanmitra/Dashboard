@@ -1,13 +1,12 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Star, Info, RefreshCcw, MapPin } from 'lucide-react';
+import { Star, Info, RefreshCcw, MapPin, Download } from 'lucide-react';
 import { Button } from './ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Progress } from './ui/progress';
+import FilterBar from './FilterBar';
+import { useFilterContext } from '../context/FilterContext';
 
-
-
-const Review= ({author, rating, content }) => {
+const Review = ({ author, rating, content }) => {
   return (
     <div className="py-3 border-b border-neutral-800 last:border-0">
       <div className="flex justify-between items-start mb-1">
@@ -28,53 +27,77 @@ const Review= ({author, rating, content }) => {
 };
 
 export default function ReviewsBreakdown() {
+  const { reviews, loading, error } = useFilterContext();
+
+  // Function to get recent reviews
+  const getRecentReviews = () => {
+    return reviews
+      .filter(review => review.type !== "placeInfo")
+      .slice(0, 3)
+      .map(review => ({
+        author: review.author || "Anonymous",
+        rating: review.stars || 3,
+        content: review.content || "No review content"
+      }));
+  };
+
+  // Function to calculate star distribution
+  const calculateStarDistribution = () => {
+    const starCounts = {
+      5: 0,
+      4: 0,
+      3: 0,
+      2: 0,
+      1: 0
+    };
+
+    reviews
+      .filter(review => review.type !== "placeInfo")
+      .forEach(review => {
+        const stars = review.stars || 0;
+        if (stars >= 1 && stars <= 5) {
+          starCounts[stars]++;
+        }
+      });
+
+    return starCounts;
+  };
+
+  if (loading) return <p className="text-center text-gray-500 text-lg">Loading reviews...</p>;
+  if (error) return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
+
+  const recentReviews = getRecentReviews();
+  const starDistribution = calculateStarDistribution();
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="flex-1 overflow-auto">
+      <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">Review Breakdown</h1>
-          <p className="text-sm text-neutral-400">Detailed analysis of your reviews</p>
+          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <Button
+            variant="outline"
+            className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700 flex items-center gap-2"
+          >
+            <Download size={16} />
+            Export Report
+          </Button>
         </div>
-        <Button variant="outline" className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
-          Export Report
-        </Button>
-      </div>
 
-      {/* Filters */}
-      <div className="flex justify-between items-center">
-        <div className="flex gap-2">
-          <div className="w-48">
-            <Select defaultValue="temple-bar">
-              <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                <SelectValue placeholder="Temple Bar" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="temple-bar">Temple Bar</SelectItem>
-                <SelectItem value="other-location">Other Location</SelectItem>
-              </SelectContent>
-            </Select>
+
+        <div className="flex items-center justify-between">
+          {/* Overview Section */}
+          <div>
+            <h2 className="text-2xl font-semibold">Review Breakdown</h2>
+            <p className="text-sm text-neutral-400">Detailed analysis of your reviews</p>
           </div>
-          <div className="w-48">
-            <Select defaultValue="last-7-days">
-              <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                <SelectValue placeholder="Last 7 days" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="last-7-days">Last 7 days</SelectItem>
-                <SelectItem value="last-30-days">Last 30 days</SelectItem>
-                <SelectItem value="last-90-days">Last 90 days</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+
+          {/* Filters */}
+          <FilterBar/>
         </div>
-        <Button variant="outline" className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
-          Filter
-        </Button>
-      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Sentiment Analysis */}
+        {/* Sentiment Analysis
         <Card className="bg-neutral-800 border-none text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium">
@@ -84,14 +107,14 @@ export default function ReviewsBreakdown() {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-neutral-400 mb-4">
-              Lorem ipsum dolor sit amet consectetur. Tincidunt tempor aliquam nunc hac id praesent. Diam varius ut proin etm et volutpat ut.
+              Analyze the overall sentiment of customer reviews to understand their experience.
             </p>
             <Button variant="outline" className="bg-white text-black hover:bg-neutral-200" size="sm">
               <RefreshCcw className="h-4 w-4 mr-2" />
               Refresh
             </Button>
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* Recent Reviews */}
         <Card className="bg-neutral-800 border-none text-white">
@@ -102,21 +125,14 @@ export default function ReviewsBreakdown() {
             <Info className="h-4 w-4 text-neutral-500" />
           </CardHeader>
           <CardContent className="space-y-1">
-            <Review
-              author="Romeo Paul"
-              rating={4}
-              content="Lorem ipsum dolor sit amet consectetur. Tincidunt tempor aliquam nunc hac id praesent. Diam varius ut proin etm et volutpat ut."
-            />
-            <Review
-              author="Romeo Paul"
-              rating={1}
-              content="Not reviewed"
-            />
-            <Review
-              author="Romeo Paul"
-              rating={3}
-              content="Lorem ipsum dolor sit amet consectetur. Tincidunt tempor aliquam nunc hac id praesent. Diam varius ut proin etm et volutpat ut."
-            />
+            {recentReviews.map((review, index) => (
+              <Review
+                key={index}
+                author={review.author}
+                rating={review.rating}
+                content={review.content}
+              />
+            ))}
           </CardContent>
         </Card>
 
@@ -134,11 +150,11 @@ export default function ReviewsBreakdown() {
                 <div key={stars} className="flex items-center gap-2">
                   <span className="w-4 text-sm">{stars}</span>
                   <Progress 
-                    value={stars === 5 ? 70 : stars === 4 ? 50 : stars === 3 ? 30 : 20} 
+                    value={(starDistribution[stars] / reviews.length) * 100} 
                     className="h-2 bg-neutral-700" 
                     indicatorClassName="bg-blue-400" 
                   />
-                  <span className="w-8 text-sm text-right">{stars === 5 ? '2341' : stars === 4 ? '1237' : stars === 3 ? '30' : stars === 2 ? '35' : '53'}</span>
+                  <span className="w-8 text-sm text-right">{starDistribution[stars]}</span>
                 </div>
               ))}
             </div>
@@ -146,7 +162,7 @@ export default function ReviewsBreakdown() {
         </Card>
 
         {/* Best Performing Locations */}
-        <Card className="bg-neutral-800 border-none text-white">
+        {/* <Card className="bg-neutral-800 border-none text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium">
               <MapPin className="h-4 w-4 inline mr-2" />
@@ -180,8 +196,9 @@ export default function ReviewsBreakdown() {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
+    </div>
     </div>
   );
 }

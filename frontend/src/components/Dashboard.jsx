@@ -43,7 +43,7 @@ export function Dashboard() {
 
   // const chartData = categorizeReviewsByMonth(rawData);
   const [placeInfo, setPlaceInfo] = useState(null);
-  const [url, setUrl] = useState("https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D");
+  const [url, setUrl] = useState("https://www.google.com/maps/place/Adamas+International+School+ICSE,+IGCSE,+ISC(Nursery+to+12)+%26+CBSE*(Nursery+to+1+Only)+School+in+Kolkata/@22.663409,88.3718299,17z/data=!3m1!4b1!4m6!3m5!1s0x39f89c4db0c795a1:0x7b383bb6953e65da!8m2!3d22.663409!4d88.3744048!16s%2Fg%2F11bx8kmxzb?entry=ttu&g_ep=EgoyMDI1MDMwMy4wIKXMDSoASAFQAw%3D%3D");
   const [selectedOption, setSelectedOption] = useState("last-7-Days");
   const [selectedPlace, setSelectedPlace] = useState("simple-bar");
   const [loading, setLoading] = useState(true);
@@ -91,60 +91,61 @@ export function Dashboard() {
     return { positive, negative };
   };
 
-  // Fetch reviews when the component mounts or when the URL/selectedOption changes
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const reviewsStartDate = getStartDate(selectedOption);
-        const response = await fetch(
-          `http://localhost:3000/api/reviews?url=${encodeURIComponent(url)}&reviewsStartDate=${reviewsStartDate}`
-        );
+  const fetchReviews = async () => {
+    try {
+      const reviewsStartDate = getStartDate(selectedOption);
+      const response = await fetch(
+        `http://localhost:3000/api/reviews?url=${encodeURIComponent(url)}&reviewsStartDate=${reviewsStartDate}`
+      );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch reviews");
-        }
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("Invalid response format: Expected JSON");
-        }
-        const data = await response.json();
-
-        // Separate place info from reviews
-        const placeData = data.simplifiedReviews.filter((item) => item.type === "placeInfo");
-        setChartData(data.reviewsChartData)
-
-        // Calculate sentiment
-        const { positive: pos, negative: neg } = calculateSentiment(placeData);
-
-        // Calculate percentages
-        const numReview = pos + neg;
-        const percP = ((pos / numReview) * 100).toFixed(2);
-        const percN = ((neg / numReview) * 100).toFixed(2);
-
-        // Update state
-        setPlaceInfo(placeData);
-        setPositive(pos);
-        setNegative(neg);
-        setPosiper(percP);
-        setNegaper(percN);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error("Failed to fetch reviews");
       }
-    };
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Invalid response format: Expected JSON");
+      }
+      const data = await response.json();
 
-    // Call fetchReviews only if a URL is provided
+      // Separate place info from reviews
+      const placeData = data.simplifiedReviews.filter((item) => item.type === "placeInfo");
+      setChartData(data.reviewsChartData)
+
+      // Calculate sentiment
+      const { positive: pos, negative: neg } = calculateSentiment(placeData);
+
+      // Calculate percentages
+      const numReview = pos + neg;
+      const percP = ((pos / numReview) * 100).toFixed(2);
+      const percN = ((neg / numReview) * 100).toFixed(2);
+
+      // Update state
+      setPlaceInfo(placeData);
+      setPositive(pos);
+      setNegative(neg);
+      setPosiper(percP);
+      setNegaper(percN);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+
 
     fetchReviews();
 
   }, [url, selectedOption, selectedPlace]);
 
-  const handleFilterClick = () => {
+  const handleFilterClick = async () => {
     // Trigger useEffect by updating the state
     setUrl(placeOptions[selectedPlace])
     setSelectedOption(selectedOption)
-    setLoading(true); // Show loading state
+    setLoading(true); 
+    await fetchReviews();
+    setLoading(false);// Show loading state
     setError(""); // Clear any previous errors
   };
 

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Info, Star, Users } from 'lucide-react';
+import { Download, Info, Star, Users } from 'lucide-react';
 import { Button } from './ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-
-
+import FilterBar from './FilterBar';
+import { useFilterContext } from '../context/FilterContext';
 
 const ProgressBadge = ({ icon, title, reviews, active, completed }) => {
   return (
@@ -26,50 +25,58 @@ const ProgressBadge = ({ icon, title, reviews, active, completed }) => {
 };
 
 export default function Performance() {
+  const { 
+    placeInfo, 
+    loading, 
+    error, 
+    fetchReviews, 
+    determineMilestone 
+  } = useFilterContext();
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  if (loading) return <p className="text-center text-gray-500 text-lg">Loading performance data...</p>;
+  if (error) return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
+
+  // Milestone calculation
+  const currentMilestone = placeInfo ? determineMilestone(placeInfo.reviewsCount) : 'Beginner';
+  const milestones = [
+    { title: 'Beginner', reviews: '0-9 reviews', minReviews: 0, maxReviews: 9 },
+    { title: 'Amateur', reviews: '10-49 reviews', minReviews: 10, maxReviews: 49 },
+    { title: 'Challenger', reviews: '50-99 reviews', minReviews: 50, maxReviews: 99 },
+    { title: 'Master', reviews: '100-499 reviews', minReviews: 100, maxReviews: 499 },
+    { title: 'Legend', reviews: '500-999 reviews', minReviews: 500, maxReviews: 999 },
+    { title: 'Grandmaster', reviews: '1000+ reviews', minReviews: 1000, maxReviews: Infinity }
+  ];
+
   return (
+    <div className="flex-1 overflow-auto">
     <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">Performance</h1>
-          <p className="text-sm text-neutral-400">Monitor your software performance</p>
+          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <Button
+            variant="outline"
+            className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700 flex items-center gap-2"
+          >
+            <Download size={16} />
+            Export Report
+          </Button>
         </div>
-        <Button variant="outline" className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
-          Export Report
-        </Button>
-      </div>
 
-      {/* Filters */}
-      <div className="flex justify-between items-center">
-        <div className="flex gap-2">
-          <div className="w-48">
-            <Select defaultValue="temple-bar">
-              <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                <SelectValue placeholder="Temple Bar" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="temple-bar">Temple Bar</SelectItem>
-                <SelectItem value="other-location">Other Location</SelectItem>
-              </SelectContent>
-            </Select>
+
+        <div className="flex items-center justify-between">
+          {/* Overview Section */}
+          <div>
+            <h2 className="text-2xl font-semibold">Performance</h2>
+            <p className="text-sm text-neutral-400">Monitor your software performance</p>
           </div>
-          <div className="w-48">
-            <Select defaultValue="last-7-days">
-              <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                <SelectValue placeholder="Last 7 days" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="last-7-days">Last 7 days</SelectItem>
-                <SelectItem value="last-30-days">Last 30 days</SelectItem>
-                <SelectItem value="last-90-days">Last 90 days</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+
+          {/* Filters */}
+          <FilterBar/>
         </div>
-        <Button variant="outline" className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
-          Filter
-        </Button>
-      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Before/After Star Boom */}
@@ -91,8 +98,8 @@ export default function Performance() {
               <div className="text-lg font-medium">vs</div>
               <div className="text-center">
                 <p className="text-sm text-green-400">After</p>
-                <h2 className="text-4xl font-bold">1204</h2>
-                <p className="text-xs text-neutral-400">reviews & average of 4.8 Stars</p>
+                <h2 className="text-4xl font-bold">{placeInfo ? placeInfo.reviewsCount : 'N/A'}</h2>
+                <p className="text-xs text-neutral-400">reviews & average of {placeInfo ? placeInfo.totalScore : 'N/A'} Stars</p>
               </div>
             </div>
           </CardContent>
@@ -111,8 +118,8 @@ export default function Performance() {
             <div className="flex justify-between items-center">
               <div className="text-center">
                 <p className="text-sm text-green-400">Your business</p>
-                <h2 className="text-4xl font-bold">12</h2>
-                <p className="text-xs text-neutral-400">reviews & average of 4.5 Stars</p>
+                <h2 className="text-4xl font-bold">{placeInfo ? placeInfo.reviewsCount : 'N/A'}</h2>
+                <p className="text-xs text-neutral-400">reviews & average of {placeInfo ? placeInfo.totalScore : 'N/A'} Stars</p>
               </div>
               <div className="text-lg font-medium">vs</div>
               <div className="text-center">
@@ -136,43 +143,24 @@ export default function Performance() {
         </CardHeader>
         <CardContent>
           <div className="flex justify-between items-center">
-            <ProgressBadge
-              icon="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/starship.svg"
-              title="Beginner"
-              reviews="0-9 reviews"
-              completed={true}
-            />
-            <ProgressBadge
-              icon="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/starship.svg"
-              title="Amateur"
-              reviews="10-49 reviews"
-              completed={true}
-            />
-            <ProgressBadge
-              icon="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/starship.svg"
-              title="Challenger"
-              reviews="50-99 reviews"
-              active={true}
-              completed={true}
-            />
-            <ProgressBadge
-              icon="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/starship.svg"
-              title="Master"
-              reviews="100-499 reviews"
-            />
-            <ProgressBadge
-              icon="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/starship.svg"
-              title="Legend"
-              reviews="500-999 reviews"
-            />
-            <ProgressBadge
-              icon="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/starship.svg"
-              title="Grandmaster"
-              reviews="1000+ reviews"
-            />
+            {milestones.map((milestone, index) => (
+              <ProgressBadge
+                key={milestone.title}
+                icon="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/starship.svg"
+                title={milestone.title}
+                reviews={milestone.reviews}
+                active={currentMilestone === milestone.title}
+                completed={
+                  placeInfo && 
+                  placeInfo.reviewsCount >= milestone.minReviews && 
+                  placeInfo.reviewsCount <= milestone.maxReviews
+                }
+              />
+            ))}
           </div>
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 }
