@@ -26,124 +26,138 @@ import {
 } from "./ui/select";
 import { cn } from "../lib/utils";
 import ReviewsChart from "./ReviewChart";
+import { useFilterContext } from "../context/FilterContext";
+import FilterBar from "./FilterBar";
 
 export function Dashboard() {
-  const [placeInfo, setPlaceInfo] = useState(null);
-  const [url, setUrl] = useState(
-    "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D"
-  );
-  const [selectedOption, setSelectedOption] = useState("last-7-days");
-  const [selectedPlace, setSelectedPlace] = useState("simple-bar");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [positive, setPositive] = useState(0);
-  const [negative, setNegative] = useState(0);
-  const [posiper, setPosiper] = useState(0);
-  const [negaper, setNegaper] = useState(0);
-  const [chartData, setChartData] = useState([]);
-  const hasFetched = useRef(false);
 
-  const placeOptions = {
-    "simple-bar":
-      "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
-    "complex-bar":
-      "https://www.google.com/maps/search/iem/@22.456918,88.3197996,12z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
-    "bad-bar":
-      "https://www.google.com/maps/place/Techno+Main+Salt+Lake/@22.5760866,88.4251959,17z/data=!4m10!1m2!2m1!1stechno+india+main+salt+lake!3m6!1s0x3a02751a9d9c9e85:0x7fe665c781b10383!8m2!3d22.5761707!4d88.4270293!15sCht0ZWNobm8gaW5kaWEgbWFpbiBzYWx0IGxha2VaHSIbdGVjaG5vIGluZGlhIG1haW4gc2FsdCBsYWtlkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VOeGNuQlhlSHBSUlJBQuABAPoBBQi-AhAt!16s%2Fg%2F11fml2v54k?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
-  };
+  const {
+      selectedOption,
+      placeInfo,
+      loading,
+      error,
+      fetchReviews,
+      chartData,
+      posiper,
+      negaper,
+      negative
+  } = useFilterContext()
 
-  const getStartDate = (option) => {
-    const today = new Date();
-    switch (option) {
-      case "last-7-days":
-        return new Date(today.setDate(today.getDate() - 7))
-          .toISOString()
-          .split("T")[0];
-      case "last-30-days":
-        return new Date(today.setDate(today.getDate() - 30))
-          .toISOString()
-          .split("T")[0];
-      case "last-90-days":
-        return new Date(today.setDate(today.getDate() - 90))
-          .toISOString()
-          .split("T")[0];
-      default:
-        return new Date(today.setDate(today.getDate() - 7))
-          .toISOString()
-          .split("T")[0];
-    }
-  };
+  // const [placeInfo, setPlaceInfo] = useState(null);
+  // const [url, setUrl] = useState(
+  //   "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D"
+  // );
+  // const [selectedOption, setSelectedOption] = useState("last-7-days");
+  // const [selectedPlace, setSelectedPlace] = useState("simple-bar");
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const [positive, setPositive] = useState(0);
+  // const [negative, setNegative] = useState(0);
+  // const [posiper, setPosiper] = useState(0);
+  // const [negaper, setNegaper] = useState(0);
+  // const [chartData, setChartData] = useState([]);
+  // const hasFetched = useRef(false);
 
-  const calculateSentiment = (reviews) => {
-    let positive = 0;
-    let negative = 0;
+  // const placeOptions = {
+  //   "simple-bar":
+  //     "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
+  //   "complex-bar":
+  //     "https://www.google.com/maps/search/iem/@22.456918,88.3197996,12z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
+  //   "bad-bar":
+  //     "https://www.google.com/maps/place/Techno+Main+Salt+Lake/@22.5760866,88.4251959,17z/data=!4m10!1m2!2m1!1stechno+india+main+salt+lake!3m6!1s0x3a02751a9d9c9e85:0x7fe665c781b10383!8m2!3d22.5761707!4d88.4270293!15sCht0ZWNobm8gaW5kaWEgbWFpbiBzYWx0IGxha2VaHSIbdGVjaG5vIGluZGlhIG1haW4gc2FsdCBsYWtlkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VOeGNuQlhlSHBSUlJBQuABAPoBBQi-AhAt!16s%2Fg%2F11fml2v54k?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
+  // };
 
-    reviews.forEach((review) => {
-      if (review.stars >= 3) {
-        positive++;
-      } else {
-        negative++;
-      }
-    });
+  // const getStartDate = (option) => {
+  //   const today = new Date();
+  //   switch (option) {
+  //     case "last-7-days":
+  //       return new Date(today.setDate(today.getDate() - 7))
+  //         .toISOString()
+  //         .split("T")[0];
+  //     case "last-30-days":
+  //       return new Date(today.setDate(today.getDate() - 30))
+  //         .toISOString()
+  //         .split("T")[0];
+  //     case "last-90-days":
+  //       return new Date(today.setDate(today.getDate() - 90))
+  //         .toISOString()
+  //         .split("T")[0];
+  //     default:
+  //       return new Date(today.setDate(today.getDate() - 7))
+  //         .toISOString()
+  //         .split("T")[0];
+  //   }
+  // };
 
-    return { positive, negative };
-  };  
-  const fetchReviews = async () => {
-    try {
-      setUrl(placeOptions[selectedPlace]);
-      setSelectedPlace(selectedPlace);
-      setSelectedOption(selectedOption);
-      const reviewsStartDate = getStartDate(selectedOption);
-      const url = placeOptions[selectedPlace];
-      const response = await fetch(
-        `http://localhost:3000/api/reviews?url=${encodeURIComponent(
-          url
-        )}&reviewsStartDate=${reviewsStartDate}`
-      );
+  // const calculateSentiment = (reviews) => {
+  //   let positive = 0;
+  //   let negative = 0;
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch reviews");
-      }
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Invalid response format: Expected JSON");
-      }
-      const data = await response.json();
+  //   reviews.forEach((review) => {
+  //     if (review.stars >= 3) {
+  //       positive++;
+  //     } else {
+  //       negative++;
+  //     }
+  //   });
 
-      const placeData = data.simplifiedReviews.filter(
-        (item) => item.type === "placeInfo"
-      );
-      setChartData(data.reviewsChartData);
+  //   return { positive, negative };
+  // };  
+  // const fetchReviews = async () => {
+  //   try {
+  //     setUrl(placeOptions[selectedPlace]);
+  //     setSelectedPlace(selectedPlace);
+  //     setSelectedOption(selectedOption);
+  //     const reviewsStartDate = getStartDate(selectedOption);
+  //     const url = placeOptions[selectedPlace];
+  //     const response = await fetch(
+  //       `http://localhost:3000/api/reviews?url=${encodeURIComponent(
+  //         url
+  //       )}&reviewsStartDate=${reviewsStartDate}`
+  //     );
 
-      const { positive: pos, negative: neg } = calculateSentiment(placeData);
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch reviews");
+  //     }
+  //     const contentType = response.headers.get("content-type");
+  //     if (!contentType || !contentType.includes("application/json")) {
+  //       throw new Error("Invalid response format: Expected JSON");
+  //     }
+  //     const data = await response.json();
 
-      const numReview = pos + neg;
-      const percP = ((pos / numReview) * 100).toFixed(0);
-      const percN = ((neg / numReview) * 100).toFixed(0);
+  //     const placeData = data.simplifiedReviews.filter(
+  //       (item) => item.type === "placeInfo"
+  //     );
+  //     setChartData(data.reviewsChartData);
 
-      setPlaceInfo(placeData);
-      setPositive(pos);
-      setNegative(neg);
-      setPosiper(percP);
-      setNegaper(percN);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
+  //     const { positive: pos, negative: neg } = calculateSentiment(placeData);
+
+  //     const numReview = pos + neg;
+  //     const percP = ((pos / numReview) * 100).toFixed(0);
+  //     const percN = ((neg / numReview) * 100).toFixed(0);
+
+  //     setPlaceInfo(placeData);
+  //     setPositive(pos);
+  //     setNegative(neg);
+  //     setPosiper(percP);
+  //     setNegaper(percN);
+  //     setLoading(false);
+  //   } catch (err) {
+  //     setError(err.message);
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
-    if (!hasFetched.current) {
-      hasFetched.current = true;
+    
       fetchReviews();
-    }
+    
   }, []);
 
-  const handleFilterClick = () => {
-    setLoading(true);
-    fetchReviews();
-  };
+  // const handleFilterClick = () => {
+  //   setLoading(true);
+  //   fetchReviews();
+  // };
 
   if (loading)
     return (
@@ -177,38 +191,7 @@ export function Dashboard() {
             <p className="text-neutral-400">Overall weekly performance</p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-            <Select value={selectedPlace} onValueChange={setSelectedPlace}>
-              <SelectTrigger className="w-full sm:w-48 bg-neutral-800 border-neutral-700 text-white">
-                <Store className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Simple Bar" />
-              </SelectTrigger>
-              <SelectContent className='bg-white'>
-                <SelectItem value="simple-bar">Simple Bar</SelectItem>
-                <SelectItem value="complex-bar">Complex Bar</SelectItem>
-                <SelectItem value="bad-bar">Bad Bar</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={selectedOption} onValueChange={setSelectedOption}>
-              <SelectTrigger className="w-full sm:w-48 bg-neutral-800 border-neutral-700 text-white">
-                <Timer className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Last 7 days" />
-              </SelectTrigger>
-              <SelectContent className='bg-white'>
-                <SelectItem value="last-7-days">Last 7 days</SelectItem>
-                <SelectItem value="last-30-days">Last 30 days</SelectItem>
-                <SelectItem value="last-90-days">Last 90 days</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Button
-              onClick={handleFilterClick}
-              className="bg-white text-black hover:bg-neutral-200"
-            >
-              Filter
-            </Button>
-          </div>
+          <FilterBar/>
         </div>
 
         {/* Main Stats Grid */}
@@ -253,7 +236,7 @@ export function Dashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold">
-                  {placeInfo[0].totalScore}
+                  {placeInfo ? placeInfo.totalScore : 'N/A'}
                 </div>
                 <div className="flex items-center mt-2 text-xs text-green-500">
                   <ArrowUpRight className="h-3 w-3 mr-1" />
@@ -273,7 +256,7 @@ export function Dashboard() {
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold">{placeInfo[0].reviewsCount}</div>
+                <div className="text-3xl font-bold">{placeInfo ? placeInfo.reviewsCount : 'N/A'}</div>
                 <div className="flex items-center mt-2 text-xs text-red-500">
                   <ArrowDownRight className="h-3 w-3 mr-1" />
                   <span>-5% reduced from last week</span>
@@ -375,7 +358,7 @@ export function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between mb-2">
-              <div className="text-3xl font-bold">2</div>
+              <div className="text-3xl font-bold">{negative}</div>
               <Button
                 variant="outline"
                 className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"

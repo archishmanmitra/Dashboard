@@ -12,6 +12,11 @@ export const FilterProvider = ({ children }) => {
   const [placeInfo, setPlaceInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+    const [positive, setPositive] = useState(0);
+    const [negative, setNegative] = useState(0);
+    const [posiper, setPosiper] = useState(0);
+    const [negaper, setNegaper] = useState(0);
+    const [chartData, setChartData] = useState([]);
 
   const placeOptions = {
     "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
@@ -32,6 +37,21 @@ export const FilterProvider = ({ children }) => {
         return new Date(today.setDate(today.getDate() - 7)).toISOString().split("T")[0];
     }
   };
+
+  const calculateSentiment = (reviews) => {
+    let positive = 0;
+    let negative = 0;
+
+    reviews.forEach((review) => {
+      if (review.stars >= 3) {
+        positive++;
+      } else {
+        negative++;
+      }
+    });
+
+    return { positive, negative };
+  };  
 
   const fetchReviews = async () => {
     setLoading(true);
@@ -59,6 +79,20 @@ export const FilterProvider = ({ children }) => {
       // Set reviews (excluding place info)
       const reviewsData = data.simplifiedReviews.filter(review => review.type === "placeInfo");
       setReviews(reviewsData);
+
+      setChartData(data.reviewsChartData);
+
+      const { positive: pos, negative: neg } = calculateSentiment(reviewsData);
+
+      const numReview = pos + neg;
+      const percP = ((pos / numReview) * 100).toFixed(0);
+      const percN = ((neg / numReview) * 100).toFixed(0);
+
+      // setPlaceInfo(placeData);
+      setPositive(pos);
+      setNegative(neg);
+      setPosiper(percP);
+      setNegaper(percN);
       
       setLoading(false);
       return data;
@@ -100,7 +134,12 @@ export const FilterProvider = ({ children }) => {
       handleFilterClick,
       fetchReviews,
       placeOptions,
-      determineMilestone
+      determineMilestone,
+      chartData,
+      setChartData,
+      posiper,
+      negaper,
+      negative
     }}>
       {children}
     </FilterContext.Provider>

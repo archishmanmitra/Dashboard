@@ -81,28 +81,30 @@ export default function ReviewsBreakdown() {
   const starDistribution = calculateStarDistribution();
 
   return (
-    <div className="flex-1 overflow-auto">
-      <div className="p-6 space-y-6">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <Button
-            variant="outline"
-            className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700 flex items-center gap-2"
-          >
-            <Download size={16} />
-            Export Report
-          </Button>
-        </div>
-
-        <div className="flex items-center justify-between">
-          {/* Overview Section */}
-          <div>
-            <h2 className="text-2xl font-semibold">Review Breakdown</h2>
-            <p className="text-sm text-neutral-400">
-              Detailed analysis of your reviews
-            </p>
+    <div className="min-h-screen bg-neutral-900 p-6">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-2">
+              <Star className="h-6 w-6 text-white" />
+              <h1 className="text-2xl font-bold text-white">Star Boom</h1>
+            </div>
+            <Button
+              variant="outline"
+              className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Export Report
+            </Button>
           </div>
+    
+          {/* Overview Section */}
+          <div className="mb-8">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+              <div>
+                <h2 className="text-xl text-white">Review Breakdown</h2>
+                <p className="text-neutral-400">Detailed analysis of your reviews</p>
+              </div>
+    
 
           {/* Filters */}
           <FilterBar />

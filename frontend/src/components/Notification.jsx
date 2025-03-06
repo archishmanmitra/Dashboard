@@ -1,8 +1,9 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Info, Users } from 'lucide-react';
+import { Download, Info, Star, Users } from 'lucide-react';
 import { Button } from './ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import FilterBar from './FilterBar';
 
 
 
@@ -25,49 +26,34 @@ const Message = ({ initial, content, time, color }) => {
 
 export default function Notification() {
   return (
-    <div className="p-6 space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">Notification</h1>
-          <p className="text-sm text-neutral-400">Here is your important messages</p>
-        </div>
-        <Button variant="outline" className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
-          Export Report
-        </Button>
+    <div className="min-h-screen bg-neutral-900 p-6">
+    {/* Header */}
+    <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center gap-2">
+        <Star className="h-6 w-6 text-white" />
+        <h1 className="text-2xl font-bold text-white">Star Boom</h1>
       </div>
+      <Button
+        variant="outline"
+        className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+      >
+        <Download className="h-4 w-4 mr-2" />
+        Export Report
+      </Button>
+    </div>
 
-      {/* Filters */}
-      <div className="flex justify-between items-center">
-        <div className="flex gap-2">
-          <div className="w-48">
-            <Select defaultValue="temple-bar">
-              <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                <SelectValue placeholder="Temple Bar" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="temple-bar">Temple Bar</SelectItem>
-                <SelectItem value="other-location">Other Location</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="w-48">
-            <Select defaultValue="last-7-days">
-              <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                <SelectValue placeholder="Last 7 days" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="last-7-days">Last 7 days</SelectItem>
-                <SelectItem value="last-30-days">Last 30 days</SelectItem>
-                <SelectItem value="last-90-days">Last 90 days</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+    {/* Overview Section */}
+    <div className="mb-8">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+        <div>
+          <h2 className="text-xl text-white">Notification</h2>
+          <p className="text-neutral-400">Here is your important messages</p>
         </div>
-        <Button variant="outline" className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
-          Filter
-        </Button>
-      </div>
+
+
+    {/* Filters */}
+    <FilterBar />
+  </div>
 
       {/* Messages */}
       <Card className="bg-neutral-800 border-none text-white">
@@ -93,6 +79,7 @@ export default function Notification() {
           />
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 }
