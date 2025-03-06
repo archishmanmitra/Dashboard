@@ -158,19 +158,36 @@ export default function ReviewsBreakdown() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {[5, 4, 3, 2, 1].map((stars) => (
-                  <div key={stars} className="flex items-center gap-2">
-                    <span className="w-4 text-sm">{stars}</span>
-                    <Progress
-                      value={(starDistribution[stars] / reviews.length) * 100}
-                      className="h-2 bg-neutral-700"
-                      indicatorClassName="bg-blue-400"
-                    />
-                    <span className="w-8 text-sm text-right">
-                      {starDistribution[stars]}
-                    </span>
-                  </div>
-                ))}
+                {(() => {
+                  const maxCount = Math.max(
+                    ...Object.values(starDistribution),
+                    1
+                  ); // Avoid division by zero
+
+                  return [5, 4, 3, 2, 1].map((stars) => {
+                    const percentage =
+                      (starDistribution[stars] / maxCount) * 100; // Scale based on highest count
+
+                    return (
+                      <div key={stars} className="flex items-center gap-2">
+                        <span className="w-4 text-sm">{stars}</span>
+                        <div className="relative w-full h-2 bg-neutral-700 rounded-md overflow-hidden">
+                          <div
+                            className="absolute top-0 left-0 h-full rounded-md"
+                            style={{
+                              width: `${percentage}%`,
+                              background:
+                                "linear-gradient(90deg, #4385FF 0%, #7DC6FF 100%)",
+                            }}
+                          />
+                        </div>
+                        <span className="w-8 text-sm text-right">
+                          {starDistribution[stars]}
+                        </span>
+                      </div>
+                    );
+                  });
+                })()}
               </div>
             </CardContent>
           </Card>
