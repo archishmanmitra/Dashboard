@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import { useFilterContext } from "../context/FilterContext";
 
 // Helper function to get month name
 const getMonthName = (date) => {
@@ -19,12 +20,14 @@ const getDayName = (date) => {
   return date.toLocaleString("default", { weekday: "long" });
 };
 
-const ReviewsChart = ({ data, selectedOption }) => {
-  const chartData = useMemo(() => {
-    if (!data || !data.length) return [];
+const ReviewsChart = () => {
+
+  const {selectedOption, chartData} = useFilterContext()
+  const chart = useMemo(() => {
+    if (!chartData || !chartData.length) return [];
 
     // const currentDate = new Date();
-    const reviewDates = data
+    const reviewDates = chartData
       .map((review) => new Date(review.day))
       .filter((date) => !isNaN(date));
 
@@ -35,7 +38,7 @@ const ReviewsChart = ({ data, selectedOption }) => {
 
     const groupedData = {};
 
-    data.forEach((review) => {
+    chartData.forEach((review) => {
       if (!review.day) return;
 
       const publishedDate = new Date(review.day);
@@ -69,13 +72,13 @@ const ReviewsChart = ({ data, selectedOption }) => {
       .sort((a, b) =>
         a.interval.localeCompare(b.interval, undefined, { numeric: true })
       );
-  }, [data, selectedOption]);
+  }, [chartData]);
 
   return (
     <>
       <div>
         <div className="text-3xl  font-bold mb-1">
-          {data.length} 
+          {chartData.length} 
         </div>
 
         <div className="text-sm  text-neutral-400 mb-6">
@@ -89,7 +92,7 @@ const ReviewsChart = ({ data, selectedOption }) => {
         <div className="h-[200px]">
           <ResponsiveContainer width="100%" height={250}>
             <BarChart
-              data={chartData}
+              data={chart}
               margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#2D3748" />

@@ -8,8 +8,8 @@ import { useFilterContext } from '../context/FilterContext';
 const ProgressBadge = ({ icon, title, reviews, active, completed }) => {
   return (
     <div className={`flex flex-col items-center ${active ? 'text-white' : 'text-neutral-600'}`}>
-      <div className={`w-16 h-16 mb-2 relative ${completed ? 'opacity-100' : 'opacity-50'}`}>
-        <img src={icon} alt={title} className="w-full h-full" />
+      <div className={`w-16 flex-col flex gap-6 h-16 mb-2 relative ${completed ? 'opacity-100' : 'opacity-100'}`}>
+        <img src={icon} alt={title} className=" h-[158px]" />
         {completed && (
           <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -43,12 +43,12 @@ export default function Performance() {
   // Milestone calculation
   const currentMilestone = placeInfo ? determineMilestone(placeInfo.reviewsCount) : 'Beginner';
   const milestones = [
-    { title: 'Beginner', reviews: '0-9 reviews', minReviews: 0, maxReviews: 9 },
-    { title: 'Amateur', reviews: '10-49 reviews', minReviews: 10, maxReviews: 49 },
-    { title: 'Challenger', reviews: '50-99 reviews', minReviews: 50, maxReviews: 99 },
-    { title: 'Master', reviews: '100-499 reviews', minReviews: 100, maxReviews: 499 },
-    { title: 'Legend', reviews: '500-999 reviews', minReviews: 500, maxReviews: 999 },
-    { title: 'Grandmaster', reviews: '1000+ reviews', minReviews: 1000, maxReviews: Infinity }
+    { title: 'Beginner', reviews: '0-9 reviews', minReviews: 0, maxReviews: 9, icon: '/beginner.png' },
+    { title: 'Amateur', reviews: '10-49 reviews', minReviews: 10, maxReviews: 49, icon: '/amateur.png' },
+    { title: 'Challenger', reviews: '50-99 reviews', minReviews: 50, maxReviews: 99, icon: '/challenger.png' },
+    { title: 'Master', reviews: '100-499 reviews', minReviews: 100, maxReviews: 499, icon: '/master.png' },
+    { title: 'Legend', reviews: '500-999 reviews', minReviews: 500, maxReviews: 999, icon: '/legend.png' },
+    { title: 'Grandmaster', reviews: '1000+ reviews', minReviews: 1000, maxReviews: Infinity, icon: '/grandmaster.png' }
   ];
 
   return (
@@ -149,7 +149,7 @@ export default function Performance() {
               {milestones.map((milestone, index) => (
                 <ProgressBadge
                   key={index}
-                  icon="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/starship.svg"
+                  icon={milestone.icon}
                   title={milestone.title}
                   reviews={milestone.reviews}
                   active={currentMilestone === milestone.title}

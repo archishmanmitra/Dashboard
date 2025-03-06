@@ -147,10 +147,12 @@ export function Dashboard() {
   //     setLoading(false);
   //   }
   // };
+  // const [bool, setBool] = useState(false)
 
   useEffect(() => {
-    
+
       fetchReviews();
+
     
   }, []);
 
@@ -215,7 +217,7 @@ export function Dashboard() {
                 </div> */}
                 {/* <div className="text-sm text-neutral-400 mb-6">in a week</div>
                 <div className="h-[200px]"> */}
-                  <ReviewsChart data={chartData} selectedOption={selectedOption} />
+                  <ReviewsChart   />
                   {/* </div> */}
                 {/* </div> */}
               </CardContent>

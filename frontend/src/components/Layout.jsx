@@ -76,7 +76,7 @@ const Layout = () => {
 
           <Separator className="my-4 bg-neutral-800" />
 
-          <nav className="space-y-1">
+          {/* <nav className="space-y-1">
             <SidebarItem
               icon={<Settings size={18} />}
               label="Settings"
@@ -89,7 +89,7 @@ const Layout = () => {
               to="/help"
               active={path === '/help'}
             />
-          </nav>
+          </nav> */}
         </div>
 
         {/* User */}

@@ -2,7 +2,7 @@ import express from "express";
 import { ApifyClient } from "apify-client";
 import cors from "cors";
 import dotenv from "dotenv";
-import connectDB from "./db/dbConfig.js";
+// import connectDB from "./db/dbConfig.js";
 dotenv.config({});
 const app = express();
 const port = process.env.PORT||3000;
@@ -84,18 +84,19 @@ app.get("/api/reviews", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch reviews" });
   }
 });
+app.listen(port, () => {  console.log(`Server running on port ${port}`);});
 
 // Database connection Here: 
 
-connectDB()
-.then(()=>{
-  app.on("error",(error)=>{
-    console.log("Error connecting to database: ", error);
-  })
-  app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
-  })
-  .catch((error)=>{
-    console.error("MongoDB failed to connect :  ", error);
-  });
+// connectDB()
+// .then(()=>{
+//   app.on("error",(error)=>{
+//     console.log("Error connecting to database: ", error);
+//   })
+//   app.listen(port, () => {
+//     console.log(`Server running on port ${port}`);
+//   });
+//   })
+//   .catch((error)=>{
+//     console.error("MongoDB failed to connect :  ", error);
+//   });
