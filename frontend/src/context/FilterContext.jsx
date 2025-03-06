@@ -38,8 +38,9 @@ export const FilterProvider = ({ children }) => {
     setError(null);
     try {
       const reviewsStartDate = getStartDate(selectedOption);
+      const urlMain = placeOptions[selectedPlace]
       const response = await fetch(
-        `http://localhost:3000/api/reviews?url=${encodeURIComponent(url)}&reviewsStartDate=${reviewsStartDate}`
+        `http://localhost:3000/api/reviews?url=${encodeURIComponent(urlMain)}&reviewsStartDate=${reviewsStartDate}`
       );
 
       if (!response.ok) {

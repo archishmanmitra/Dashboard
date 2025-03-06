@@ -145,7 +145,7 @@ export default function Performance() {
           <div className="flex justify-between items-center">
             {milestones.map((milestone, index) => (
               <ProgressBadge
-                key={milestone.title}
+                key={index}
                 icon="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/starship.svg"
                 title={milestone.title}
                 reviews={milestone.reviews}
