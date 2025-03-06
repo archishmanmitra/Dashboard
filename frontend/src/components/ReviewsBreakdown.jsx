@@ -32,12 +32,11 @@ export default function ReviewsBreakdown() {
   // Function to get recent reviews
   const getRecentReviews = () => {
     return reviews
-      .filter(review => review.type !== "placeInfo")
-      .slice(0, 3)
+      .slice(0, 5)
       .map(review => ({
-        author: review.author || "Anonymous",
-        rating: review.stars || 3,
-        content: review.content || "No review content"
+        author: review.name || "Anonymous",
+        rating: review.stars,
+        content: review.text || "No text content"
       }));
   };
 
@@ -52,9 +51,8 @@ export default function ReviewsBreakdown() {
     };
 
     reviews
-      .filter(review => review.type !== "placeInfo")
       .forEach(review => {
-        const stars = review.stars || 0;
+        const stars = review.stars;
         if (stars >= 1 && stars <= 5) {
           starCounts[stars]++;
         }

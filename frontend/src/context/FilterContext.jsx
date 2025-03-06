@@ -56,7 +56,7 @@ export const FilterProvider = ({ children }) => {
       setPlaceInfo(placeData);
       
       // Set reviews (excluding place info)
-      const reviewsData = data.simplifiedReviews.filter(review => review.type !== "placeInfo");
+      const reviewsData = data.simplifiedReviews.filter(review => review.type === "placeInfo");
       setReviews(reviewsData);
       
       setLoading(false);

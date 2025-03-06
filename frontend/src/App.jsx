@@ -13,21 +13,21 @@ import { FilterProvider } from './context/FilterContext';
 
 const App = () => {   
   return (     
-    // <FilterProvider>
+    <FilterProvider>
       <Router>
         <Routes>
           <Route path='/' element={<Home/>} />
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            {/* <Route path="/breakdown" element={<ReviewsBreakdown />} />
+            <Route path="/breakdown" element={<ReviewsBreakdown />} />
             <Route path="/performance" element={<Performance />} />
             <Route path="/notification" element={<Notification />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/help" element={<Help />} /> */}
+            <Route path="/help" element={<Help />} />
           </Route>
         </Routes>
       </Router>
-    //  </FilterProvider>
+      </FilterProvider>
   ); 
 };  
 
