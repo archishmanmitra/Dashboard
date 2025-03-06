@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Star,
   Info,
@@ -43,7 +43,7 @@ export function Dashboard() {
 
   // const chartData = categorizeReviewsByMonth(rawData);
   const [placeInfo, setPlaceInfo] = useState(null);
-  const [url, setUrl] = useState("https://www.google.com/maps/place/Adamas+International+School+ICSE,+IGCSE,+ISC(Nursery+to+12)+%26+CBSE*(Nursery+to+1+Only)+School+in+Kolkata/@22.663409,88.3718299,17z/data=!3m1!4b1!4m6!3m5!1s0x39f89c4db0c795a1:0x7b383bb6953e65da!8m2!3d22.663409!4d88.3744048!16s%2Fg%2F11bx8kmxzb?entry=ttu&g_ep=EgoyMDI1MDMwMy4wIKXMDSoASAFQAw%3D%3D");
+  const [url, setUrl] = useState("https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D");
   const [selectedOption, setSelectedOption] = useState("last-7-Days");
   const [selectedPlace, setSelectedPlace] = useState("simple-bar");
   const [loading, setLoading] = useState(true);
@@ -53,6 +53,7 @@ export function Dashboard() {
   const [posiper, setPosiper] = useState(0);
   const [negaper, setNegaper] = useState(0);
   const [chartData, setChartData] = useState([]);
+  const hasFetched = useRef(false);
 
   const placeOptions = {
     "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
@@ -93,6 +94,9 @@ export function Dashboard() {
 
   const fetchReviews = async () => {
     try {
+      setUrl(placeOptions[selectedPlace])
+      setSelectedPlace(selectedPlace)
+    setSelectedOption(selectedOption)
       const reviewsStartDate = getStartDate(selectedOption);
       const response = await fetch(
         `http://localhost:3000/api/reviews?url=${encodeURIComponent(url)}&reviewsStartDate=${reviewsStartDate}`
@@ -133,20 +137,19 @@ export function Dashboard() {
   };
   
   useEffect(() => {
+    if (!hasFetched.current) {
+      hasFetched.current = true;
+      fetchReviews();
+    }
+  }, []);
 
-
-    fetchReviews();
-
-  }, [url, selectedOption, selectedPlace]);
-
-  const handleFilterClick = async () => {
+  const handleFilterClick = () => {
     // Trigger useEffect by updating the state
-    setUrl(placeOptions[selectedPlace])
-    setSelectedOption(selectedOption)
+    
     setLoading(true); 
-    await fetchReviews();
-    setLoading(false);// Show loading state
-    setError(""); // Clear any previous errors
+    fetchReviews();
+    // setLoading(false);// Show loading state
+    // setError(""); // Clear any previous errors
   };
 
 
@@ -213,7 +216,7 @@ export function Dashboard() {
             <Button
               variant="primary"
               className="bg-white border-neutral-700 rounded-full text-black hover:bg-gray-500"
-              onClick={handleFilterClick}
+              onClick={()=>handleFilterClick()}
             >
               Filter
             </Button>
