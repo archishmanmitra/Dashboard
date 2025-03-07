@@ -16,7 +16,7 @@ const App = () => {
     <FilterProvider>
       <Router>
         <Routes>
-          <Route path='/' element={<Home/>} />
+          <Route path='/scan' element={<Home/>} />
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/breakdown" element={<ReviewsBreakdown />} />

@@ -1,7 +1,16 @@
 import React from 'react';
-import { Star } from 'lucide-react';
+import {  Star } from 'lucide-react';
 
 export default function Home() {
+  useEffect(() => {
+    // Log the scan when the page loads
+    axios.post('/api/log-scan');
+  }, []);
+
+  const handleReviewClick = () => {
+    // Log the button click
+    axios.post('/api/log-button-click');
+  };
   return (
     <div className="h-screen bg-black text-white">
       <div className="h-full relative">
@@ -35,7 +44,7 @@ export default function Home() {
           <p className="text-gray-300 mb-6 text-center">
             Tap below to leave a review. It takes less than a minute. Thank you!
           </p>
-          <button className="w-full bg-white text-black py-3 px-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors">
+          <button onClick={handleReviewClick} className="w-full bg-white text-black py-3 px-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors">
             <Star className="w-5 h-5" />
             Rate Us on Google
           </button>
