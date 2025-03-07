@@ -117,6 +117,11 @@ export const FilterProvider = ({ children }) => {
     setLoading(true); // Show loading state
     setError("");
   };
+  useEffect(() => {
+    
+    fetchReviews();
+  }, [])
+ 
 
   return (
     <FilterContext.Provider value={{

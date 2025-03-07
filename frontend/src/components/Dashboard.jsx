@@ -149,12 +149,12 @@ export function Dashboard() {
   // };
   // const [bool, setBool] = useState(false)
 
-  useEffect(() => {
+  // useEffect(() => {
 
-      fetchReviews();
+  //     fetchReviews();
 
     
-  }, []);
+  // }, []);
 
   // const handleFilterClick = () => {
   //   setLoading(true);

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Download, Info, Star, Users } from 'lucide-react';
+import { AlertTriangle, ArrowUpRight, Download, Info, Star, Users } from 'lucide-react';
 import { Button } from './ui/button';
 import FilterBar from './FilterBar';
 import { useFilterContext } from '../context/FilterContext';
@@ -30,11 +30,14 @@ export default function Performance() {
     loading,
     error,
     fetchReviews,
-    determineMilestone
+    determineMilestone,
+    handleFilterClick
   } = useFilterContext();
 
   // useEffect(() => {
-  //   fetchReviews();
+  //   if (performance.navigation.type === 1) {  // 1 = Reload, 0 = Normal navigation
+  //     fetchReviews();
+  //   };
   // }, []);
 
   if (loading) return <p className="text-center text-gray-500 text-lg">Loading performance data...</p>;
@@ -136,7 +139,7 @@ export default function Performance() {
         </div>
 
         {/* Your Progress */}
-        <Card className="bg-neutral-800 border-none mt-5 text-white">
+        <Card className="bg-neutral-800 border-none mt-5 mb-5 text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium flex items-center">
               <Users className="h-4 w-4 mr-2" />
@@ -160,6 +163,33 @@ export default function Performance() {
                   }
                 />
               ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-neutral-800 border-none text-white">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">
+              <div className="flex items-center">
+                <AlertTriangle className="h-4 w-4 mr-2 text-red-500" />
+                Visitors
+              </div>
+            </CardTitle>
+            <Info className="h-4 w-4 text-neutral-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between mb-2">
+              <div className="text-3xl font-bold">69</div>
+              <Button
+                variant="outline"
+                className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+              >
+                Manage
+              </Button>
+            </div>
+            <div className="flex items-center text-xs text-green-500">
+              <ArrowUpRight className="h-3 w-3 mr-1" />
+              <span>+15% improved from last week</span>
             </div>
           </CardContent>
         </Card>
