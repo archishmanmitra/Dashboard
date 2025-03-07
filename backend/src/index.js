@@ -85,6 +85,50 @@ app.get("/api/reviews", async (req, res) => {
   }
 });
 
+// API to log a scan
+app.post('/api/log-scan', async (req, res) => {
+  try {
+    // Find the document or create it if it doesn't exist
+    let scanData = await ScanModel.findOne();
+    if (!scanData) {
+      scanData = new ScanModel();
+    }
+    scanData.scans += 1; // Increment scan count
+    await scanData.save();
+    res.send({ success: true });
+  } catch (error) {
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
+
+// API to log a button click
+app.post('/api/log-button-click', async (req, res) => {
+  try {
+    let scanData = await ScanModel.findOne();
+    if (!scanData) {
+      scanData = new ScanModel();
+    }
+    scanData.buttonClicks += 1; // Increment button click count
+    await scanData.save();
+    res.send({ success: true });
+  } catch (error) {
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
+
+// API to get scan and button click counts
+app.get('/api/get-counts', async (req, res) => {
+  try {
+    let scanData = await ScanModel.findOne();
+    if (!scanData) {
+      scanData = { scans: 0, buttonClicks: 0 }; // Default values if no data exists
+    }
+    res.send({ scanCount: scanData.scans, buttonClickCount: scanData.buttonClicks });
+  } catch (error) {
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
+
 // Database connection Here: 
 
 connectDB()
