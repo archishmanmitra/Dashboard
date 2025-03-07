@@ -12,6 +12,7 @@ export default function Home() {
   const handleReviewClick = () => {
     // Log the button click
     axios.post('http://localhost:3000/api/log-button-click');
+    window.open(googleReviewUrl, "_blank");
   };
   return (
     <div className="h-screen bg-black text-white">
@@ -46,6 +47,7 @@ export default function Home() {
           <p className="text-gray-300 mb-6 text-center">
             Tap below to leave a review. It takes less than a minute. Thank you!
           </p>
+        
           <button onClick={handleReviewClick} className="w-full bg-white text-black py-3 px-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors">
             <Star className="w-5 h-5" />
             Rate Us on Google

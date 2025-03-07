@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Create the context
@@ -17,6 +18,16 @@ export const FilterProvider = ({ children }) => {
     const [posiper, setPosiper] = useState(0);
     const [negaper, setNegaper] = useState(0);
     const [chartData, setChartData] = useState([]);
+    const [counts, setCounts] = useState(0);
+    const [click, setClick] = useState(0);
+
+  useEffect(() => {
+    // Fetch counts from the backend
+    axios.get('http://localhost:3000/api/get-counts').then((response) => {
+      setCounts(response.data.scanCount);
+      setClick(response.data.buttonClickCount);
+    });
+  }, []);
 
   const placeOptions = {
     "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
@@ -143,7 +154,9 @@ export const FilterProvider = ({ children }) => {
       setChartData,
       posiper,
       negaper,
-      negative
+      negative,
+      counts,
+      click,
     }}>
       {children}
     </FilterContext.Provider>
