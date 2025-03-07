@@ -12,6 +12,8 @@ const port = process.env.PORT||3000;
 app.use(cors());
 app.use(express.json());
 
+export const dbName = "starboom";
+
 // Create the API endpoint
 app.get("/api/reviews", async (req, res) => {
   try {
