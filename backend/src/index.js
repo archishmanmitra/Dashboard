@@ -3,6 +3,7 @@ import { ApifyClient } from "apify-client";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./db/dbConfig.js";
+import ScanModel from "./models/visitor.models.js";
 dotenv.config({});
 const app = express();
 const port = process.env.PORT||3000;
