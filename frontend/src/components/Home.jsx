@@ -1,15 +1,17 @@
 import React from 'react';
 import {  Star } from 'lucide-react';
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
     // Log the scan when the page loads
-    axios.post('/api/log-scan');
+    axios.post('http://localhost:3000/api/log-scan');
   }, []);
 
   const handleReviewClick = () => {
     // Log the button click
-    axios.post('/api/log-button-click');
+    axios.post('http://localhost:3000/api/log-button-click');
   };
   return (
     <div className="h-screen bg-black text-white">
