@@ -79,7 +79,6 @@ export const FilterProvider = ({ children }) => {
       // Set reviews (excluding place info)
       const reviewsData = data.simplifiedReviews.filter(review => review.type === "placeInfo");
       setReviews(reviewsData);
-
       setChartData(data.reviewsChartData);
 
       const { positive: pos, negative: neg } = calculateSentiment(reviewsData);
