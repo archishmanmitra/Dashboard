@@ -20,12 +20,17 @@ export const FilterProvider = ({ children }) => {
     const [chartData, setChartData] = useState([]);
     const [counts, setCounts] = useState(0);
     const [click, setClick] = useState(0);
+    const [clickRate, setClickRate] = useState(0);
+    const [countRate, setCountRate] = useState(0);
+
 
   useEffect(() => {
     // Fetch counts from the backend
     axios.get('http://localhost:3000/api/get-counts').then((response) => {
-      setCounts(response.data.scanCount);
-      setClick(response.data.buttonClickCount);
+      setCounts(response.data.totalScans);
+      setClick(response.data.totalButtonClicks);
+      setCountRate(response.data.scanRate);
+      setClickRate(response.data.clickRate);
     });
   }, []);
 
@@ -157,6 +162,8 @@ export const FilterProvider = ({ children }) => {
       negative,
       counts,
       click,
+      clickRate,
+      countRate,
     }}>
       {children}
     </FilterContext.Provider>
