@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use, useContext } from 'react';
 import { cn } from '../lib/utils';
 import {
   BarChart3,
@@ -11,6 +11,7 @@ import {
 import { Avatar } from './ui/avatar';
 import { Separator } from './ui/separator';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const SidebarItem = ({ icon, label, to, active }) => {
   return (
@@ -33,6 +34,7 @@ const SidebarItem = ({ icon, label, to, active }) => {
 const Layout = () => {
   const location = useLocation();
   const path = location.pathname;
+  const { logout } = useContext(AuthContext);
 
   return (
     <div className="flex h-screen bg-neutral-900 text-white">
@@ -100,6 +102,9 @@ const Layout = () => {
                 U
               </div>
             </Avatar>
+            <button onClick={logout} style={{ position: 'absolute', top: '10px', right: '10px' }}>
+              Logout
+            </button>
             <div className="flex flex-col">
               <span className="text-sm text-white">rk360ironjr@gmail.com</span>
               <span className="text-xs text-neutral-400">Ver. 1.0</span>
