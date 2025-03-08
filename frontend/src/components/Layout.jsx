@@ -1,5 +1,5 @@
-import React, { use, useContext } from 'react';
-import { cn } from '../lib/utils';
+import React, { useContext } from "react";
+import { cn } from "../lib/utils";
 import {
   BarChart3,
   ChevronRight,
@@ -7,21 +7,21 @@ import {
   MessageSquare,
   Settings,
   Star,
-} from 'lucide-react';
-import { Avatar } from './ui/avatar';
-import { Separator } from './ui/separator';
-import { Link, Outlet, useLocation } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+} from "lucide-react";
+import { Avatar } from "./ui/avatar";
+import { Separator } from "./ui/separator";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const SidebarItem = ({ icon, label, to, active }) => {
   return (
     <Link to={to}>
       <div
         className={cn(
-          'flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer transition-colors',
+          "flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer transition-colors",
           active
-            ? 'bg-neutral-800 text-white'
-            : 'text-neutral-400 hover:text-neutral-300 hover:bg-neutral-800/50'
+            ? "bg-neutral-800 text-white"
+            : "text-neutral-400 hover:text-neutral-300 hover:bg-neutral-800/50"
         )}
       >
         <div className="flex items-center justify-center w-5 h-5">{icon}</div>
@@ -54,25 +54,25 @@ const Layout = () => {
               icon={<Star size={18} />}
               label="Overview"
               to="/dashboard"
-              active={path === '/dashboard'}
+              active={path === "/dashboard"}
             />
             <SidebarItem
               icon={<ChevronRight size={18} />}
               label="Review Breakdown"
               to="/breakdown"
-              active={path === '/breakdown'}
+              active={path === "/breakdown"}
             />
             <SidebarItem
               icon={<BarChart3 size={18} />}
               label="Performance"
               to="/performance"
-              active={path === '/performance'}
+              active={path === "/performance"}
             />
             <SidebarItem
               icon={<MessageSquare size={18} />}
               label="Notification"
               to="/notification"
-              active={path === '/notification'}
+              active={path === "/notification"}
             />
           </nav>
 
@@ -102,7 +102,10 @@ const Layout = () => {
                 U
               </div>
             </Avatar>
-            <button onClick={logout} style={{ position: 'absolute', top: '10px', right: '10px' }}>
+            <button
+              onClick={logout}
+              style={{ position: "absolute", top: "10px", right: "10px" }}
+            >
               Logout
             </button>
             <div className="flex flex-col">
