@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: 'Open Sauce Sans';
+    src: url('/fonts/OpenSauceSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Open Sauce Sans';
+    src: url('/fonts/OpenSauceSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* @apply font-[Open_Sauce_Sans]; */
+body{
+    font-family: 'Open Sauce Sana';
+    background-color: black;
+}

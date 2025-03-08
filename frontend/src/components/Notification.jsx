@@ -56,7 +56,7 @@ export default function Notification() {
   </div>
 
       {/* Messages */}
-      <Card className="bg-neutral-800 border-none text-white">
+      {/* <Card className="bg-neutral-800 border-none text-white">
         <CardHeader className="pb-2 flex flex-row justify-between items-start">
           <CardTitle className="text-sm font-medium flex items-center">
             <Users className="h-4 w-4 mr-2" />
@@ -78,7 +78,7 @@ export default function Notification() {
             color="bg-blue-500"
           />
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
     </div>
   );

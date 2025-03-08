@@ -37,7 +37,7 @@ const Layout = () => {
   const { logout } = useContext(AuthContext);
 
   return (
-    <div className="flex h-screen bg-neutral-900 text-white">
+    <div className="flex h-screen font-[Open_Sauce_Sans]  bg-black text-white">
       {/* Sidebar */}
       <div className="flex flex-col h-full w-60 bg-neutral-900 border-r border-neutral-800">
         {/* Logo */}
@@ -117,7 +117,7 @@ const Layout = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto ">
         <Outlet />
       </div>
     </div>
