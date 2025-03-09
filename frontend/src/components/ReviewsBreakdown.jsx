@@ -6,6 +6,7 @@ import { Progress } from "./ui/progress";
 import FilterBar from "./FilterBar";
 import { useFilterContext } from "../context/FilterContext";
 import { cn } from "../lib/utils";
+import { Separator } from "./ui/separator";
 
 const Review = ({ author, rating, content }) => {
   return (
@@ -20,13 +21,12 @@ const Review = ({ author, rating, content }) => {
               className={cn(
                 "text-transparent",
                 i < rating
-                  ? ` ${
-                      rating > 3
-                        ? " fill-[#1EC928]"
-                        : rating == 3
-                        ? " fill-[#F7C73B]"
-                        : "fill-[#FF3838]"
-                    }`
+                  ? ` ${rating > 3
+                    ? " fill-[#1EC928]"
+                    : rating == 3
+                      ? " fill-[#F7C73B]"
+                      : "fill-[#FF3838]"
+                  }`
                   : "fill-[#393939]"
               )}
             />
@@ -81,30 +81,42 @@ export default function ReviewsBreakdown() {
   const starDistribution = calculateStarDistribution();
 
   return (
-    <div className="min-h-screen bg-neutral-900 p-6">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-2">
-              <Star className="h-6 w-6 text-white" />
-              <h1 className="text-2xl font-bold text-white">Star Boom</h1>
-            </div>
-            <Button
-              variant="outline"
-              className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Export Report
-            </Button>
+    <div className="min-h-screen relative bg-black p-6">
+      {/* Header */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          width: "542px",
+          height: "530px",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(circle, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
+          zIndex: "0",
+        }}
+      />
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-2">
+          <h1 className="text-4xl  text-white">Dashboard</h1>
+        </div>
+        {/* <Button
+          variant="outline"
+          className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+        >
+          <Download className="h-4 w-4 mr-2" />
+          Export Report
+        </Button> */}
+      </div>
+<Separator className="my-4 bg-neutral-800" />
+      {/* Overview Section */}
+      <div className="mb-8">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+          <div>
+            <h2 className="text-xl text-white">Review Breakdown</h2>
+            <p className="text-neutral-400">Detailed analysis of your reviews</p>
           </div>
-    
-          {/* Overview Section */}
-          <div className="mb-8">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
-              <div>
-                <h2 className="text-xl text-white">Review Breakdown</h2>
-                <p className="text-neutral-400">Detailed analysis of your reviews</p>
-              </div>
-    
+
+
 
           {/* Filters */}
           <FilterBar />
@@ -131,7 +143,7 @@ export default function ReviewsBreakdown() {
         </Card> */}
 
           {/* Recent Reviews */}
-          <Card className="bg-neutral-800 border-none text-white">
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
             <CardHeader className="pb-2 flex flex-row justify-between items-start">
               <CardTitle className="text-sm font-medium">
                 💬 Recent Reviews
@@ -151,7 +163,7 @@ export default function ReviewsBreakdown() {
           </Card>
 
           {/* Star Distribution */}
-          <Card className="bg-neutral-800 border-none text-white">
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
             <CardHeader className="pb-2 flex flex-row justify-between items-start">
               <CardTitle className="text-sm font-medium">
                 ≡ Star Distribution

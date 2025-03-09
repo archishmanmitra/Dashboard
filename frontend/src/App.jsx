@@ -16,7 +16,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 const App = () => {
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <FilterProvider>
         <Router>
           <Routes>
@@ -43,7 +43,7 @@ const App = () => {
           </Routes>
         </Router>
       </FilterProvider>
-    </AuthProvider>
+    // </AuthProvider>
   );
 };
 

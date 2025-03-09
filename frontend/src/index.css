@@ -16,8 +16,23 @@
     font-display: swap;
   }
 
+  :root {
+    /* Color variables */
+    --color-primary: #4f46e5;    /* Change to your preferred primary color */
+    --color-secondary: #8b5cf6;  /* Change to your preferred secondary color */
+    --color-accent: #ec4899;
+    --color-bodcol: #393939;     /* Change to your preferred accent color */
+  }
+  
+
   /* @apply font-[Open_Sauce_Sans]; */
 body{
     font-family: 'Open Sauce Sana';
     background-color: black;
+}
+
+@layer components {
+  .bg-custom-gradient {
+    background: linear-gradient(105.62deg, #1B1C21 0%, #131418 100%);
+  }
 }

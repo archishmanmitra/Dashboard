@@ -36,6 +36,20 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/protected', (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, SECRET_KEY);
+    res.json({ message: 'You have access', userId: decoded.userId });
+  } catch (err) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
+});
+
 router.post('/logout', (req, res) => {
   res.clearCookie('token');
   res.json({ success: true, message: 'Logged out successfully' });

@@ -17,8 +17,11 @@ const FilterBar = () => {
     <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
       <Select value={selectedPlace} onValueChange={setSelectedPlace}>
         <SelectTrigger className="w-full sm:w-48 bg-neutral-800 border-neutral-700 text-white">
+          <div className='flex items-center gap-2 justify-between'>
           <Store className="h-4 w-4 mr-2" />
           <SelectValue placeholder="Simple Bar" />
+
+          </div>
         </SelectTrigger>
         <SelectContent className='bg-white'>
           <SelectItem value="simple-bar">Simple Bar</SelectItem>

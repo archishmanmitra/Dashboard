@@ -12,6 +12,8 @@ import { Avatar } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import gradientOverlay from '/gradientOverlay.svg';
+import Logout from "./Logout";
 
 const SidebarItem = ({ icon, label, to, active }) => {
   return (
@@ -34,18 +36,20 @@ const SidebarItem = ({ icon, label, to, active }) => {
 const Layout = () => {
   const location = useLocation();
   const path = location.pathname;
-  const { logout } = useContext(AuthContext);
+
 
   return (
     <div className="flex h-screen font-[Open_Sauce_Sans]  bg-black text-white">
       {/* Sidebar */}
-      <div className="flex flex-col h-full w-60 bg-neutral-900 border-r border-neutral-800">
+      <div className="flex flex-col h-full w-60 bg-black border-r border-neutral-800">
         {/* Logo */}
         <div className="p-4">
-          <div className="bg-white text-black text-xs font-bold py-1 px-2 inline-block">
-            GOURMET BURGER KITCHEN
+          <div className=" text-white text-lg font-bold py-1 px-2 inline-block">
+            Star Boom
           </div>
         </div>
+
+        <Separator className="my-4 mx-8 bg-neutral-800 w-40" />
 
         {/* Navigation */}
         <div className="flex-1 px-3 py-2">
@@ -76,7 +80,6 @@ const Layout = () => {
             />
           </nav>
 
-          <Separator className="my-4 bg-neutral-800" />
 
           {/* <nav className="space-y-1">
             <SidebarItem
@@ -95,20 +98,16 @@ const Layout = () => {
         </div>
 
         {/* User */}
-        <div className="p-4 border-t border-neutral-800">
+        <div className="p-4 border-t flex flex-col items-start gap-5 border-neutral-800">
+           <Logout/>
+          <Separator className=" bg-neutral-800" />
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8 border border-neutral-700">
               <div className="bg-neutral-700 h-full w-full flex items-center justify-center text-xs text-white">
                 U
               </div>
             </Avatar>
-            <button
-              onClick={logout}
-              style={{ position: "absolute", top: "10px", right: "10px" }}
-            >
-              Logout
-            </button>
-            <div className="flex flex-col">
+            <div className="flex flex-col items-start">
               <span className="text-sm text-white">rk360ironjr@gmail.com</span>
               <span className="text-xs text-neutral-400">Ver. 1.0</span>
             </div>
@@ -117,8 +116,42 @@ const Layout = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto ">
-        <Outlet />
+      <div className="flex-1 relative overflow-auto ">
+      {/* <img 
+          src={gradientOverlay} 
+          alt="grad" 
+          className="absolute pointer-events-none z-10"
+          style={{
+            width: "542px",
+            height: "530px",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: "10",
+          }}
+        /> */}
+          {/* <div 
+          className="absolute inset-0 pointer-events-none z-10"
+          style={{
+            background: "radial-gradient(circle at center, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
+            // mixBlendMode: "hard-light", // Try different blend modes like: overlay, screen, soft-light
+          }}
+        /> */}
+        {/* <div 
+          className="absolute pointer-events-none"
+          style={{
+            width: "542px",
+            height: "530px",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            background: "radial-gradient(circle, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
+            zIndex: "10"
+          }}
+        /> */}
+
+        <Outlet/>
+        
       </div>
     </div>
   );

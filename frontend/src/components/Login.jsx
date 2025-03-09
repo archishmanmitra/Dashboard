@@ -4,34 +4,45 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (login(password)) {
-      navigate('/dashboard'); // Redirect to the dashboard after successful login
+
+    const response = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+      // Include cookies
+    });
+
+    if (response.ok) {
+      navigate('/dashboard'); // Redirect to dashboard
     } else {
-      alert('Incorrect password');
+      alert('Invalid credentials');
     }
   };
 
   return (
-    <div className='bg-black min-h-screen min-w-screen flex justify-center items-center text-white'>
+    <div className='bg-gray-700 min-h-screen min-w-screen flex justify-center items-center text-white'>
         <div style={{ padding: '20px', maxWidth: '300px', margin: 'auto' }}>
       <h2>Admin Login</h2>
       <form onSubmit={handleLogin}>
         <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
           type="password"
-          placeholder="Enter password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
-        <button type="submit" style={{ width: '100%', padding: '10px' }}>
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
       </div>
     </div>

@@ -28,19 +28,20 @@ import { cn } from "../lib/utils";
 import ReviewsChart from "./ReviewChart";
 import { useFilterContext } from "../context/FilterContext";
 import FilterBar from "./FilterBar";
+import { Separator } from "./ui/separator";
 
 export function Dashboard() {
 
   const {
-      selectedOption,
-      placeInfo,
-      loading,
-      error,
-      fetchReviews,
-      chartData,
-      posiper,
-      negaper,
-      negative
+    selectedOption,
+    placeInfo,
+    loading,
+    error,
+    fetchReviews,
+    chartData,
+    posiper,
+    negaper,
+    negative
   } = useFilterContext()
 
   // const [placeInfo, setPlaceInfo] = useState(null);
@@ -153,7 +154,7 @@ export function Dashboard() {
 
   //     fetchReviews();
 
-    
+
   // }, []);
 
   // const handleFilterClick = () => {
@@ -169,21 +170,33 @@ export function Dashboard() {
     return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
 
   return (
-    <div className="min-h-screen bg-neutral-900 p-6">
+    <div className="min-h-screen relative bg-black p-6">
       {/* Header */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          width: "542px",
+          height: "530px",
+          top: "50%",
+          left: "60%",
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(circle, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
+          zIndex: "0",
+        }}
+      />
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-2">
-          <Star className="h-6 w-6 text-white" />
-          <h1 className="text-2xl font-bold text-white">Star Boom</h1>
+          <h1 className="text-4xl  text-white">Dashboard</h1>
         </div>
-        <Button
+        {/* <Button
           variant="outline"
           className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
         >
           <Download className="h-4 w-4 mr-2" />
           Export Report
-        </Button>
+        </Button> */}
       </div>
+      <Separator className="my-4 bg-neutral-800" />
 
       {/* Overview Section */}
       <div className="mb-8">
@@ -193,14 +206,14 @@ export function Dashboard() {
             <p className="text-neutral-400">Overall weekly performance</p>
           </div>
 
-          <FilterBar/>
+          <FilterBar />
         </div>
 
         {/* Main Stats Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Total Ratings */}
-          <div className="lg:col-span-2">
-            <Card className="bg-neutral-800 border-none text-white h-full">
+          <div className="lg:col-span-2 ">
+            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white h-full">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
@@ -217,8 +230,8 @@ export function Dashboard() {
                 </div> */}
                 {/* <div className="text-sm text-neutral-400 mb-6">in a week</div>
                 <div className="h-[200px]"> */}
-                  <ReviewsChart   />
-                  {/* </div> */}
+                <ReviewsChart />
+                {/* </div> */}
                 {/* </div> */}
               </CardContent>
             </Card>
@@ -226,7 +239,7 @@ export function Dashboard() {
 
           {/* Stats Cards */}
           <div className="space-y-4">
-            <Card className="bg-neutral-800 border-none text-white">
+            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
               <CardHeader className="flex flex-row items-center justify-between pb-11">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
@@ -247,7 +260,7 @@ export function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card className="bg-neutral-800 border-none text-white">
+            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
               <CardHeader className="flex flex-row items-center justify-between pb-11">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
@@ -272,7 +285,7 @@ export function Dashboard() {
       {/* Bottom Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Positive vs Negative Rating Ratio */}
-        <Card className="bg-neutral-800 border-none text-white">
+        <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">
               <div className="flex items-center">
@@ -317,7 +330,7 @@ export function Dashboard() {
         </Card>
 
         {/* Milestone */}
-        <Card className="bg-neutral-800 border-none text-white">
+        <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">
               <div className="flex items-center">
@@ -348,7 +361,7 @@ export function Dashboard() {
         </Card>
 
         {/* Negative Review Alert */}
-        <Card className="bg-neutral-800 border-none text-white">
+        <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">
               <div className="flex items-center">

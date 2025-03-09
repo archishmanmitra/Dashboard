@@ -12,6 +12,7 @@ import {
 import { Button } from "./ui/button";
 import FilterBar from "./FilterBar";
 import { useFilterContext } from "../context/FilterContext";
+import { Separator } from "./ui/separator";
 
 const ProgressLine = ({ completed, current, total = 16 }) => {
   return (
@@ -48,7 +49,7 @@ const ProgressBadge = ({
     >
       {/* Icon Container - Top */}
       <div
-        className={`${width} ${height} mb-2 relative flex items-center justify-center overflow-hidden rounded-full bg-neutral-800`}
+        className={`${width} ${height} mb-2 relative flex items-center justify-center overflow-hidden rounded-full bg-none`}
       >
         <img
           src={icon}
@@ -170,7 +171,7 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col z-10">
       {/* Badges row */}
       <div className="flex items-center justify-between px-6 mb-8">
         {milestones.map((milestone, index) => (
@@ -314,21 +315,33 @@ export default function Performance() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 p-6">
+    <div className="min-h-screen relative bg-black p-6 ">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div 
+          className="absolute pointer-events-none"
+          style={{
+            width: "542px",
+            height: "530px",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            background: "radial-gradient(circle, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
+            zIndex: "0"
+          }}
+        />
+      <div className="flex items-center justify-between mb-8 z-10">
         <div className="flex items-center gap-2">
-          <Star className="h-6 w-6 text-white" />
-          <h1 className="text-2xl font-bold text-white">Star Boom</h1>
+          <h1 className="text-4xl  text-white">Dashboard</h1>
         </div>
-        <Button
+        {/* <Button
           variant="outline"
           className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
         >
           <Download className="h-4 w-4 mr-2" />
           Export Report
-        </Button>
+        </Button> */}
       </div>
+      <Separator className="my-4 bg-neutral-800" />
 
       {/* Overview Section */}
       <div className="mb-8">
@@ -342,9 +355,9 @@ export default function Performance() {
           <FilterBar />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
           {/* Before/After Star Boom */}
-          <Card className="bg-neutral-800 border-none text-white">
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white z-10">
             <CardHeader className="pb-2 flex flex-row justify-between items-start">
               <CardTitle className="text-sm font-medium flex items-center">
                 <Star className="h-4 w-4 mr-2" />
@@ -353,7 +366,7 @@ export default function Performance() {
               <Info className="h-4 w-4 text-neutral-500" />
             </CardHeader>
             <CardContent>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between z-10 items-center">
                 <div className="text-center">
                   <p className="text-sm text-neutral-400">Before</p>
                   <h2 className="text-4xl font-bold">6</h2>
@@ -377,7 +390,7 @@ export default function Performance() {
           </Card>
 
           {/* Competitor Benchmarking */}
-          <Card className="bg-neutral-800 border-none text-white">
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
             <CardHeader className="pb-2 flex flex-row justify-between items-start">
               <CardTitle className="text-sm font-medium flex items-center">
                 <Users className="h-4 w-4 mr-2" />
@@ -410,7 +423,7 @@ export default function Performance() {
           </Card>
         </div>
 
-        <Card className="bg-neutral-800 border-none mt-5 mb-5 text-white">
+        <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 mt-5 mb-5 text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium flex items-center">
               <Users className="h-4 w-4 mr-2" />
@@ -418,7 +431,7 @@ export default function Performance() {
             </CardTitle>
             <Info className="h-4 w-4 text-neutral-500" />
           </CardHeader>
-          <CardContent>
+          <CardContent className='z-10'>
             {/* Using our new separated progress component */}
             <ProgressSection 
               milestones={milestones}
@@ -429,7 +442,7 @@ export default function Performance() {
         </Card>
 
         <div className="flex gap-5 items-center">
-          <Card className="bg-neutral-800 border-none text-white">
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">
                 <div className="flex items-center">
@@ -442,12 +455,12 @@ export default function Performance() {
             <CardContent>
               <div className="flex items-center justify-between mb-2">
                 <div className="text-3xl font-bold">{counts}</div>
-                <Button
+                {/* <Button
                   variant="outline"
                   className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
                 >
                   Manage
-                </Button>
+                </Button> */}
               </div>
               <div className="flex items-center text-xs text-green-500">
                 <ArrowUpRight className="h-3 w-3 mr-1" />
@@ -455,7 +468,7 @@ export default function Performance() {
               </div>
             </CardContent>
           </Card>
-          <Card className="bg-neutral-800 border-none text-white">
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">
                 <div className="flex items-center">
@@ -468,12 +481,12 @@ export default function Performance() {
             <CardContent>
               <div className="flex items-center justify-between mb-2">
                 <div className="text-3xl font-bold">{click}</div>
-                <Button
+                {/* <Button
                   variant="outline"
                   className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
                 >
                   Manage
-                </Button>
+                </Button> */}
               </div>
               <div className="flex items-center text-xs text-green-500">
                 <ArrowUpRight className="h-3 w-3 mr-1" />
