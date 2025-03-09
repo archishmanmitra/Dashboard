@@ -178,7 +178,7 @@ export function Dashboard() {
           width: "542px",
           height: "530px",
           top: "50%",
-          left: "60%",
+          left: "50%",
           transform: "translate(-50%, -50%)",
           background: "radial-gradient(circle, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
           zIndex: "0",

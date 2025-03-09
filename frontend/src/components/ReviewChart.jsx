@@ -77,7 +77,7 @@ const ReviewsChart = () => {
   return (
     <>
       <div>
-        <div className="text-3xl  font-bold mb-1">
+        <div className="text-3xl z-50 font-bold mb-1">
           {chartData.length} 
         </div>
 
