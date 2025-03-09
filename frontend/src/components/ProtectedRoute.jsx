@@ -12,7 +12,6 @@ const ProtectedRoute = ({ children }) => {
       const response = await fetch('http://localhost:3000/api/protected', {
         method: "GET",
         credentials:"include",
-         // Include cookies
       });
 
       if (response.ok) {
