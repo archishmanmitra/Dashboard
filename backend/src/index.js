@@ -5,12 +5,20 @@ import dotenv from "dotenv";
 import connectDB from "./db/dbConfig.js";
 import ScanModel from "./models/visitor.models.js";
 import EventModel from "./models/event.models.js";
+import authRouter from "./routes/auth.routes.js";
+import { authenticateAdmin } from "./middleware/auth.middleware.js";
+import cookieParser from 'cookie-parser'
+import {Admin} from "./models/admin.models.js";
 dotenv.config({});
 const app = express();
 const port = process.env.PORT||3000;
 
 // Enable CORS
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+  credentials: true
+}));
+app.use(cookieParser());
 app.use(express.json());
 
 export const dbName = "starboom";
@@ -203,10 +211,13 @@ app.get('/api/get-counts', async (req, res) => {
   }
 });
 
+// Auth routes
+  app.use('/api', authRouter);
 // Database connection Here: 
 
 connectDB()
-.then(() => {
+.then(async() => {
+  await Admin.initAdmin();
   console.log("Database connection established");
   app.listen(port, () => {  console.log(`Server running on port ${port}`);});
 })
