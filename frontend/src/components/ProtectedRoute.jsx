@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
     const verifyAuth = async () => {
       const response = await fetch('http://localhost:3000/api/protected', {
         method: "GET",
-        cookies: 'include'
+        credentials:"include",
          // Include cookies
       });
 
@@ -29,7 +29,7 @@ const ProtectedRoute = ({ children }) => {
     return <div>Loading...</div>;
   }
 
-  return ( children) ;
+  return isAuthenticated ? children : <Navigate to="/login"replace/>;
 };
 
 export default ProtectedRoute;
