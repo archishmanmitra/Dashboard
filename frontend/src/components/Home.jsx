@@ -12,7 +12,7 @@ export default function Home() {
   const handleReviewClick = () => {
     // Log the button click
     axios.post('http://localhost:3000/api/log-button-click');
-    window.open(googleReviewUrl, "_blank");
+    window.open('https://www.google.com/maps?sca_esv=9214e60237169270&rlz=1C1ONGR_en-GBIN1071IN1071&output=search&q=techno+main+salt+lake&source=lnms&fbs=ABzOT_CWdhQLP1FcmU5B0fn3xuWpA-dk4wpBWOGsoR7DG5zJBv10Kbgy3ptSBM6mMfaz8zDVX4b2W1tiDkb3uUgOX2bJ3a5BLG7BkjuQ4GCVNnHDBVV8AikdpKXTHc3QzL9r29OsmnWG9YyUq2HKDk92VPIGBTiroTgAhnMApiY7Y7Ee9UH5_IVpOJ56QvX16CCwZmL-eFirhkCq3ojEZn8tyFPiJegzIg&entry=mc&ved=1t:200715&ictx=111', "_blank");
   };
   return (
     <div className="h-screen bg-black text-white">

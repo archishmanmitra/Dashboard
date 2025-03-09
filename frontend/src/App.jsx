@@ -29,7 +29,7 @@ const App = () => {
               path="/"
               element={
                 <ProtectedRoute>
-                  <Layout />
+                  <Layout classname='font-[Open Sause Sans]'/>
                 </ProtectedRoute>
               }
             >

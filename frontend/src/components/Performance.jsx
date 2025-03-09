@@ -13,16 +13,16 @@ import { Button } from "./ui/button";
 import FilterBar from "./FilterBar";
 import { useFilterContext } from "../context/FilterContext";
 
-const ProgressLine = ({ completed, current, total = 10 }) => {
+const ProgressLine = ({ completed, current, total = 16 }) => {
   return (
-    <div className="flex items-center justify-center w-24 h-8">
+    <div className="flex items-center justify-center gap-1 w-full h-8">
       {[...Array(total)].map((_, index) => (
         <div
           key={index}
           className={`h-0.5 w-1 mx-px ${
             completed
               ? "bg-green-500"
-              : current && index < Math.floor((current / 100) * total)
+              : current && index < Math.floor((current / 100) * (total))
               ? "bg-green-500"
               : "bg-gray-600"
           }`}
@@ -37,11 +37,8 @@ const ProgressBadge = ({
   title,
   reviews,
   active,
-  completed,
   width,
   height,
-  ticked,
-  isCurrent
 }) => {
   return (
     <div
@@ -67,10 +64,9 @@ const ProgressBadge = ({
       </div>
 
       {/* Checkmark Container - Fixed Height Bottom */}
-      <div className="h-6 mt-2.5 flex items-center ">
+      {/* <div className="h-6 mt-2.5 flex gap-3 items-center ">
         {" "}
-        {/* Fixed height container */}
-        {completed ? (
+        {completedTick ? (
           <div className="bg-green-500 text-neutral-800 rounded-full p-1">
             <svg
               width="16"
@@ -105,6 +101,108 @@ const ProgressBadge = ({
             }
           />
         )}
+      </div> */}
+    </div>
+  );
+};
+const ProgressIndicator = ({
+  completed,
+  isCurrent,
+  completedTick,
+  showLine
+}) => {
+  return (
+    <div className="flex items-center px-1 gap-2">
+      {/* Checkmark */}
+      {completedTick ? (
+        <div className="bg-green-500 text-neutral-800 rounded-full p-1">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+          >
+            <path d="M20 6L9 17L4 12" />
+          </svg>
+        </div>
+      ) : (
+        <div className="bg-[#292C30] text-white rounded-full p-1">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+          >
+            <path d="M20 6L9 17L4 12" />
+          </svg>
+        </div>
+      )}
+      
+      {/* Progress Line */}
+      {showLine && (
+        <ProgressLine
+          completed={completed}
+          current={isCurrent}
+        />
+      )}
+    </div>
+  );
+};
+
+// Component to be used in the Performance component
+const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
+  // Calculate the current progress within a milestone
+  const getCurrentLevelProgress = (count) => {
+    const currentMilestoneObj = milestones.find(
+      (m) => m.title === currentMilestone
+    );
+    if (!currentMilestoneObj) return 0;
+
+    const range =
+      currentMilestoneObj.maxReviews - currentMilestoneObj.minReviews;
+    const progress = count - currentMilestoneObj.minReviews;
+
+    return Math.min(100, (progress / range) * 100);
+  };
+
+  return (
+    <div className="flex flex-col">
+      {/* Badges row */}
+      <div className="flex items-center justify-between px-6 mb-8">
+        {milestones.map((milestone, index) => (
+          <div key={`badge-${index}`}>
+            <ProgressBadge
+              width={milestone.width}
+              height={milestone.height}
+              icon={milestone.icon}
+              title={milestone.title}
+              reviews={milestone.reviews}
+              active={currentMilestone === milestone.title}
+            />
+          </div>
+        ))}
+      </div>
+      
+      {/* Progress indicators row - now separate from badges */}
+      <div className="flex items-center justify-between pl-19 pr-20 px-6">
+        {milestones.map((milestone, index) => (
+          <div key={`progress-${index}`} className="flex-1 flex justify-center">
+            <ProgressIndicator
+              completed={reviewsCount > milestone.maxReviews}
+              completedTick={reviewsCount >= milestone.minReviews}
+              isCurrent={
+                reviewsCount >= milestone.minReviews && 
+                reviewsCount <= milestone.maxReviews ? 
+                  getCurrentLevelProgress(reviewsCount) : 0
+              }
+              showLine={index < milestones.length - 1}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -236,8 +334,8 @@ export default function Performance() {
       <div className="mb-8">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
           <div>
-            <h2 className="text-xl text-white">Notification</h2>
-            <p className="text-neutral-400">Here is your important messages</p>
+            <h2 className="text-xl text-white">Performance</h2>
+            <p className="text-neutral-400">Monitor your software performance</p>
           </div>
 
           {/* Filters */}
@@ -312,7 +410,6 @@ export default function Performance() {
           </Card>
         </div>
 
-        {/* Your Progress */}
         <Card className="bg-neutral-800 border-none mt-5 mb-5 text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium flex items-center">
@@ -322,45 +419,15 @@ export default function Performance() {
             <Info className="h-4 w-4 text-neutral-500" />
           </CardHeader>
           <CardContent>
-            <div className="flex items-center justify-between px-6">
-              {milestones.map((milestone, index) => (
-                <div key={index}>
-                  <ProgressBadge
-                    width={milestone.width}
-                    height={milestone.height}
-                    icon={milestone.icon}
-                    title={milestone.title}
-                    reviews={milestone.reviews}
-                    active={currentMilestone === milestone.title}
-                    completed={placeInfo.reviewsCount > milestone.maxReviews}
-                    isCurrentLevel={
-                      placeInfo.reviewsCount >= milestone.minReviews &&
-                      placeInfo.reviewsCount <= milestone.maxReviews
-                    }
-                    ticked={index < milestones.length - 1 }
-                    isCurrent={
-                          placeInfo.reviewsCount >= milestone.minReviews && 
-                          placeInfo.reviewsCount <= milestone.maxReviews ? 
-                            getCurrentLevelProgress(placeInfo.reviewsCount) : 0
-                        }
-                    
-                      // <ProgressLine 
-                      //   completed={placeInfo.reviewsCount > milestone.maxReviews}
-                      //   current={
-                      //     placeInfo.reviewsCount >= milestone.minReviews && 
-                      //     placeInfo.reviewsCount <= milestone.maxReviews ? 
-                      //       getCurrentLevelProgress(placeInfo.reviewsCount) : 0
-                      //   }
-                      // />
-                    
-                  />
-
-                  {/* Add progress dashes between badges except after the last one */}
-                </div>
-              ))}
-            </div>
+            {/* Using our new separated progress component */}
+            <ProgressSection 
+              milestones={milestones}
+              currentMilestone={currentMilestone}
+              reviewsCount={placeInfo.reviewsCount}
+            />
           </CardContent>
         </Card>
+
         <div className="flex gap-5 items-center">
           <Card className="bg-neutral-800 border-none text-white">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
