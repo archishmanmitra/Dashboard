@@ -35,12 +35,6 @@ export const FilterProvider = ({ children }) => {
     });
   }, []);
 
-  useEffect(() => {
-    axios.get('http://localhost:3000/api/analyze').then((response) => {
-      setAnalysis(response.data.analysis);
-  });
-}, []);
-
   const placeOptions = {
     "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
     "complex-bar": "https://www.google.com/maps/search/iem/@22.456918,88.3197996,12z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
@@ -98,7 +92,7 @@ export const FilterProvider = ({ children }) => {
       // Separate place info from reviews
       const placeData = data.simplifiedReviews.filter((item) => item.type === "placeInfo")[0];
       setPlaceInfo(placeData);
-      
+      setAnalysis(data.sentimentAnalysis.rawAnalysis)
       // Set reviews (excluding place info)
       const reviewsData = data.simplifiedReviews.filter(review => review.type === "placeInfo");
       setReviews(reviewsData);

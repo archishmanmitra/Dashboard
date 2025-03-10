@@ -136,7 +136,7 @@ export default function ReviewsBreakdown() {
           </CardHeader>
           <CardContent>
             <h1 className="text-white text-2xl">
-              {}
+              {analysis}
             </h1>
             <Button variant="outline" className="bg-white text-black hover:bg-neutral-200" size="sm">
               <RefreshCcw className="h-4 w-4 mr-2" />
