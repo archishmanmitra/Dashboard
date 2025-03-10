@@ -70,7 +70,20 @@ export function Dashboard() {
   if (error)
     return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
 
-  const [ina, setIna] = useState('a week');
+  const [ina, setIna] = useState(' a week');
+  useEffect(() => {
+    if (selectedOption === "last-90-days") {
+      setIna(' 3 months')
+    } else if (selectedOption === "last-30-days") {
+      setIna(' a month')
+    } else {
+      setIna(' a week')
+    }
+    // return () => {
+    //   second
+    // }
+  }, [])
+
   return (
     <div className="min-h-screen relative bg-black p-6">
       {/* Header */}
@@ -133,7 +146,7 @@ export function Dashboard() {
                 </div> */}
                   {/* <div className="text-sm text-neutral-400 mb-6">in a week</div>
                 <div className="h-[200px]"> */}
-                  <ReviewsChart />
+                  <ReviewsChart ina={ina} />
                   {/* </div> */}
                   {/* </div> */}
                 </CardContent>
@@ -157,15 +170,9 @@ export function Dashboard() {
                   <div className="text-4xl font-bold">
                     {placeInfo ? placeInfo.totalScore : 'N/A'}
                   </div>
-                  <div className="flex items-center mt-2 text-xs text-green-500">
-                  {/* <ArrowUpRight className="h-3 w-3 mr-1" /> */}
-                  <span>in {selectedOption === "last-90-days"
-            ? " 3 months"
-            : selectedOption === "last-30-days"
-            ? " a month"
-            : " a week"}</span>
-                </div>
-                  {/* <div className="h-4"></div> */}
+                  <div className="flex items-center mt-2 text-xs text-[var(--color-secondary)]">
+                    <span>in {ina}</span>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -182,11 +189,9 @@ export function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">{placeInfo ? placeInfo.reviewsCount : 'N/A'}</div>
-                  {/* <div className="flex items-center mt-2 text-xs text-red-500">
-                  <ArrowDownRight className="h-3 w-3 mr-1" />
-                  <span>-5% reduced from last week</span>
-                </div> */}
-                  <div className="h-4"></div>
+                  <div className="flex items-center mt-2 text-xs text-[var(--color-secondary)]">
+                    <span>in {ina}</span>
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -199,9 +204,9 @@ export function Dashboard() {
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
-                  <Icon icon="ix:compare" width="24" height="24" className="mr-2 rotate-90" />
-                  <h1 className="text-lg">Positive vs Negative Rating Ratio</h1>
-                    
+                    <Icon icon="ix:compare" width="24" height="24" className="mr-2 rotate-90" />
+                    <h1 className="text-lg">Positive vs Negative Rating Ratio</h1>
+
                   </div>
                 </CardTitle>
                 <Info className="h-4 w-4 text-neutral-500" />
@@ -245,8 +250,8 @@ export function Dashboard() {
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
-                  <Icon icon="material-symbols:trophy" width="24" height="24" className="mr-2" />
-                  <h1 className="text-lg">Milestone</h1>
+                    <Icon icon="material-symbols:trophy" width="24" height="24" className="mr-2" />
+                    <h1 className="text-lg">Milestone</h1>
                   </div>
                 </CardTitle>
                 <Info className="h-4 w-4 text-neutral-500" />
@@ -289,9 +294,9 @@ export function Dashboard() {
                   </div>
                   <p className="text-xs text-neutral-400">
                     {milestones[milestones.indexOf(currentMilestoneObj) + 1] ? (
-                      `Earn ${milestones[milestones.indexOf(currentMilestoneObj) + 1].minReviews - placeInfo.reviewsCount} more stars to become a ${milestones[milestones.indexOf(currentMilestoneObj) + 1].title}`
+                      `Earn ${milestones[milestones.indexOf(currentMilestoneObj) + 1].minReviews - placeInfo.reviewsCount} more stars to become a ${milestones[milestones.indexOf(currentMilestoneObj) + 1].title}.`
                     ) : (
-                      "No next milestone available"
+                      `Congratulations! You've completed all of the milestones.`
                     )
                     }
                   </p>

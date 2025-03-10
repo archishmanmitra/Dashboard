@@ -20,7 +20,7 @@ const getDayName = (date) => {
   return date.toLocaleString("default", { weekday: "long" });
 };
 
-const ReviewsChart = () => {
+const ReviewsChart = ({ ina }) => {
 
   const {selectedOption, chartData} = useFilterContext()
   const chart = useMemo(() => {
@@ -81,13 +81,9 @@ const ReviewsChart = () => {
           {chartData.length} 
         </div>
 
-        <div className="text-sm  text-neutral-400 mb-6">
-          in
-          {selectedOption === "last-90-days"
-            ? " 3 months"
-            : selectedOption === "last-30-days"
-            ? " a month"
-            : " a week"}
+        <div className="text-sm  text-[var(--color-secondary)] mb-6">
+          in 
+          {ina}
         </div>
         <div className="h-[200px]">
           <ResponsiveContainer width="100%" height={250}>

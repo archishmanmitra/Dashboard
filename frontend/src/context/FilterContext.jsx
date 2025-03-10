@@ -23,7 +23,8 @@ export const FilterProvider = ({ children }) => {
     const [clickRate, setClickRate] = useState(0);
     const [countRate, setCountRate] = useState(0);
     const [analysis, setAnalysis] = useState('');
-
+    const [milestone, setMilestone] = useState(null);
+    const [negativeReviews, setNegativeReviews] = useState([]);
 
   useEffect(() => {
     // Fetch counts from the backend
@@ -109,6 +110,15 @@ export const FilterProvider = ({ children }) => {
       setNegative(neg);
       setPosiper(percP);
       setNegaper(percN);
+
+      const newMilestone = determineMilestone(reviewsData.length);
+      if (newMilestone !== milestone) {
+        await updateMilestone(newMilestone);
+      }
+
+      // Filter negative reviews
+      const negativeReviews = reviewsData.filter(review => review.stars < 3);
+      setNegativeReviews(negativeReviews);
       
       setLoading(false);
       return data;
@@ -192,7 +202,7 @@ export const FilterProvider = ({ children }) => {
     setError("");
   };
   useEffect(() => {
-    
+    fetchMilestones();
     fetchReviews();
   }, [])
  

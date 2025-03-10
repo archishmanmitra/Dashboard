@@ -19,6 +19,10 @@ const adminSchema = new Schema(
       default: "admin",
       immutable: true,
     },
+    milestone: {
+      type: String,
+      default: "Beginner", // Initially, no milestone is set
+    },
   },
   { timestamps: true }
 );
