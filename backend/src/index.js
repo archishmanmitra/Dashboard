@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser'
 import {Admin} from "./models/admin.models.js";
 import {getReviews} from "./api/apify.js";
 import { authenticateAdmin } from "./middleware/auth.middleware.js";
+;
 dotenv.config({});
 const app = express();
 const port = process.env.PORT||3000;
@@ -141,7 +142,7 @@ app.get('/api/get-counts', async (req, res) => {
     res.status(500).send({ success: false, error: error.message });
   }
 });
-
+  // app.use('/api',getSentimentAnalyis)
 // Auth routes
   app.use('/api', authRouter);
   app.use("/api", adminRouter);

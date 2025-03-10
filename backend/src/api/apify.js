@@ -1,5 +1,5 @@
 import { ApifyClient } from "apify-client";
-
+import { generateSentimentAnalysis } from "./gemini.js";
 const getReviews = async (req, res) => {
   try {
     const { url, reviewsStartDate } = req.query;
@@ -64,7 +64,13 @@ const getReviews = async (req, res) => {
       day,
       reviews: reviewsByMonth[day],
     }));
-    res.json({ simplifiedReviews, reviewsChartData });
+    
+    const analysisResult = await generateSentimentAnalysis(items);
+    res.json({
+      simplifiedReviews,
+      reviewsChartData,
+      sentimentAnalysis: analysisResult,
+    });
   } catch (error) {
     console.error("Error occurred:", error);
     res.status(500).json({ error: "Failed to fetch reviews" });
