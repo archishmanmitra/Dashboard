@@ -70,6 +70,7 @@ export function Dashboard() {
   if (error)
     return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
 
+  const [ina, setIna] = useState('a week');
   return (
     <div className="min-h-screen relative bg-black p-6">
       {/* Header */}
@@ -156,11 +157,15 @@ export function Dashboard() {
                   <div className="text-4xl font-bold">
                     {placeInfo ? placeInfo.totalScore : 'N/A'}
                   </div>
-                  {/* <div className="flex items-center mt-2 text-xs text-green-500">
-                  <ArrowUpRight className="h-3 w-3 mr-1" />
-                  <span>+15% improvement from before</span>
-                </div> */}
-                  <div className="h-4"></div>
+                  <div className="flex items-center mt-2 text-xs text-green-500">
+                  {/* <ArrowUpRight className="h-3 w-3 mr-1" /> */}
+                  <span>in {selectedOption === "last-90-days"
+            ? " 3 months"
+            : selectedOption === "last-30-days"
+            ? " a month"
+            : " a week"}</span>
+                </div>
+                  {/* <div className="h-4"></div> */}
                 </CardContent>
               </Card>
 

@@ -14,15 +14,15 @@ import FilterBar from "./FilterBar";
 import { useFilterContext } from "../context/FilterContext";
 import { Separator } from "./ui/separator";
 
-const ProgressLine = ({ completed, current, total = 16 }) => {
+const ProgressLine = ({ completed, current, total = 12 }) => {
   return (
     <div className="flex items-center justify-center gap-1 w-full h-8">
       {[...Array(total)].map((_, index) => (
         <div
           key={index}
-          className={`h-0.5 w-1 mx-px ${
+          className={`h-0.5 md:w-1 lg:w-[7.7px]  mx-px ${
             completed
-              ? "bg-green-500"
+              ? "bg-[var(--color-green)]"
               : current && index < Math.floor((current / 100) * (total))
               ? "bg-green-500"
               : "bg-gray-600"
@@ -186,8 +186,8 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
             />
           </div>
         ))}
-      </div>
       
+      </div>
       {/* Progress indicators row - now separate from badges */}
       <div className="flex items-center justify-between pl-19 pr-20 px-6">
         {milestones.map((milestone, index) => (

@@ -18,10 +18,12 @@
 
   :root {
     /* Color variables */
-    --color-primary: #4f46e5;    /* Change to your preferred primary color */
-    --color-secondary: #8b5cf6;  /* Change to your preferred secondary color */
+    --color-primary: #000000;    /* Change to your preferred primary color */
+    --color-secondary: #757575;   /* Change to your preferred secondary color */
     --color-accent: #ec4899;
-    --color-bodcol: #393939;     /* Change to your preferred accent color */
+    --color-bodcol: #393939;  
+    --color-green: #77F17E;
+    --color-red: #FF3838 ;   /* Change to your preferred accent color */
   }
   
 
