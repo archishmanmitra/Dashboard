@@ -35,6 +35,23 @@ export const FilterProvider = ({ children }) => {
       setClickRate(response.data.clickRate);
     });
   }, []);
+  const fetchMilestone = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/get-milestone');
+      setMilestone(response.data.milestone);
+    } catch (error) {
+      console.error('Failed to fetch milestone:', error);
+    }
+  };
+
+  const updateMilestone = async (newMilestone) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/update-milestone', { milestone: newMilestone });
+      setMilestone(response.data.milestone);
+    } catch (error) {
+      console.error('Failed to update milestone:', error);
+    }
+  };
 
   const placeOptions = {
     "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
@@ -197,12 +214,13 @@ export const FilterProvider = ({ children }) => {
 
   const handleFilterClick = () => {
     setUrl(placeOptions[selectedPlace]);
+    fetchMilestone();
     fetchReviews();
     setLoading(true); // Show loading state
     setError("");
   };
   useEffect(() => {
-    fetchMilestones();
+    fetchMilestone();
     fetchReviews();
   }, [])
  
@@ -234,6 +252,8 @@ export const FilterProvider = ({ children }) => {
       countRate,
       analysis,
       milestones,
+      milestone,
+      negativeReviews,
     }}>
       {children}
     </FilterContext.Provider>
