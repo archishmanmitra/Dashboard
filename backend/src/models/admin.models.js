@@ -42,7 +42,8 @@ adminSchema.statics.initAdmin = async function () {
     if(!adminExists){
         const admin= new this({
             username:process.env.ADMIN_USERNAME,
-            password:process.env.ADMIN_PASSWORD
+            password:process.env.ADMIN_PASSWORD,
+            milestone:"Beginner",
         })
 
         await admin.save()

@@ -24,8 +24,8 @@ const ProgressLine = ({ completed, current, total = 12 }) => {
             completed
               ? "bg-[var(--color-green)]"
               : current && index < Math.floor((current / 100) * (total))
-              ? "bg-green-500"
-              : "bg-gray-600"
+              ? "bg-[var(--color-green)]"
+              : "bg-[var(--color-bodcol)]"
           }`}
         ></div>
       ))}
@@ -116,7 +116,7 @@ const ProgressIndicator = ({
     <div className="flex items-center px-1 gap-2">
       {/* Checkmark */}
       {completedTick ? (
-        <div className="bg-green-500 text-neutral-800 rounded-full p-1">
+        <div className="bg-[var(--color-green)] text-[var(--color-in-tick)] rounded-full p-1">
           <svg
             width="16"
             height="16"
@@ -129,7 +129,7 @@ const ProgressIndicator = ({
           </svg>
         </div>
       ) : (
-        <div className="bg-[#292C30] text-white rounded-full p-1">
+        <div className="bg-[var(--color-eclipse)] text-[var(--color-in-tick)] rounded-full p-1">
           <svg
             width="16"
             height="16"

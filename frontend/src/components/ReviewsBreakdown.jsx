@@ -21,12 +21,13 @@ const Review = ({ author, rating, content }) => {
               className={cn(
                 "text-transparent",
                 i < rating
-                  ? ` ${rating > 3
-                    ? " fill-[#1EC928]"
-                    : rating == 3
-                      ? " fill-[#F7C73B]"
-                      : "fill-[#FF3838]"
-                  }`
+                  ? ` ${
+                      rating > 3
+                        ? " fill-[#1EC928]"
+                        : rating == 3
+                        ? " fill-[#F7C73B]"
+                        : "fill-[#FF3838]"
+                    }`
                   : "fill-[#393939]"
               )}
             />
@@ -91,123 +92,124 @@ export default function ReviewsBreakdown() {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          background: "radial-gradient(circle, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
+          background:
+            "radial-gradient(circle, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
           zIndex: "0",
         }}
       />
       <div className="relative z-10">
-
-      
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-2">
-          <h1 className="text-4xl  text-white">Dashboard</h1>
-        </div>
-        {/* <Button
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-2">
+            <h1 className="text-4xl  text-white">Dashboard</h1>
+          </div>
+          {/* <Button
           variant="outline"
           className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
         >
           <Download className="h-4 w-4 mr-2" />
           Export Report
         </Button> */}
-      </div>
-<Separator className="my-4 bg-neutral-800" />
-      {/* Overview Section */}
-      <div className="mb-8">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
-        <div className="flex flex-col gap-2">
-            <h2 className="text-2xl text-white">Review Breakdown</h2>
-            <p className="text-neutral-400 text-xs">Detailed analysis of your reviews</p>
+        </div>
+        <Separator className="my-4 bg-neutral-800" />
+        {/* Overview Section */}
+        <div className="mb-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+            <div className="flex flex-col gap-2">
+              <h2 className="text-2xl text-white">Review Breakdown</h2>
+              <p className="text-neutral-400 text-xs">
+                Detailed analysis of your reviews
+              </p>
+            </div>
+
+            {/* Filters */}
+            <FilterBar />
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-auto">
+            <div className="flex-col flex w-full gap-4">
+            {/* Sentiment Analysis */}
+            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white h-fit self-start">
+              <CardHeader className="pb-2 flex flex-row justify-between items-start">
+                <CardTitle className="text-sm font-medium">
+                  🎭 Sentiment Analysis
+                </CardTitle>
+                <Info className="h-4 w-4 text-neutral-500" />
+              </CardHeader>
+              <CardContent>
+                <h1 className="text-white text-xl">{analysis}</h1>
+              </CardContent>
+            </Card>
+             {/* Star Distribution */}
+             <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white h-fit self-start w-full">
+              <CardHeader className="pb-2 flex flex-row justify-between items-start">
+                <CardTitle className="text-sm font-medium">
+                  ≡ Star Distribution
+                </CardTitle>
+                <Info className="h-4 w-4 text-neutral-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {(() => {
+                    const maxCount = Math.max(
+                      ...Object.values(starDistribution),
+                      1
+                    ); // Avoid division by zero
 
+                    return [5, 4, 3, 2, 1].map((stars) => {
+                      const percentage =
+                        (starDistribution[stars] / maxCount) * 100; // Scale based on highest count
 
-          {/* Filters */}
-          <FilterBar />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Sentiment Analysis */}
-        <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
-          <CardHeader className="pb-2 flex flex-row justify-between items-start">
-            <CardTitle className="text-sm font-medium">
-              🎭 Sentiment Analysis
-            </CardTitle>
-            <Info className="h-4 w-4 text-neutral-500" />
-          </CardHeader>
-          <CardContent>
-            <h1 className="text-white text-2xl">
-              {analysis}
-            </h1>
-            
-          </CardContent>
-        </Card>
-
-          {/* Recent Reviews */}
-          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
-            <CardHeader className="pb-2 flex flex-row justify-between items-start">
-              <CardTitle className="text-sm font-medium">
-                💬 Recent Reviews
-              </CardTitle>
-              <Info className="h-4 w-4 text-neutral-500" />
-            </CardHeader>
-            <CardContent className="space-y-1">
-              {recentReviews.map((review, index) => (
-                <Review
-                  key={index}
-                  author={review.author}
-                  rating={review.rating}
-                  content={review.content}
-                />
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* Star Distribution */}
-          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
-            <CardHeader className="pb-2 flex flex-row justify-between items-start">
-              <CardTitle className="text-sm font-medium">
-                ≡ Star Distribution
-              </CardTitle>
-              <Info className="h-4 w-4 text-neutral-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {(() => {
-                  const maxCount = Math.max(
-                    ...Object.values(starDistribution),
-                    1
-                  ); // Avoid division by zero
-
-                  return [5, 4, 3, 2, 1].map((stars) => {
-                    const percentage =
-                      (starDistribution[stars] / maxCount) * 100; // Scale based on highest count
-
-                    return (
-                      <div key={stars} className="flex items-center gap-2">
-                        <span className="w-4 text-sm">{stars}</span>
-                        <div className="relative w-full h-2 bg-neutral-700 rounded-md overflow-hidden">
-                          <div
-                            className="absolute top-0 left-0 h-full rounded-md"
-                            style={{
-                              width: `${percentage}%`,
-                              background:
-                                "linear-gradient(90deg, #4385FF 0%, #7DC6FF 100%)",
-                            }}
-                          />
+                      return (
+                        <div key={stars} className="flex items-center gap-2">
+                          <span className="w-4 text-sm">{stars}</span>
+                          <div className="relative w-full h-2 bg-neutral-700 rounded-md overflow-hidden">
+                            <div
+                              className="absolute top-0 left-0 h-full rounded-md"
+                              style={{
+                                width: `${percentage}%`,
+                                background:
+                                  "linear-gradient(90deg, #4385FF 0%, #7DC6FF 100%)",
+                              }}
+                            />
+                          </div>
+                          <span className="w-8 text-sm text-right">
+                            {starDistribution[stars]}
+                          </span>
                         </div>
-                        <span className="w-8 text-sm text-right">
-                          {starDistribution[stars]}
-                        </span>
-                      </div>
-                    );
-                  });
-                })()}
-              </div>
-            </CardContent>
-          </Card>
+                      );
+                    });
+                  })()}
+                </div>
+              </CardContent>
+            </Card>
+            </div>
 
-          {/* Best Performing Locations */}
-          {/* <Card className="bg-neutral-800 border-none text-white">
+            {/* Recent Reviews */}
+            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white h-fit self-start">
+              <CardHeader className="pb-2 flex flex-row justify-between items-start">
+                <CardTitle className="text-sm font-medium">
+                  💬 Recent Reviews
+                </CardTitle>
+                <Info className="h-4 w-4 text-neutral-500" />
+              </CardHeader>
+              <CardContent className="space-y-1">
+                {recentReviews.map((review, index) => (
+                  <Review
+                    key={index}
+                    author={review.author}
+                    rating={review.rating}
+                    content={review.content}
+                  />
+                ))}
+              </CardContent>
+            </Card>
+
+           
+            </div>
+        </div>
+      </div>
+            {/* Best Performing Locations */}
+            {/* <Card className="bg-neutral-800 border-none text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium">
               <MapPin className="h-4 w-4 inline mr-2" />
@@ -242,9 +244,7 @@ export default function ReviewsBreakdown() {
             </div>
           </CardContent>
         </Card> */}
-        </div>
-      </div>
-      </div>
+         
     </div>
   );
 }

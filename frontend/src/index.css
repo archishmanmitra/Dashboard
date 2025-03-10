@@ -23,7 +23,9 @@
     --color-accent: #ec4899;
     --color-bodcol: #393939;  
     --color-green: #77F17E;
-    --color-red: #FF3838 ;   /* Change to your preferred accent color */
+    --color-red: #FF3838 ; 
+    --color-eclipse:#292C30;
+    --color-in-tick:#131418;  /* Change to your preferred accent color */
   }
   
 
