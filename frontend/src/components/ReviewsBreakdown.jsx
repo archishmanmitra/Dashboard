@@ -39,7 +39,7 @@ const Review = ({ author, rating, content }) => {
 };
 
 export default function ReviewsBreakdown() {
-  const { reviews, loading, error } = useFilterContext();
+  const { reviews, loading, error, analysis } = useFilterContext();
 
   // Function to get recent reviews
   const getRecentReviews = () => {
@@ -114,9 +114,9 @@ export default function ReviewsBreakdown() {
       {/* Overview Section */}
       <div className="mb-8">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
-          <div>
-            <h2 className="text-xl text-white">Review Breakdown</h2>
-            <p className="text-neutral-400">Detailed analysis of your reviews</p>
+        <div className="flex flex-col gap-2">
+            <h2 className="text-2xl text-white">Review Breakdown</h2>
+            <p className="text-neutral-400 text-xs">Detailed analysis of your reviews</p>
           </div>
 
 
@@ -125,7 +125,7 @@ export default function ReviewsBreakdown() {
           <FilterBar />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Sentiment Analysis */}
         <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
@@ -135,9 +135,9 @@ export default function ReviewsBreakdown() {
             <Info className="h-4 w-4 text-neutral-500" />
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-neutral-400 mb-4">
-              Analyze the overall sentiment of customer reviews to understand their experience.
-            </p>
+            <h1 className="text-white text-2xl">
+              {}
+            </h1>
             <Button variant="outline" className="bg-white text-black hover:bg-neutral-200" size="sm">
               <RefreshCcw className="h-4 w-4 mr-2" />
               Refresh

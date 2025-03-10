@@ -10,7 +10,6 @@ import Help from "./components/Help";
 import Home from './components/Home.jsx';
 import ReviewsDisplay from "./components/ReviewDisplay.jsx";
 import { FilterProvider } from './context/FilterContext';
-import { AuthProvider } from './context/AuthContext.jsx';
 import Login from './components/Login.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 

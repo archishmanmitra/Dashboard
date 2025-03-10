@@ -11,7 +11,6 @@ import {
 import { Avatar } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
 import gradientOverlay from '/gradientOverlay.svg';
 import Logout from "./Logout";
 

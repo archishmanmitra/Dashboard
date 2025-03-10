@@ -22,6 +22,7 @@ export const FilterProvider = ({ children }) => {
     const [click, setClick] = useState(0);
     const [clickRate, setClickRate] = useState(0);
     const [countRate, setCountRate] = useState(0);
+    const [analysis, setAnalysis] = useState('');
 
 
   useEffect(() => {
@@ -33,6 +34,12 @@ export const FilterProvider = ({ children }) => {
       setClickRate(response.data.clickRate);
     });
   }, []);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/api/analyze').then((response) => {
+      setAnalysis(response.data.analysis);
+  });
+}, []);
 
   const placeOptions = {
     "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
@@ -127,6 +134,63 @@ export const FilterProvider = ({ children }) => {
     return 'Grandmaster';
   };
 
+  const milestones = [
+    {
+      title: "Beginner",
+      reviews: "0-9 reviews",
+      minReviews: 0,
+      maxReviews: 9,
+      icon: "/beginner.png",
+      width: "w-[141px]",
+      height: "h-[158px]",
+    },
+    {
+      title: "Amateur",
+      reviews: "10-49 reviews",
+      minReviews: 10,
+      maxReviews: 49,
+      icon: "/amateur.png",
+      width: "w-[141px]",
+      height: "h-[158px]",
+    },
+    {
+      title: "Challenger",
+      reviews: "50-99 reviews",
+      minReviews: 50,
+      maxReviews: 99,
+      icon: "/challenger.png",
+      width: "w-[141px]",
+      height: "h-[158px]",
+    },
+    {
+      title: "Master",
+      reviews: "100-499 reviews",
+      minReviews: 100,
+      maxReviews: 499,
+      icon: "/master.png",
+      width: "w-[141px]",
+      height: "h-[158px]",
+    },
+    {
+      title: "Legend",
+      reviews: "500-999 reviews",
+      minReviews: 500,
+      maxReviews: 999,
+      icon: "/legend.png",
+      width: "w-[141px]",
+      height: "h-[158px]",
+    },
+    {
+      title: "Grandmaster",
+      reviews: "1000+ reviews",
+      minReviews: 1000,
+      maxReviews: Infinity,
+      icon: "/grandmaster.png",
+      width: "w-[141px]",
+      height: "h-[158px]",
+    },
+  ];
+
   const handleFilterClick = () => {
     setUrl(placeOptions[selectedPlace]);
     fetchReviews();
@@ -164,6 +228,8 @@ export const FilterProvider = ({ children }) => {
       click,
       clickRate,
       countRate,
+      analysis,
+      milestones,
     }}>
       {children}
     </FilterContext.Provider>

@@ -347,9 +347,9 @@ export default function Performance() {
       {/* Overview Section */}
       <div className="mb-8">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
-          <div>
-            <h2 className="text-xl text-white">Performance</h2>
-            <p className="text-neutral-400">Monitor your software performance</p>
+          <div className='gap-2 flex flex-col'>
+            <h2 className="text-2xl text-white">Performance</h2>
+            <p className="text-neutral-400 text-xs">Monitor your software performance</p>
           </div>
 
           {/* Filters */}
