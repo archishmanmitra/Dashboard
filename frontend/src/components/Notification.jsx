@@ -4,6 +4,7 @@ import { Download, Info, Star, Users } from 'lucide-react';
 import { Button } from './ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import FilterBar from './FilterBar';
+import { useFilterContext } from '../context/FilterContext';
 
 
 
@@ -25,6 +26,14 @@ const Message = ({ initial, content, time, color }) => {
 };
 
 export default function Notification() {
+  const { reviews, loading, error, showMilestoneNotification} = useFilterContext();
+
+  if (loading)
+    return (
+      <p className="text-center text-gray-500 text-lg">Loading reviews...</p>
+    );
+  if (error)
+    return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
   return (
     <div className="min-h-screen bg-neutral-900 p-6">
     {/* Header */}
@@ -54,9 +63,8 @@ export default function Notification() {
     {/* Filters */}
     <FilterBar />
   </div>
-
-      {/* Messages */}
-      <Card className="bg-neutral-800 border-none text-white">
+ {showMilestoneNotification ? (
+  <Card className="bg-neutral-800 border-none text-white">
         <CardHeader className="pb-2 flex flex-row justify-between items-start">
           <CardTitle className="text-sm font-medium flex items-center">
             <Users className="h-4 w-4 mr-2" />
@@ -79,6 +87,11 @@ export default function Notification() {
           />
         </CardContent>
       </Card>
+ ) : (
+  <div> lol </div>
+ )}
+      {/* Messages */}
+      
     </div>
     </div>
   );

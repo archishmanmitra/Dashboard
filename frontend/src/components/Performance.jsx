@@ -220,6 +220,7 @@ export default function Performance() {
     counts,
     clickRate,
     countRate,
+    milestone
   } = useFilterContext();
 
   // useEffect(() => {

@@ -24,8 +24,13 @@ export const FilterProvider = ({ children }) => {
     const [countRate, setCountRate] = useState(0);
     const [analysis, setAnalysis] = useState('');
     const [milestone, setMilestone] = useState(null);
+    const [previousMilestone, setPreviousMilestone] = useState(null);
     const [negativeReviews, setNegativeReviews] = useState([]);
-
+    const [showMilestoneNotification, setShowMilestoneNotification] = useState(false);
+    const [milestoneData, setMilestoneData] = useState({ 
+      current: "Beginner", 
+      previous: null 
+    });
   useEffect(() => {
     // Fetch counts from the backend
     axios.get('http://localhost:3000/api/get-counts').then((response) => {
@@ -37,17 +42,37 @@ export const FilterProvider = ({ children }) => {
   }, []);
   const fetchMilestone = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/get-milestone');
-      setMilestone(response.data.milestone);
+      const response = await axios.get(`http://localhost:3000/api/milestone/${selectedPlace}`);
+      setMilestoneData(response.data);
     } catch (error) {
       console.error('Failed to fetch milestone:', error);
+      setMilestoneData({ current: "Beginner", previous: null });
     }
   };
 
+  // Update milestone when placeInfo changes
+  // useEffect(() => {
+    
+  //     const newMilestone = determineMilestone(placeInfo.reviewsCount);
+  //     if (newMilestone !== milestoneData.current) {
+  //       updateMilestone(newMilestone);
+  //     }
+    
+  // }, []);
+
   const updateMilestone = async (newMilestone) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/update-milestone', { milestone: newMilestone });
-      setMilestone(response.data.milestone);
+      const response = await axios.post(
+        `http://localhost:3000/api/milestone/${selectedPlace}`,
+        { newMilestone }
+      );
+      
+      setMilestoneData(response.data);
+      
+      // Show notification only if milestone changed
+      if (response.data.current !== response.data.previous) {
+        setShowMilestoneNotification(true);
+      }
     } catch (error) {
       console.error('Failed to update milestone:', error);
     }
@@ -55,7 +80,7 @@ export const FilterProvider = ({ children }) => {
 
   const placeOptions = {
     "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
-    "complex-bar": "https://www.google.com/maps/search/iem/@22.456918,88.3197996,12z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
+    "complex-bar": "https://www.google.com/maps/place/Salt+Lake+St.+Xavier's+Point+School/@22.5643977,88.4001209,17z/data=!3m1!4b1!4m6!3m5!1s0x3a0275d54af1b257:0x241cbc23e5c9bce8!8m2!3d22.5643977!4d88.4026958!16s%2Fg%2F11f3x97wtj?entry=ttu&g_ep=EgoyMDI1MDMwNC4wIKXMDSoASAFQAw%3D%3D",
     "bad-bar": "https://www.google.com/maps/place/Techno+Main+Salt+Lake/@22.5760866,88.4251959,17z/data=!4m10!1m2!2m1!1stechno+india+main+salt+lake!3m6!1s0x3a02751a9d9c9e85:0x7fe665c781b10383!8m2!3d22.5761707!4d88.4270293!15sCht0ZWNobm8gaW5kaWEgbWFpbiBzYWx0IGxha2VaHSIbdGVjaG5vIGluZGlhIG1haW4gc2FsdCBsYWtlkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VOeGNuQlhlSHBSUlJBQuABAPoBBQi-AhAt!16s%2Fg%2F11fml2v54k?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
   };
 
@@ -128,9 +153,13 @@ export const FilterProvider = ({ children }) => {
       setPosiper(percP);
       setNegaper(percN);
 
-      const newMilestone = determineMilestone(reviewsData.length);
-      if (newMilestone !== milestone) {
-        await updateMilestone(newMilestone);
+      // const newMilestone = determineMilestone(placeData.reviewsCount);
+      // if (newMilestone !== milestone) {
+      //   await updateMilestone(newMilestone);
+      // }
+      const newMilestone = determineMilestone(placeData?.reviewsCount);
+      if (newMilestone !== milestoneData.current) {
+        updateMilestone(newMilestone);
       }
 
       // Filter negative reviews
@@ -213,6 +242,7 @@ export const FilterProvider = ({ children }) => {
   ];
 
   const handleFilterClick = () => {
+    setShowMilestoneNotification(false);
     setUrl(placeOptions[selectedPlace]);
     fetchMilestone();
     fetchReviews();
@@ -253,7 +283,11 @@ export const FilterProvider = ({ children }) => {
       analysis,
       milestones,
       milestone,
+      previousMilestone,
       negativeReviews,
+      showMilestoneNotification,
+      setShowMilestoneNotification,
+      milestoneData
     }}>
       {children}
     </FilterContext.Provider>
