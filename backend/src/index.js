@@ -145,7 +145,7 @@ app.get('/api/get-counts', async (req, res) => {
   // app.use('/api',getSentimentAnalyis)
 // Auth routes
   app.use('/api', authRouter);
-  app.use("/api", adminRouter);
+  app.use("/api/milestone", adminRouter);
   app.use("/api",protectedRouter)
 // Database connection Here: 
 

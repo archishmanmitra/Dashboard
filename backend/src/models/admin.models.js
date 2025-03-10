@@ -19,9 +19,30 @@ const adminSchema = new Schema(
       default: "admin",
       immutable: true,
     },
-    milestone: {
-      type: String,
-      default: "Beginner", // Initially, no milestone is set
+    milestones: {
+      type: Map,
+      of: new Schema({
+        current: {
+          type: String,
+          default: "Beginner", // Default milestone for all places
+        },
+        previous: {
+          type: String,
+          default: null,
+        },
+      }),
+      default: () => {
+        // Initialize default milestones for all 3 places
+        const defaultMilestones = new Map();
+        const places = ["simple-bar", "complex-bar", "bad-bar"];
+        places.forEach(placeId => {
+          defaultMilestones.set(placeId, {
+            current: "Beginner",
+            previous: null,
+          });
+        });
+        return defaultMilestones;
+      },
     },
   },
   { timestamps: true }
@@ -43,7 +64,12 @@ adminSchema.statics.initAdmin = async function () {
         const admin= new this({
             username:process.env.ADMIN_USERNAME,
             password:process.env.ADMIN_PASSWORD,
-            milestone:"Beginner",
+            milestones: new Map([
+              ["simple-bar", { current: "Beginner", previous: null }],
+              ["complex-bar", { current: "Beginner", previous: null }],
+              ["bad-bar", { current: "Beginner", previous: null }],
+            ]),
+      
         })
 
         await admin.save()
