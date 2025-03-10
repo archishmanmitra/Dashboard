@@ -171,7 +171,7 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
   };
 
   return (
-    <div className="flex flex-col z-10">
+    <div className="flex flex-col ">
       {/* Badges row */}
       <div className="flex items-center justify-between px-6 mb-8">
         {milestones.map((milestone, index) => (
@@ -329,7 +329,8 @@ export default function Performance() {
             zIndex: "0"
           }}
         />
-      <div className="flex items-center justify-between mb-8 z-10">
+        <div className="relative z-10">
+      <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-2">
           <h1 className="text-4xl  text-white">Dashboard</h1>
         </div>
@@ -357,7 +358,7 @@ export default function Performance() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
           {/* Before/After Star Boom */}
-          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white z-10">
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
             <CardHeader className="pb-2 flex flex-row justify-between items-start">
               <CardTitle className="text-sm font-medium flex items-center">
                 <Star className="h-4 w-4 mr-2" />
@@ -366,7 +367,7 @@ export default function Performance() {
               <Info className="h-4 w-4 text-neutral-500" />
             </CardHeader>
             <CardContent>
-              <div className="flex justify-between z-10 items-center">
+              <div className="flex justify-between  items-center">
                 <div className="text-center">
                   <p className="text-sm text-neutral-400">Before</p>
                   <h2 className="text-4xl font-bold">6</h2>
@@ -390,7 +391,7 @@ export default function Performance() {
           </Card>
 
           {/* Competitor Benchmarking */}
-          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
             <CardHeader className="pb-2 flex flex-row justify-between items-start">
               <CardTitle className="text-sm font-medium flex items-center">
                 <Users className="h-4 w-4 mr-2" />
@@ -423,7 +424,7 @@ export default function Performance() {
           </Card>
         </div>
 
-        <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 mt-5 mb-5 text-white">
+        <Card className="bg-custom-gradient border border-[var(--color-bodcol)]  mt-5 mb-5 text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium flex items-center">
               <Users className="h-4 w-4 mr-2" />
@@ -431,7 +432,7 @@ export default function Performance() {
             </CardTitle>
             <Info className="h-4 w-4 text-neutral-500" />
           </CardHeader>
-          <CardContent className='z-10'>
+          <CardContent className=''>
             {/* Using our new separated progress component */}
             <ProgressSection 
               milestones={milestones}
@@ -495,6 +496,7 @@ export default function Performance() {
             </CardContent>
           </Card>
         </div>
+      </div>
       </div>
     </div>
   );

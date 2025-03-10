@@ -184,6 +184,7 @@ export function Dashboard() {
           zIndex: "0",
         }}
       />
+      <div className="relative z-10">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-2">
           <h1 className="text-4xl  text-white">Dashboard</h1>
@@ -387,6 +388,7 @@ export function Dashboard() {
             </div>
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );
