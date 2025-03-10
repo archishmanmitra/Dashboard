@@ -95,6 +95,9 @@ export default function ReviewsBreakdown() {
           zIndex: "0",
         }}
       />
+      <div className="relative z-10">
+
+      
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-2">
           <h1 className="text-4xl  text-white">Dashboard</h1>
@@ -123,8 +126,8 @@ export default function ReviewsBreakdown() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Sentiment Analysis
-        <Card className="bg-neutral-800 border-none text-white">
+          {/* Sentiment Analysis */}
+        <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium">
               🎭 Sentiment Analysis
@@ -140,7 +143,7 @@ export default function ReviewsBreakdown() {
               Refresh
             </Button>
           </CardContent>
-        </Card> */}
+        </Card>
 
           {/* Recent Reviews */}
           <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
@@ -243,6 +246,7 @@ export default function ReviewsBreakdown() {
           </CardContent>
         </Card> */}
         </div>
+      </div>
       </div>
     </div>
   );
