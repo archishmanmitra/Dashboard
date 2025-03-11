@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useFilterContext } from '../context/FilterContext';
 import { Calendar, Store, Timer } from 'lucide-react';
+import { Icon } from "@iconify/react";
 
 const FilterBar = () => {
   const {
@@ -14,13 +15,16 @@ const FilterBar = () => {
   } = useFilterContext();
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+    <div className="flex flex-col sm:flex-row gap-6 w-full items-end lg:w-auto">
+      <div className="flex-col">
+        <h1 className="text-xs mb-2">
+          Store
+        </h1>
       <Select value={selectedPlace} onValueChange={setSelectedPlace}>
-        <SelectTrigger className="w-full sm:w-48 bg-custom-gradient border-neutral-700 text-white">
-          <div className='flex items-center gap-2 justify-between'>
-          <Store className="h-4 w-4 mr-2" />
-          <SelectValue placeholder="Simple Bar" />
-
+        <SelectTrigger className="w-full rounded-full px-4 sm:w-72 bg-custom-gradient border-neutral-700 text-white">
+          <div className='flex items-center gap-1 justify-between'>
+            <Icon icon="material-symbols:store-outline" width="20" height="20" className="mr-2" />
+            <SelectValue placeholder="Simple Bar" />
           </div>
         </SelectTrigger>
         <SelectContent className='bg-custom-gradient text-white border-none'>
@@ -29,11 +33,18 @@ const FilterBar = () => {
           <SelectItem value="bad-bar">Bad Bar</SelectItem>
         </SelectContent>
       </Select>
+      </div>
 
+      <div className="flex-col">
+        <h1 className="text-xs mb-2">
+          Time Period
+        </h1>
       <Select value={selectedOption} onValueChange={setSelectedOption}>
-        <SelectTrigger className="w-full sm:w-48 bg-custom-gradient border-neutral-700 text-white">
-          <Timer className="h-4 w-4 mr-2" />
-          <SelectValue placeholder="Last 7 days" />
+        <SelectTrigger className="w-full rounded-full px-4 sm:w-72 bg-custom-gradient border-neutral-700 text-white">
+        <div className='flex items-center gap-1 justify-between'>
+            <Icon icon="uil:calender" width="20" height="20" className="mr-2" />
+            <SelectValue placeholder="Last 7 Days" />
+          </div>
         </SelectTrigger>
         <SelectContent className='bg-custom-gradient text-white border-none'>
           <SelectItem value="last-7-days">Last 7 days</SelectItem>
@@ -41,10 +52,11 @@ const FilterBar = () => {
           <SelectItem value="last-90-days">Last 90 days</SelectItem>
         </SelectContent>
       </Select>
+      </div>
 
       <Button
         onClick={handleFilterClick}
-        className="bg-white text-black hover:bg-neutral-200"
+        className="bg-white rounded-full px-6 text-black hover:bg-neutral-200"
       >
         Filter
       </Button>

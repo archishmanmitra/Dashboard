@@ -7,6 +7,7 @@ import FilterBar from "./FilterBar";
 import { useFilterContext } from "../context/FilterContext";
 import { cn } from "../lib/utils";
 import { Separator } from "./ui/separator";
+import { Icon } from "@iconify/react";
 
 const Review = ({ author, rating, content }) => {
   return (
@@ -21,13 +22,12 @@ const Review = ({ author, rating, content }) => {
               className={cn(
                 "text-transparent",
                 i < rating
-                  ? ` ${
-                      rating > 3
-                        ? " fill-[#1EC928]"
-                        : rating == 3
-                        ? " fill-[#F7C73B]"
-                        : "fill-[#FF3838]"
-                    }`
+                  ? ` ${rating > 3
+                    ? " fill-[#1EC928]"
+                    : rating == 3
+                      ? " fill-[#F7C73B]"
+                      : "fill-[#FF3838]"
+                  }`
                   : "fill-[#393939]"
               )}
             />
@@ -82,7 +82,7 @@ export default function ReviewsBreakdown() {
   const starDistribution = calculateStarDistribution();
 
   return (
-    <div className="min-h-screen relative bg-black p-6">
+    <div className="min-h-screen relative bg-black p-6 px-8">
       {/* Header */}
       <div
         className="absolute pointer-events-none"
@@ -112,8 +112,8 @@ export default function ReviewsBreakdown() {
         </div>
         <Separator className="my-4 bg-neutral-800" />
         {/* Overview Section */}
-        <div className="mb-8">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+        <div className="mb-8 mt-5">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 mb-8">
             <div className="flex flex-col gap-2">
               <h2 className="text-2xl text-white">Review Breakdown</h2>
               <p className="text-neutral-400 text-xs">
@@ -127,68 +127,77 @@ export default function ReviewsBreakdown() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-auto">
             <div className="flex-col flex w-full gap-4">
-            {/* Sentiment Analysis */}
-            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white h-fit self-start">
-              <CardHeader className="pb-2 flex flex-row justify-between items-start">
-                <CardTitle className="text-sm font-medium">
-                  🎭 Sentiment Analysis
-                </CardTitle>
-                <Info className="h-4 w-4 text-neutral-500" />
-              </CardHeader>
-              <CardContent>
-                <h1 className="text-white text-xl">{analysis}</h1>
-              </CardContent>
-            </Card>
-             {/* Star Distribution */}
-             <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white h-fit self-start w-full">
-              <CardHeader className="pb-2 flex flex-row justify-between items-start">
-                <CardTitle className="text-sm font-medium">
-                  ≡ Star Distribution
-                </CardTitle>
-                <Info className="h-4 w-4 text-neutral-500" />
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  {(() => {
-                    const maxCount = Math.max(
-                      ...Object.values(starDistribution),
-                      1
-                    ); // Avoid division by zero
+              {/* Sentiment Analysis */}
+              <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white h-fit self-start">
+                <CardHeader className="pb-2 flex flex-row justify-between items-start">
+                  <CardTitle className="text-sm font-medium">
+                  <div className="flex items-center">
+                      <Icon icon="ri:chat-ai-fill" width="24" height="24" className="mr-2" />
+                      <h1 className="text-lg">Sentiment Analysis</h1>
+                    </div>
+                  </CardTitle>
+                  <Info className="h-4 w-4 text-neutral-500" />
+                </CardHeader>
+                <CardContent>
+                  <h1 className="text-white text-xl">{analysis}</h1>
+                </CardContent>
+              </Card>
+              {/* Star Distribution */}
+              <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white h-fit self-start w-full">
+                <CardHeader className="pb-2 flex flex-row justify-between items-start">
+                  <CardTitle className="text-sm font-medium">
+                    <div className="flex items-center">
+                      <Icon icon="flowbite:bars-from-left-outline" width="24" height="24" className="mr-2" />
+                      <h1 className="text-lg">Star Distribution</h1>
+                    </div>
+                  </CardTitle>
+                  <Info className="h-4 w-4 text-neutral-500" />
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    {(() => {
+                      const maxCount = Math.max(
+                        ...Object.values(starDistribution),
+                        1
+                      ); // Avoid division by zero
 
-                    return [5, 4, 3, 2, 1].map((stars) => {
-                      const percentage =
-                        (starDistribution[stars] / maxCount) * 100; // Scale based on highest count
+                      return [5, 4, 3, 2, 1].map((stars) => {
+                        const percentage =
+                          (starDistribution[stars] / maxCount) * 100; // Scale based on highest count
 
-                      return (
-                        <div key={stars} className="flex items-center gap-2">
-                          <span className="w-4 text-sm">{stars}</span>
-                          <div className="relative w-full h-2 bg-neutral-700 rounded-md overflow-hidden">
-                            <div
-                              className="absolute top-0 left-0 h-full rounded-md"
-                              style={{
-                                width: `${percentage}%`,
-                                background:
-                                  "linear-gradient(90deg, #4385FF 0%, #7DC6FF 100%)",
-                              }}
-                            />
+                        return (
+                          <div key={stars} className="flex items-center gap-2">
+                            <span className="w-4 text-sm">{stars}</span>
+                            <div className="relative w-full h-2 bg-neutral-700 rounded-md overflow-hidden">
+                              <div
+                                className="absolute top-0 left-0 h-full rounded-md"
+                                style={{
+                                  width: `${percentage}%`,
+                                  background:
+                                    "linear-gradient(90deg, #4385FF 0%, #7DC6FF 100%)",
+                                }}
+                              />
+                            </div>
+                            <span className="w-8 text-sm text-right">
+                              {starDistribution[stars]}
+                            </span>
                           </div>
-                          <span className="w-8 text-sm text-right">
-                            {starDistribution[stars]}
-                          </span>
-                        </div>
-                      );
-                    });
-                  })()}
-                </div>
-              </CardContent>
-            </Card>
+                        );
+                      });
+                    })()}
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Recent Reviews */}
             <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white h-fit self-start">
               <CardHeader className="pb-2 flex flex-row justify-between items-start">
                 <CardTitle className="text-sm font-medium">
-                  💬 Recent Reviews
+                <div className="flex items-center">
+                      <Icon icon="iconamoon:comment-fill" width="24" height="24" className="mr-2" />
+                      <h1 className="text-lg">Recent Reviews</h1>
+                    </div>
                 </CardTitle>
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
@@ -204,12 +213,12 @@ export default function ReviewsBreakdown() {
               </CardContent>
             </Card>
 
-           
-            </div>
+
+          </div>
         </div>
       </div>
-            {/* Best Performing Locations */}
-            {/* <Card className="bg-neutral-800 border-none text-white">
+      {/* Best Performing Locations */}
+      {/* <Card className="bg-neutral-800 border-none text-white">
           <CardHeader className="pb-2 flex flex-row justify-between items-start">
             <CardTitle className="text-sm font-medium">
               <MapPin className="h-4 w-4 inline mr-2" />
@@ -244,7 +253,7 @@ export default function ReviewsBreakdown() {
             </div>
           </CardContent>
         </Card> */}
-         
+
     </div>
   );
 }

@@ -85,7 +85,7 @@ export function Dashboard() {
   }, [])
 
   return (
-    <div className="min-h-screen relative bg-black p-6">
+    <div className="min-h-screen relative bg-black p-6 px-8">
       {/* Header */}
       <div
         className="absolute pointer-events-none"
@@ -115,8 +115,8 @@ export function Dashboard() {
         <Separator className="my-4 bg-neutral-800" />
 
         {/* Overview Section */}
-        <div className="mb-8">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+        <div className="mb-8 mt-5">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 mb-8">
             <div className="flex flex-col gap-2">
               <h2 className="text-2xl text-white">Overview</h2>
               <p className="text-neutral-400 text-xs">Overall weekly performance</p>
@@ -212,7 +212,7 @@ export function Dashboard() {
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-4 mt-3">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-sm">Positive Review</span>
@@ -306,29 +306,27 @@ export function Dashboard() {
 
             {/* Negative Review Alert */}
             <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardHeader className="flex flex-row items-center justify-between pb-11">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
-                    <AlertTriangle className="h-4 w-4 mr-2 text-red-500" />
-                    Negative Review Alert
+                    <Icon icon="icon-park-solid:bad-two" width="24" height="24" className="mr-2" />
+                    <h1 className="text-lg">Negative Review Alert</h1>
                   </div>
                 </CardTitle>
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-4xl font-bold">{negative}</div>
+                  <div className="text-4xl font-bold text-red">{negative}</div>
                   <Button
                     variant="outline"
-                    className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
-                  >
+                    className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
                     Manage
-                  </Button>
+                  </Button> 
+                 </div>
+                <div className="flex items-center mt-2 text-xs text-[var(--color-secondary)]">
+                  <span>in {ina}</span>
                 </div>
-                {/* <div className="flex items-center text-xs text-green-500">
-              <ArrowUpRight className="h-3 w-3 mr-1" />
-              <span>+15% improved from last week</span>
-            </div> */}
               </CardContent>
             </Card>
           </div>

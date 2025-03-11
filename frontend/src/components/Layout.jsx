@@ -42,10 +42,10 @@ const Layout = () => {
       {/* Sidebar */}
       <div className="flex flex-col h-full w-60 bg-black border-r border-neutral-800">
         {/* Logo */}
-        <div className="p-4">
-          <div className=" text-white text-lg font-bold py-1 px-2 inline-block">
-            Star Boom
-          </div>
+        <div className="px-2">
+          
+            <img src="/logoname.png" alt=""  className="w-48 "/>
+          
         </div>
 
         <Separator className="my-4 mx-8 bg-neutral-800 w-40" />

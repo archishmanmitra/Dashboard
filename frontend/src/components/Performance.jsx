@@ -13,6 +13,7 @@ import { Button } from "./ui/button";
 import FilterBar from "./FilterBar";
 import { useFilterContext } from "../context/FilterContext";
 import { Separator } from "./ui/separator";
+import { Icon } from "@iconify/react";
 
 const ProgressLine = ({ completed, current, total = 12 }) => {
   return (
@@ -20,13 +21,12 @@ const ProgressLine = ({ completed, current, total = 12 }) => {
       {[...Array(total)].map((_, index) => (
         <div
           key={index}
-          className={`h-0.5 md:w-1 lg:w-[7.7px]  mx-px ${
-            completed
-              ? "bg-[var(--color-green)]"
-              : current && index < Math.floor((current / 100) * (total))
+          className={`h-0.5 md:w-1 lg:w-[7.7px]  mx-px ${completed
+            ? "bg-[var(--color-green)]"
+            : current && index < Math.floor((current / 100) * (total))
               ? "bg-[var(--color-green)]"
               : "bg-[var(--color-bodcol)]"
-          }`}
+            }`}
         ></div>
       ))}
     </div>
@@ -43,9 +43,8 @@ const ProgressBadge = ({
 }) => {
   return (
     <div
-      className={`flex flex-col items-center ${
-        active ? "text-white" : "text-neutral-600"
-      }`}
+      className={`flex flex-col items-center ${active ? "text-white" : "text-neutral-600"
+        }`}
     >
       {/* Icon Container - Top */}
       <div
@@ -142,7 +141,7 @@ const ProgressIndicator = ({
           </svg>
         </div>
       )}
-      
+
       {/* Progress Line */}
       {showLine && (
         <ProgressLine
@@ -186,7 +185,7 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
             />
           </div>
         ))}
-      
+
       </div>
       {/* Progress indicators row - now separate from badges */}
       <div className="flex items-center justify-between pl-19 pr-20 px-6">
@@ -196,8 +195,8 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
               completed={reviewsCount > milestone.maxReviews}
               completedTick={reviewsCount >= milestone.minReviews}
               isCurrent={
-                reviewsCount >= milestone.minReviews && 
-                reviewsCount <= milestone.maxReviews ? 
+                reviewsCount >= milestone.minReviews &&
+                  reviewsCount <= milestone.maxReviews ?
                   getCurrentLevelProgress(reviewsCount) : 0
               }
               showLine={index < milestones.length - 1}
@@ -231,7 +230,7 @@ export default function Performance() {
 
   if (loading) return <p className="...">Loading performance...</p>;
   if (error) return <p className="...">Error...</p>;
-  
+
   // Add null check for placeInfo
   if (!placeInfo) {
     return (
@@ -316,188 +315,200 @@ export default function Performance() {
   };
 
   return (
-    <div className="min-h-screen relative bg-black p-6 ">
+    <div className="min-h-screen relative bg-black p-6 px-8">
       {/* Header */}
-      <div 
-          className="absolute pointer-events-none"
-          style={{
-            width: "542px",
-            height: "530px",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            background: "radial-gradient(circle, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
-            zIndex: "0"
-          }}
-        />
-        <div className="relative z-10">
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-2">
-          <h1 className="text-4xl  text-white">Dashboard</h1>
-        </div>
-        {/* <Button
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          width: "542px",
+          height: "530px",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(circle, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
+          zIndex: "0"
+        }}
+      />
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-2">
+            <h1 className="text-4xl  text-white">Dashboard</h1>
+          </div>
+          {/* <Button
           variant="outline"
           className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
         >
           <Download className="h-4 w-4 mr-2" />
           Export Report
         </Button> */}
-      </div>
-      <Separator className="my-4 bg-neutral-800" />
+        </div>
+        <Separator className="my-4 bg-neutral-800" />
 
-      {/* Overview Section */}
-      <div className="mb-8">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
-          <div className='gap-2 flex flex-col'>
-            <h2 className="text-2xl text-white">Performance</h2>
-            <p className="text-neutral-400 text-xs">Monitor your software performance</p>
+        {/* Overview Section */}
+        <div className="mb-8 mt-5">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 mb-8">
+            <div className='gap-2 flex flex-col'>
+              <h2 className="text-2xl text-white">Performance</h2>
+              <p className="text-neutral-400 text-xs">Monitor your software performance</p>
+            </div>
+
+            {/* Filters */}
+            <FilterBar />
           </div>
 
-          {/* Filters */}
-          <FilterBar />
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+            {/* Before/After Star Boom */}
+            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
+              <CardHeader className="pb-2 flex flex-row justify-between items-start">
+                <CardTitle className="text-sm font-medium flex items-center">
+                  <div className="flex items-center">
+                    <Icon icon="tdesign:rocket-filled" width="24" height="24" className="mr-2" />
+                    <h1 className="text-lg">Before Star Boom and After Star Boom</h1>
+                  </div>
+                </CardTitle>
+                <Info className="h-4 w-4 text-neutral-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="flex justify-between  items-center">
+                  <div className="text-center">
+                    <p className="text-sm text-neutral-400">Before</p>
+                    <h2 className="text-4xl font-bold">6</h2>
+                    <p className="text-xs text-neutral-400">
+                      reviews & average of 4.2 Stars
+                    </p>
+                  </div>
+                  <div className="text-lg font-medium">vs</div>
+                  <div className="text-center">
+                    <p className="text-sm text-green-400">After</p>
+                    <h2 className="text-4xl font-bold">
+                      {placeInfo ? placeInfo.reviewsCount : "N/A"}
+                    </h2>
+                    <p className="text-xs text-neutral-400">
+                      reviews & average of{" "}
+                      {placeInfo ? placeInfo.totalScore : "N/A"} Stars
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
-          {/* Before/After Star Boom */}
-          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
+            {/* Competitor Benchmarking */}
+            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
+              <CardHeader className="pb-2 flex flex-row justify-between items-start">
+                <CardTitle className="text-sm font-medium flex items-center">
+                  <div className="flex items-center">
+                    <Icon icon="tabler:vs" width="24" height="24" className="mr-2" />
+                    <h1 className="text-lg">Competitor Benchmarking</h1>
+                  </div>
+
+                </CardTitle>
+                <Info className="h-4 w-4 text-neutral-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="flex justify-between items-center">
+                  <div className="text-center">
+                    <p className="text-sm text-green-400">Your business</p>
+                    <h2 className="text-4xl font-bold">
+                      {placeInfo ? placeInfo.reviewsCount : "N/A"}
+                    </h2>
+                    <p className="text-xs text-neutral-400">
+                      reviews & average of{" "}
+                      {placeInfo ? placeInfo.totalScore : "N/A"} Stars
+                    </p>
+                  </div>
+                  <div className="text-lg font-medium">vs</div>
+                  <div className="text-center">
+                    <p className="text-sm text-neutral-400">Salt paper</p>
+                    <h2 className="text-4xl font-bold">10</h2>
+                    <p className="text-xs text-neutral-400">
+                      reviews & average of 4.5 Stars
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)]  mt-5 mb-5 text-white">
             <CardHeader className="pb-2 flex flex-row justify-between items-start">
               <CardTitle className="text-sm font-medium flex items-center">
-                <Star className="h-4 w-4 mr-2" />
-                Before Star Boom and After Star Boom
-              </CardTitle>
-              <Info className="h-4 w-4 text-neutral-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="flex justify-between  items-center">
-                <div className="text-center">
-                  <p className="text-sm text-neutral-400">Before</p>
-                  <h2 className="text-4xl font-bold">6</h2>
-                  <p className="text-xs text-neutral-400">
-                    reviews & average of 4.2 Stars
-                  </p>
-                </div>
-                <div className="text-lg font-medium">vs</div>
-                <div className="text-center">
-                  <p className="text-sm text-green-400">After</p>
-                  <h2 className="text-4xl font-bold">
-                    {placeInfo ? placeInfo.reviewsCount : "N/A"}
-                  </h2>
-                  <p className="text-xs text-neutral-400">
-                    reviews & average of{" "}
-                    {placeInfo ? placeInfo.totalScore : "N/A"} Stars
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Competitor Benchmarking */}
-          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
-            <CardHeader className="pb-2 flex flex-row justify-between items-start">
-              <CardTitle className="text-sm font-medium flex items-center">
-                <Users className="h-4 w-4 mr-2" />
-                Competitor Benchmarking
-              </CardTitle>
-              <Info className="h-4 w-4 text-neutral-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="flex justify-between items-center">
-                <div className="text-center">
-                  <p className="text-sm text-green-400">Your business</p>
-                  <h2 className="text-4xl font-bold">
-                    {placeInfo ? placeInfo.reviewsCount : "N/A"}
-                  </h2>
-                  <p className="text-xs text-neutral-400">
-                    reviews & average of{" "}
-                    {placeInfo ? placeInfo.totalScore : "N/A"} Stars
-                  </p>
-                </div>
-                <div className="text-lg font-medium">vs</div>
-                <div className="text-center">
-                  <p className="text-sm text-neutral-400">Salt paper</p>
-                  <h2 className="text-4xl font-bold">10</h2>
-                  <p className="text-xs text-neutral-400">
-                    reviews & average of 4.5 Stars
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Card className="bg-custom-gradient border border-[var(--color-bodcol)]  mt-5 mb-5 text-white">
-          <CardHeader className="pb-2 flex flex-row justify-between items-start">
-            <CardTitle className="text-sm font-medium flex items-center">
-              <Users className="h-4 w-4 mr-2" />
-              Your Progress
-            </CardTitle>
-            <Info className="h-4 w-4 text-neutral-500" />
-          </CardHeader>
-          <CardContent className=''>
-            {/* Using our new separated progress component */}
-            <ProgressSection 
-              milestones={milestones}
-              currentMilestone={currentMilestone}
-              reviewsCount={placeInfo.reviewsCount}
-            />
-          </CardContent>
-        </Card>
-
-        <div className="flex gap-5 items-center">
-          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
                 <div className="flex items-center">
-                  <AlertTriangle className="h-4 w-4 mr-2 text-red-500" />
-                  Visitors
+                  <Icon icon="streamline:star-badge-solid" width="24" height="24" className="mr-2" />
+                  <h1 className="text-lg">Your Progress</h1>
                 </div>
+
               </CardTitle>
               <Info className="h-4 w-4 text-neutral-500" />
             </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-3xl font-bold">{counts}</div>
-                {/* <Button
+            <CardContent className=''>
+              {/* Using our new separated progress component */}
+              <ProgressSection
+                milestones={milestones}
+                currentMilestone={currentMilestone}
+                reviewsCount={placeInfo.reviewsCount}
+              />
+            </CardContent>
+          </Card>
+
+          <div className="flex gap-5 items-center">
+            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium">
+                  <div className="flex items-center">
+                    <div className="flex items-center">
+                      <Icon icon="mdi:people" width="24" height="24" className="mr-2" />
+                      <h1 className="text-lg">Visitors</h1>
+                    </div>
+                  </div>
+                </CardTitle>
+                <Info className="h-4 w-4 text-neutral-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-4xl font-bold">{counts}</div>
+                  {/* <Button
                   variant="outline"
                   className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
                 >
                   Manage
                 </Button> */}
-              </div>
-              <div className="flex items-center text-xs text-green-500">
-                <ArrowUpRight className="h-3 w-3 mr-1" />
-                <span>+{countRate} % improved from last week</span>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
-                <div className="flex items-center">
-                  <AlertTriangle className="h-4 w-4 mr-2 text-red-500" />
-                  Button Clicks
                 </div>
-              </CardTitle>
-              <Info className="h-4 w-4 text-neutral-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-3xl font-bold">{click}</div>
-                {/* <Button
+                <div className="flex items-center text-xs text-green-500">
+                  <ArrowUpRight className="h-3 w-3 mr-1" />
+                  <span>{countRate} % improved from last week</span>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium">
+                  <div className="flex items-center">
+                  <div className="flex items-center">
+                      <Icon icon="mdi:cursor-default-click" width="24" height="24" className="mr-2" />
+                      <h1 className="text-lg">Button Clicks</h1>
+                    </div>
+                  </div>
+                </CardTitle>
+                <Info className="h-4 w-4 text-neutral-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-4xl font-bold">{click}</div>
+                  {/* <Button
                   variant="outline"
                   className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
                 >
                   Manage
                 </Button> */}
-              </div>
-              <div className="flex items-center text-xs text-green-500">
-                <ArrowUpRight className="h-3 w-3 mr-1" />
-                <span>+{clickRate} % improved from last week</span>
-              </div>
-            </CardContent>
-          </Card>
+                </div>
+                <div className="flex items-center text-xs text-green-500">
+                  <ArrowUpRight className="h-3 w-3 mr-1" />
+                  <span>{clickRate} % improved from last week</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );
