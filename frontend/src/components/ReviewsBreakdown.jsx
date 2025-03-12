@@ -8,6 +8,7 @@ import { useFilterContext } from "../context/FilterContext";
 import { cn } from "../lib/utils";
 import { Separator } from "./ui/separator";
 import { Icon } from "@iconify/react";
+import Loader from "./Loader";
 
 const Review = ({ author, rating, content }) => {
   return (
@@ -73,7 +74,7 @@ export default function ReviewsBreakdown() {
 
   if (loading)
     return (
-      <p className="text-center text-gray-500 text-lg">Loading reviews...</p>
+      <Loader/>
     );
   if (error)
     return <p className="text-center text-red-500 text-lg">Error: {error}</p>;

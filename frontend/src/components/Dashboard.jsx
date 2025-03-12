@@ -30,6 +30,7 @@ import { useFilterContext } from "../context/FilterContext";
 import FilterBar from "./FilterBar";
 import { Separator } from "./ui/separator";
 import { Icon } from "@iconify/react";
+import Loader from "./Loader";
 
 
 export function Dashboard() {
@@ -65,7 +66,7 @@ export function Dashboard() {
 
   if (loading)
     return (
-      <p className="text-center text-gray-500 text-lg">Loading reviews...</p>
+      <Loader/>
     );
   if (error)
     return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
@@ -277,7 +278,7 @@ export function Dashboard() {
                         className={cn(
                           "h-2",
                           "bg-neutral-700",
-                          "[&>div]:bg-red-500"
+                          `${currentMilestoneObj.color}`
                         )}
                       />
 
@@ -287,7 +288,7 @@ export function Dashboard() {
                         className={cn(
                           "h-2",
                           "bg-neutral-700",
-                          "[&>div]:bg-red-500"
+                          "[&>div]:bg-[#9C6AFF]"
                         )}
                       />
                     )}

@@ -14,6 +14,7 @@ import FilterBar from "./FilterBar";
 import { useFilterContext } from "../context/FilterContext";
 import { Separator } from "./ui/separator";
 import { Icon } from "@iconify/react";
+import Loader from "./Loader";
 
 const ProgressLine = ({ completed, current, total = 12 }) => {
   return (
@@ -228,7 +229,7 @@ export default function Performance() {
   //   };
   // }, []);
 
-  if (loading) return <p className="...">Loading performance...</p>;
+  if (loading) return <Loader/>;
   if (error) return <p className="...">Error...</p>;
 
   // Add null check for placeInfo

@@ -80,7 +80,7 @@ export const FilterProvider = ({ children }) => {
 
   const placeOptions = {
     "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
-    "complex-bar": "https://www.google.com/maps/place/St.+Mary's+Nursery+School/@22.4805253,88.1840871,12z/data=!4m10!1m2!2m1!1sst.+mary's+nursery+school!3m6!1s0x3a027091d6d91d87:0x2ae1dc6d6cff64a1!8m2!3d22.4805253!4d88.3365224!15sChlzdC4gbWFyeSdzIG51cnNlcnkgc2Nob29sWhoiGHN0IG1hcnkncyBudXJzZXJ5IHNjaG9vbJIBDm51cnNlcnlfc2Nob29smgEkQ2hkRFNVaE5NRzluUzBWSlEwRm5TVU5JTTNOaGMzcDNSUkFC4AEA-gEECAAQPA!16s%2Fg%2F11bbrjzj_2?entry=ttu&g_ep=EgoyMDI1MDMwNC4wIKXMDSoASAFQAw%3D%3D",
+    "complex-bar": "https://www.google.com/maps/place/Salt+Pepper/@22.6625556,88.3760408,17z/data=!3m1!4b1!4m6!3m5!1s0x39f89d89ebb188b1:0x2211f247268e892d!8m2!3d22.6625556!4d88.3786157!16s%2Fg%2F11qgyvd3pq?hl=en-GB&entry=ttu&g_ep=EgoyMDI1MDMxMC4wIKXMDSoASAFQAw%3D%3D",
     "bad-bar": "https://www.google.com/maps/place/Techno+Main+Salt+Lake/@22.5760866,88.4251959,17z/data=!4m10!1m2!2m1!1stechno+india+main+salt+lake!3m6!1s0x3a02751a9d9c9e85:0x7fe665c781b10383!8m2!3d22.5761707!4d88.4270293!15sCht0ZWNobm8gaW5kaWEgbWFpbiBzYWx0IGxha2VaHSIbdGVjaG5vIGluZGlhIG1haW4gc2FsdCBsYWtlkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VOeGNuQlhlSHBSUlJBQuABAPoBBQi-AhAt!16s%2Fg%2F11fml2v54k?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
   };
 
@@ -193,6 +193,7 @@ export const FilterProvider = ({ children }) => {
       icon: "/beginner.png",
       width: "w-[141px]",
       height: "h-[158px]",
+      color: "[&>div]:bg-[#9E7A4A]",
     },
     {
       title: "Amateur",
@@ -202,6 +203,7 @@ export const FilterProvider = ({ children }) => {
       icon: "/amateur.png",
       width: "w-[141px]",
       height: "h-[158px]",
+      color: "[&>div]:bg-[#717F88]",
     },
     {
       title: "Challenger",
@@ -211,6 +213,7 @@ export const FilterProvider = ({ children }) => {
       icon: "/challenger.png",
       width: "w-[141px]",
       height: "h-[158px]",
+      color: "[&>div]:bg-[#A56938]",
     },
     {
       title: "Master",
@@ -220,6 +223,7 @@ export const FilterProvider = ({ children }) => {
       icon: "/master.png",
       width: "w-[141px]",
       height: "h-[158px]",
+      color: "[&>div]:bg-[#566B8A]",
     },
     {
       title: "Legend",
@@ -229,6 +233,7 @@ export const FilterProvider = ({ children }) => {
       icon: "/legend.png",
       width: "w-[141px]",
       height: "h-[158px]",
+      color: "[&>div]:bg-[#F7BF46]",
     },
     {
       title: "Grandmaster",
@@ -238,6 +243,7 @@ export const FilterProvider = ({ children }) => {
       icon: "/grandmaster.png",
       width: "w-[141px]",
       height: "h-[158px]",
+      color: "[&>div]:bg-[#9C6AFF]",
     },
   ];
 
