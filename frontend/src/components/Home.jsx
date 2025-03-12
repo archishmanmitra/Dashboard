@@ -17,48 +17,65 @@ export default function Home() {
   return (
     <div className="h-screen bg-black text-white">
       <div className="h-full flex flex-col items-center relative">
+        {/* Background image */}
         <img
           src="/background.jpg"
           alt="Luxury Jewelry Display"
-          className="h-[50vh] left-[-60px] w-full object-cover"
+          className="h-[50vh] w-full object-cover"
         />
+        
+        {/* Top gradient overlay */}
         <div
-          className="absolute md:top-[30vh] top-[20.5vh] h-[200px] inset-0 md:h-[211px]"
+          className="absolute top-0 left-0 right-0 h-[50vh] pointer-events-none"
           style={{
-            background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%)'
+            background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%)'
           }}
         />
-        <div className="absolute inset-0 flex flex-col justify-center p-6">
-          <div className="h-3"
-            style={{
-              background: "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.37) 100%)"
-            }}></div>
-          <div className="flex flex-col items-center gap-5 mb-12 justify-center">
-
+        
+        {/* Bottom gradient overlay */}
+        <div
+          className="absolute top-0 left-0 right-0 h-[50vh] pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.4) 65%, rgba(0, 0, 0, 0.8) 90%, #000000 100%)'
+          }}
+        />
+        
+        {/* Content container - adjusted for left alignment and bottom positioning */}
+        <div className="absolute inset-0 flex flex-col justify-between p-6">
+          {/* Logo section at top */}
+          <div className="flex flex-col items-center gap-2 mt-32">
             <img
               src="/logo.jpg"
               alt="SD Fashion Logo"
               className="w-[100px] h-[100px] object-cover rounded-full"
             />
-            <h2 className="text-2xl font-bold text-center mb-2">S.D. Fashion</h2>
-
+            <h2 className="text-2xl mt-1 font-bold text-center">S.D. Fashion</h2>
           </div>
-          <h1 className="text-6xl font-medium mb-2">
-            <span className="text-white">Share Your </span>
-            <span className="text-amber-400">Valuable</span>
-            <span className="text-white"> Feedback!</span>
-          </h1>
-          <p className="text-gray-300 mb-6 text-center">
-            Tap below to leave a review. It takes less than a minute. Thank you!
-          </p>
-
-          <button onClick={handleReviewClick} className="w-full bg-white text-black py-3 px-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors">
-            <Star className="w-5 h-5" />
-            Rate Us on Google
-          </button>
-          <p className="text-center text-sm text-gray-400 mt-4">
-            Powered by Star Boom
-          </p>
+          
+          {/* Text and button section at bottom */}
+          <div className="flex flex-col mb-4">
+            <h1 className="text-5xl md:text-5xl font-medium mb-2 text-left">
+              <span className="text-white">Share Your </span>
+              <span className="text-gradient-gold">Valuable</span>
+              <span className="text-white"> Feedback!</span>
+            </h1>
+            
+            <p className="text-gray-300 mb-6 text-left">
+              Tap below to leave a review. It takes less than a minute. Thank you!
+            </p>
+  
+            <button 
+              onClick={handleReviewClick} 
+              className="w-full bg-white text-black py-3 rounded-lg px-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors"
+            >
+              <img src="/google.svg" alt="google" />
+              <span>Rate Us on Google</span>
+            </button>
+            
+            <p className="text-center text-sm text-[var(--color-scan-text)] mt-4">
+              Powered by Star Boom
+            </p>
+          </div>
         </div>
       </div>
     </div>

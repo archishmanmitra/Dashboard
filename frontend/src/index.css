@@ -25,7 +25,8 @@
     --color-green: #77F17E;
     --color-red: #FF3838 ; 
     --color-eclipse:#292C30;
-    --color-in-tick:#131418;  /* Change to your preferred accent color */
+    --color-in-tick:#131418;
+    --color-scan-text:#FFDCB5;   /* Change to your preferred accent color */
   }
   
 
@@ -38,5 +39,11 @@ body{
 @layer components {
   .bg-custom-gradient {
     background: linear-gradient(105.62deg, #1B1C21 0%, #131418 100%);
+  }
+  .text-gradient-gold {
+    background: linear-gradient(90deg, #CCA478 0%, #CB8940 65.17%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }

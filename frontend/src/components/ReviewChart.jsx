@@ -21,8 +21,7 @@ const getDayName = (date) => {
 };
 
 const ReviewsChart = ({ ina }) => {
-
-  const {selectedOption, chartData} = useFilterContext()
+  const { selectedOption, chartData } = useFilterContext();
   const chart = useMemo(() => {
     if (!chartData || !chartData.length) return [];
 
@@ -77,13 +76,11 @@ const ReviewsChart = ({ ina }) => {
   return (
     <>
       <div>
-        <div className="text-3xl z-50 font-bold mb-1">
-          {chartData.length} 
-        </div>
-
-        <div className="text-sm  text-[var(--color-secondary)] mb-6">
-          in 
-          {ina}
+        <div className="flex items-center justify-start">
+          <div className="text-3xl z-50 font-bold mb-1">{chartData.length}</div>
+          <div className="text-sm  text-[var(--color-secondary)] mt-3.5 pl-3.5">
+            in {ina}
+          </div>
         </div>
         <div className="h-[200px]">
           <ResponsiveContainer width="100%" height={250}>
