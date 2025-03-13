@@ -44,7 +44,7 @@ const ProgressBadge = ({
 }) => {
   return (
     <div
-      className={`flex flex-col items-center ${active ? "text-white" : "text-neutral-600"
+      className={`flex md:flex-col  items-center ${active ? "text-white" : "text-neutral-600"
         }`}
     >
       {/* Icon Container - Top */}
@@ -113,7 +113,7 @@ const ProgressIndicator = ({
   showLine
 }) => {
   return (
-    <div className="flex items-center px-1 gap-2">
+    <div className="flex md:flex-row flex-col items-center px-1 gap-2">
       {/* Checkmark */}
       {completedTick ? (
         <div className="bg-[var(--color-green)] text-[var(--color-in-tick)] rounded-full p-1">
@@ -173,7 +173,7 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
   return (
     <div className="flex flex-col ">
       {/* Badges row */}
-      <div className="flex items-center justify-between px-6 mb-8">
+      <div className="flex flex-col md:flex-row items-center justify-between px-6 mb-8">
         {milestones.map((milestone, index) => (
           <div key={`badge-${index}`}>
             <ProgressBadge
