@@ -28,14 +28,14 @@ const Message = ({ initial, content, link, color, title }) => {
         <p className="text-sm text-neutral-300 mb-1">{title}</p>
         <span className="text-xs text-neutral-500 pr-4">{content}</span>
       </div>
-      <Button
+      {/* <Button
         variant="outline"
         className="w-[95px] h-[32px] rounded-[32px] bg-white border border-neutral-700 mt-1 text-black hover:bg-neutral-700 hover:text-white transition-colors"
         style={{ lineHeight: "32px" }}
         onClick={() => window.open(link, "_blank")}
       >
         Reply
-      </Button>
+      </Button> */}
     </div>
   );
 };
@@ -93,6 +93,7 @@ export default function Notification() {
     error,
     showMilestoneNotification,
     negativeReviews,
+    milestoneData
   } = useFilterContext();
 
   if (loading)
@@ -163,7 +164,7 @@ export default function Notification() {
                         key={index}
                         author={review.name}
                         rating={review.stars}
-                        content={review.text}
+                        content={review.text || 'No text content'}
                         link={review.reviewUrl}
                         initial={review.name.charAt(0).toUpperCase()}
                         color="bg-red-500"
@@ -178,18 +179,16 @@ export default function Notification() {
                     title="No negative reviews"
                   />
                 )}
+                {showMilestoneNotification && (
+
                 <Message
-                  initial="N"
-                  content="Lorem ipsum dolor sit amet consectetur. Gravida urna magna feugiat morbi. Euismod fermentum consectetur porta erat. Sed lacus erat integer malesuada eu et pharetra nulla tortor. Mnante aliquet a mauris interdum."
+                  initial={milestoneData.current[0]}
+                  content={`Congratulations for reaching ${milestoneData.current}`}
                   color="bg-red-500"
-                  title="Lol"
+                  title="New Milestone"
                 />
-                <Message
-                  initial="S"
-                  content="Lorem ipsum dolor sit amet consectetur. Gravida urna magna feugiat morbi. Euismod fermentum consectetur porta erat. Sed lacus erat integer malesuada eu et pharetra nulla tortor. Mnante aliquet a mauris interdum."
-                  color="bg-blue-500"
-                  title="Lol"
-                />
+                )}
+                
               </CardContent>
             </Card>
 
