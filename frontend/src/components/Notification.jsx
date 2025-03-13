@@ -71,7 +71,7 @@ const Review = ({ initial, author, rating, content, link, color }) => {
           </div>
         </div>
         <div className="flex justify-between items-start">
-          <span className="text-xs text-neutral-500 pr-4">{content}</span>
+          <div className="text-xs text-neutral-500 pr-4">{content}</div>
           <Button
             variant="outline"
             className="w-[95px] h-[32px] rounded-[32px] bg-white border border-neutral-700 mt-1 text-black hover:bg-neutral-700 hover:text-white transition-colors"

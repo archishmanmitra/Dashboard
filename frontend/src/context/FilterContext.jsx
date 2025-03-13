@@ -31,6 +31,9 @@ export const FilterProvider = ({ children }) => {
       current: "Beginner", 
       previous: null 
     });
+    const [places, setPlaces] = useState([]);
+
+    const placeNames = ["Techno India University, West Bengal", "Techno Main Salt Lake", "Salt Pepper"]; 
   useEffect(() => {
     // Fetch counts from the backend
     axios.get('http://localhost:3000/api/get-counts').then((response) => {
@@ -40,6 +43,22 @@ export const FilterProvider = ({ children }) => {
       setClickRate(response.data.clickRate);
     });
   }, []);
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      const placeDetails = await Promise.all(
+        placeNames.map(async (placeName) => {
+          const response = await fetch(`http://localhost:3000/api/places?query=${placeName}`);
+        const data = await response.json();
+        return { placeName, details: data.placeDetails };
+        })
+      );
+      setPlaces(placeDetails)
+      console.log(placeDetails);
+    }
+    fetchPlaces();
+  }, [])
+
   const fetchMilestone = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/api/milestone/${selectedPlace}`);
@@ -293,7 +312,8 @@ export const FilterProvider = ({ children }) => {
       negativeReviews,
       showMilestoneNotification,
       setShowMilestoneNotification,
-      milestoneData
+      milestoneData,
+      places
     }}>
       {children}
     </FilterContext.Provider>

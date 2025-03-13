@@ -19,7 +19,7 @@ export const generateSentimentAnalysis = async (reviews) => {
       ).join("\n");
     // Create prompt
     const prompt = `
-      You are a sentiment analysis AI. Analyze the following reviews all together, along with a brief analysis.\n Explain in no more than 80 words.\nDo not mention any particular author give a detailed overall analysis of the sentiments of the customers of a restaurant:\n\n${formattedReviews};
+      You are a sentiment analysis AI. Analyze the following reviews all together, along with a brief analysis. Explain in no more than 80 words.Do not mention any particular author and give a detailed overall analysis of the sentiments of the customers of a restaurant in one paragraph:${formattedReviews};
     `;
 
     // Generate analysis

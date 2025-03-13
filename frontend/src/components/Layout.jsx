@@ -40,7 +40,7 @@ const Layout = () => {
   return (
     <div className="flex h-screen font-[Open_Sauce_Sans]  bg-black text-white">
       {/* Sidebar */}
-      <div className="flex flex-col h-full w-60 bg-black border-r border-neutral-800">
+      <div className=" hidden md:flex flex-col h-full w-60 bg-black border-r border-neutral-800">
         {/* Logo */}
         <div className="px-2">
           

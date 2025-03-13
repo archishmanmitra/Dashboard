@@ -11,7 +11,7 @@ async function getPlaceId(inputText) {
         input: encodeURIComponent(inputText.trim()),
         inputtype: "textquery",
         fields: "place_id",
-        key: API_KEY,
+        key: process.env.PLACES_API_KEY,
       },
     });
     if (response.data.status === "OK" && response.data.candidates.length) {
@@ -32,7 +32,7 @@ async function getPlaceDetails(placeId) {
       params: {
         place_id: placeId,
         fields: "user_ratings_total,rating", // add additional fields as required
-        key: API_KEY,
+        key: process.env.PLACES_API_KEY,
       },
     });
     if (response.data.status === "OK") {

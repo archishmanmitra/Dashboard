@@ -77,7 +77,7 @@ const ReviewsChart = ({ ina }) => {
     <>
       <div>
         <div className="flex items-center justify-start">
-          <div className="text-3xl z-50 font-bold mb-1">{chartData.length}</div>
+          <div className="text-4xl z-50 font-bold mt-5 mb-3">{chartData.length}</div>
           <div className="text-sm  text-[var(--color-secondary)] mt-3.5 pl-3.5">
             in {ina}
           </div>
