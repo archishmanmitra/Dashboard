@@ -16,7 +16,7 @@ const FilterBar = () => {
 
   return (
     <div className="flex flex-col sm:flex-row gap-6 w-full items-end lg:w-auto">
-      <div className="flex gap-6 w-full ">
+      <div className="flex gap-2 lg:gap-6 w-full ">
 
       
       <div className="flex-col w-full">

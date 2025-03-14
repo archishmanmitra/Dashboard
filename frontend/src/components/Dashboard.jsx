@@ -31,10 +31,11 @@ import FilterBar from "./FilterBar";
 import { Separator } from "./ui/separator";
 import { Icon } from "@iconify/react";
 import Loader from "./Loader";
+import { useNavigate } from "react-router-dom";
 
 
 export function Dashboard() {
-
+  const navigate = useNavigate();
   const {
     selectedOption,
     placeInfo,
@@ -321,7 +322,8 @@ export function Dashboard() {
                   <div className="text-4xl font-bold text-red">{negative}</div>
                   <Button
                     variant="outline"
-                    className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700">
+                    className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+                    onClick={()=> navigate('/notification')}>
                     Manage
                   </Button> 
                  </div>
