@@ -49,7 +49,20 @@ export function Dashboard() {
     determineMilestone,
     milestones
   } = useFilterContext()
-
+  
+  const [ina, setIna] = useState(' a week');
+  useEffect(() => {
+    if (selectedOption === "last-90-days") {
+      setIna(' 3 months')
+    } else if (selectedOption === "last-30-days") {
+      setIna(' a month')
+    } else {
+      setIna(' a week')
+    }
+    // return () => {
+    //   second
+    // }
+  }, [])
   const getCurrentLevelProgress = (count, currentMilestoneObj) => {
 
     const range =
@@ -72,19 +85,6 @@ export function Dashboard() {
   if (error)
     return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
 
-  const [ina, setIna] = useState(' a week');
-  useEffect(() => {
-    if (selectedOption === "last-90-days") {
-      setIna(' 3 months')
-    } else if (selectedOption === "last-30-days") {
-      setIna(' a month')
-    } else {
-      setIna(' a week')
-    }
-    // return () => {
-    //   second
-    // }
-  }, [])
 
   return (
     <div className="min-h-screen relative bg-black p-6 px-8">

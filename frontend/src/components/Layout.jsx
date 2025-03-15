@@ -13,6 +13,7 @@ import { Separator } from "./ui/separator";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import gradientOverlay from '/gradientOverlay.svg';
 import Logout from "./Logout";
+import { Icon } from "@iconify/react";
 
 const SidebarItem = ({ icon, label, to, active }) => {
   return (
@@ -26,7 +27,7 @@ const SidebarItem = ({ icon, label, to, active }) => {
         )}
       >
         <div className="flex items-center justify-center w-5 h-5">{icon}</div>
-        <span className="text-sm font-medium">{label}</span>
+        <span className="text-md font-medium">{label}</span>
       </div>
     </Link>
   );
@@ -40,39 +41,39 @@ const Layout = () => {
   return (
     <div className="flex h-screen font-[Open_Sauce_Sans]  bg-black text-white">
       {/* Sidebar */}
-      <div className=" hidden md:flex flex-col h-full w-60 bg-black border-r border-neutral-800">
+      <div className=" hidden md:flex flex-col h-full w-64 bg-black border-r border-neutral-800">
         {/* Logo */}
-        <div className="px-2">
+        <div className="px-2 pt-5 flex justify-center items-center">
           
-            <img src="/logoname.png" alt=""  className="w-48 "/>
+            <img src="/starname.png" alt=""  className=" h-11 "/>
           
         </div>
 
-        <Separator className="my-4 mx-8 bg-neutral-800 w-40" />
+        <Separator className="my-4 mx-5 bg-neutral-800 w-50" />
 
         {/* Navigation */}
         <div className="flex-1 px-3 py-2">
-          <nav className="space-y-1">
+          <nav className="space-y-2">
             <SidebarItem
-              icon={<Star size={18} />}
+              icon={<Icon icon="material-symbols:star-outline-rounded" width="22" height="22" className='' />}
               label="Overview"
               to="/dashboard"
               active={path === "/dashboard"}
             />
             <SidebarItem
-              icon={<ChevronRight size={18} />}
+              icon={<Icon icon="ic:baseline-insights" width="20" height="20" className='' />}
               label="Review Breakdown"
               to="/breakdown"
               active={path === "/breakdown"}
             />
             <SidebarItem
-              icon={<BarChart3 size={18} />}
+              icon={<Icon icon="mdi:performance" width="20" height="20" className='' />}
               label="Performance"
               to="/performance"
               active={path === "/performance"}
             />
             <SidebarItem
-              icon={<MessageSquare size={18} />}
+              icon={<Icon icon="ri:notification-line" width="20" height="20" className='' />}
               label="Notification"
               to="/notification"
               active={path === "/notification"}
@@ -103,7 +104,7 @@ const Layout = () => {
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8 border border-neutral-700">
               <div className="bg-neutral-700 h-full w-full flex items-center justify-center text-xs text-white">
-                U
+                u
               </div>
             </Avatar>
             <div className="flex flex-col items-start">

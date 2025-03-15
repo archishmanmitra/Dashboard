@@ -16,13 +16,13 @@ import { Separator } from "./ui/separator";
 import { Icon } from "@iconify/react";
 import Loader from "./Loader";
 
-const ProgressLine = ({ completed, current, total = 12 }) => {
+const ProgressLine = ({ completed, current, total = 13 }) => {
   return (
-    <div className="flex items-center justify-center gap-1 w-full h-8">
+    <div className="flex md:flex-row flex-col items-center justify-center gap-1 w-full h-8">
       {[...Array(total)].map((_, index) => (
         <div
           key={index}
-          className={`h-0.5 md:w-1 lg:w-[7.7px]  mx-px ${completed
+          className={`h-0.5 md:w-1.5   mx-px ${completed
             ? "bg-[var(--color-green)]"
             : current && index < Math.floor((current / 100) * (total))
               ? "bg-[var(--color-green)]"
@@ -371,24 +371,31 @@ export default function Performance() {
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
               <CardContent>
-                <div className="flex justify-between  items-center">
-                  <div className="text-center">
-                    <p className="text-sm text-neutral-400">Before</p>
-                    <h2 className="text-4xl font-bold">6</h2>
-                    <p className="text-xs text-neutral-400">
-                      reviews & average of 4.2 Stars
-                    </p>
+                <div className="flex justify-between mt-2 items-center">
+
+                  <div className=" flex flex-col items-start">
+                    <p className="text-sm mb-2 text-neutral-400">Before</p>
+                    <div className="flex gap-2 items-end">
+                      <h2 className="text-5xl font-bold">6</h2>
+                      <p className="text-xs mb-1 text-neutral-400">
+                        reviews & average <br /> of 4.2 Stars
+                      </p>
+                    </div>
                   </div>
+
                   <div className="text-lg font-medium">vs</div>
-                  <div className="text-center">
-                    <p className="text-sm text-green-400">After</p>
-                    <h2 className="text-4xl font-bold">
-                      {placeInfo ? placeInfo.reviewsCount : "N/A"}
-                    </h2>
-                    <p className="text-xs text-neutral-400">
-                      reviews & average of{" "}
-                      {placeInfo ? placeInfo.totalScore : "N/A"} Stars
-                    </p>
+
+                  <div className="flex flex-col items-start">
+                    <p className="text-sm mb-2 text-[var(--color-green)]">After</p>
+                    <div className="flex gap-2 items-end">
+                      <h2 className="text-5xl font-bold">
+                        {placeInfo ? placeInfo.reviewsCount : "N/A"}
+                      </h2>
+                      <p className="text-xs mb-1 text-neutral-400">
+                        reviews & average <br /> of{" "}
+                        {placeInfo ? placeInfo.totalScore : "N/A"} Stars
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -409,18 +416,13 @@ export default function Performance() {
                   <Info className="h-4 w-4 text-neutral-500" />
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex flex-col items-start mt-2 justify-between gap-4 ">
                     <div className="text-4xl font-bold">{counts}</div>
-                    {/* <Button
-                  variant="outline"
-                  className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
-                >
-                  Manage
-                </Button> */}
-                  </div>
-                  <div className="flex items-center text-xs text-green-500">
-                    <ArrowUpRight className="h-3 w-3 mr-1" />
-                    <span>{countRate} % improved from last week</span>
+
+                    <div className="flex items-center text-xs text-[var(--color-green)]">
+                      <ArrowUpRight className="h-3 w-3 mr-1" />
+                      <span>{countRate} % improved from last week</span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -437,25 +439,20 @@ export default function Performance() {
                   <Info className="h-4 w-4 text-neutral-500" />
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex flex-col items-start mt-2 justify-between gap-4">
                     <div className="text-4xl font-bold">{click}</div>
-                    {/* <Button
-                  variant="outline"
-                  className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
-                >
-                  Manage
-                </Button> */}
-                  </div>
-                  <div className="flex items-center text-xs text-green-500">
-                    <ArrowUpRight className="h-3 w-3 mr-1" />
-                    <span>{clickRate} % improved from last week</span>
+
+                    <div className="flex items-center text-xs text-[var(--color-green)]">
+                      <ArrowUpRight className="h-3 w-3 mr-1" />
+                      <span>{clickRate} % improved from last week</span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
             </div>
           </div>
 
-          <Card className="bg-custom-gradient border border-[var(--color-bodcol)]  mt-5 mb-5 text-white">
+          <Card className="bg-custom-gradient border border-[var(--color-bodcol)]  mt-4 mb-4 text-white">
             <CardHeader className="pb-2 flex flex-row justify-between items-start">
               <CardTitle className="text-sm font-medium flex items-center">
                 <div className="flex items-center">
@@ -489,29 +486,34 @@ export default function Performance() {
               <Info className="h-4 w-4 text-neutral-500" />
             </CardHeader>
             <CardContent>
-              <div className="flex justify-between items-center">
-                <div className="text-center">
-                  <p className="text-sm text-green-400">Your business</p>
-                  <h2 className="text-4xl font-bold">
+              <div className="flex justify-between mt-3 items-center">
+                <div className="flex flex-col items-start">
+                  <p className="text-sm mb-2 text-[var(--color-green)]">Your business</p>
+                  <div className="flex gap-2 items-end">
+                  <h2 className="text-5xl font-bold">
                     {placeInfo ? placeInfo.reviewsCount : "N/A"}
                   </h2>
-                  <p className="text-xs text-neutral-400">
-                    reviews & average of{" "}
+                  <p className="text-xs mb-1 text-neutral-400">
+                    reviews & average <br /> of {" "}
                     {placeInfo ? placeInfo.totalScore : "N/A"} Stars
                   </p>
+                  </div>
                 </div>
                 {places.map((place, index) => (
-                   <React.Fragment key={index}>
+                  <React.Fragment key={index}>
                     <div className="text-lg font-medium">vs</div>
-                    <div className="text-start">
-                      <p className="text-sm text-neutral-400">{place.placeName}</p>
-                      <h2 className="text-4xl font-bold">{place.details.user_ratings_total}</h2>
-                      <p className="text-xs text-neutral-400">
-                        reviews & average of {" "}
+                    <div className="flex flex-col items-start">
+                      <p className="text-sm mb-2 text-neutral-400">{place.placeName}</p>
+                      <div className="flex gap-2 items-end">
+                      <h2 className="text-5xl font-bold">{place.details.user_ratings_total}</h2>
+                      <p className="text-xs mb-1 text-neutral-400">
+                        reviews & average <br /> of  {" "}
                         {place.details.rating} Stars
                       </p>
+                      </div>
                     </div>
-                    </React.Fragment>
+                    
+                  </React.Fragment>
                 ))}
               </div>
             </CardContent>
