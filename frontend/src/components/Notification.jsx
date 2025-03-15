@@ -20,10 +20,10 @@ const Message = ({ initial, content, link, color, title, icon }) => {
   return (
     <div className="flex flex-1 gap-4 py-4  border-b border-neutral-800 last:border-0">
       <div
-        className={`w-15 h-15 rounded-full flex items-center justify-center text-white ${color}`}
+        className={`w-12 h-12 md:w-15 md:h-15 rounded-full flex items-center justify-center text-white ${color}`}
       >
-        {icon ? <Icon icon={icon} width="28" height="28" className="" /> : <Icon icon="material-symbols:trophy-sharp"  width="28" height="28" className="" />}
-        
+        {icon ? <Icon icon={icon} width="28" height="28" className="" /> : <Icon icon="material-symbols:trophy-sharp" width="28" height="28" className="" />}
+
       </div>
       <div className="flex-1 flex-col">
         <p className="text-md text-neutral-300 ">{title}</p>
@@ -43,9 +43,10 @@ const Message = ({ initial, content, link, color, title, icon }) => {
 
 const Review = ({ initial, author, rating, content, link, color }) => {
   return (
-    <div className="flex gap-4 py-4 items-center border-b border-neutral-800 last:border-0">
+    <div className="flex gap-4 py-4 md:items-center items-start border-b border-neutral-800 last:border-0">
+
       <div
-        className={`w-15 h-15  rounded-full flex items-center justify-center  text-white ${color}`}
+        className={`w-12 h-12 md:w-15 md:h-15  rounded-full flex items-center justify-center  text-white ${color}`}
       >
         <Icon icon="ant-design:alert-filled" width="28" height="28" className="" />
       </div>
@@ -71,14 +72,25 @@ const Review = ({ initial, author, rating, content, link, color }) => {
             ))}
           </div>
         </div>
-        <div className="flex justify-between items-center mt-2 ">
+        <div className="flex flex-col items-start justify-between md:flex-row  mt-2 md:gap-0 gap-3 ">
           <div className="text-xs text-neutral-500 pr-4">{content}</div>
+          <div className="">
+            <Button
+              variant="outline"
+              className="w-[75px] h-[40px] md:hidden rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
+              style={{ lineHeight: "32px" }}
+              onClick={() => window.open(link, "_blank")}
+            >
+              Reply
+            </Button>
+          </div>
         </div>
+
       </div>
       <div>
         <Button
           variant="outline"
-          className="w-[75px] h-[40px] rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
+          className="w-[75px] hidden md:flex h-[40px] rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
           style={{ lineHeight: "32px" }}
           onClick={() => window.open(link, "_blank")}
         >
@@ -184,22 +196,22 @@ export default function Notification() {
                   />
                 )}
                 {showMilestoneNotification && (
-                  milestoneData.previous!=="Beginner" ?
-                  (
-                  <Message
-                    initial={milestoneData.current[0]}
-                    content={`Let the adventure continue!`}
-                    color="bg-[#4486FE]"
-                    title={`Congratulations! You've been promoted to ${milestoneData.current}`}
-                  />
-                  ) : (
-                    <Message
-                    initial={milestoneData.current[0]}
-                    content={`Step into the game and make your mark.`}
-                    color="bg-[#4486FE]"
-                    title={`The journey begins!`}
-                  />
-                  )
+                  milestoneData.previous !== "Beginner" ?
+                    (
+                      <Message
+                        initial={milestoneData.current[0]}
+                        content={`Let the adventure continue!`}
+                        color="bg-[#4486FE]"
+                        title={`Congratulations! You've been promoted to ${milestoneData.current}`}
+                      />
+                    ) : (
+                      <Message
+                        initial={milestoneData.current[0]}
+                        content={`Step into the game and make your mark.`}
+                        color="bg-[#4486FE]"
+                        title={`The journey begins!`}
+                      />
+                    )
                 )}
 
               </CardContent>
