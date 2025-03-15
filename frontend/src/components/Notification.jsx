@@ -41,7 +41,7 @@ const Message = ({ initial, content, link, color, title, icon }) => {
   );
 };
 
-const Review = ({ initial, author, rating, content, link, color }) => {
+const Review = ({ initial, author, rating, content, link, color, onReply, hasReplied }) => {
   return (
     <div className="flex gap-4 py-4 md:items-center items-start border-b border-neutral-800 last:border-0">
 
@@ -71,6 +71,8 @@ const Review = ({ initial, author, rating, content, link, color }) => {
               />
             ))}
           </div>
+          {hasReplied && <div>
+            replied</div>}
         </div>
         <div className="flex flex-col items-start justify-between md:flex-row  mt-2 md:gap-0 gap-3 ">
           <div className="text-xs text-neutral-500 pr-4">{content}</div>
@@ -79,7 +81,9 @@ const Review = ({ initial, author, rating, content, link, color }) => {
               variant="outline"
               className="w-[75px] h-[40px] md:hidden rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
               style={{ lineHeight: "32px" }}
-              onClick={() => window.open(link, "_blank")}
+              onClick={() => { window.open(link, "_blank")
+                onReply
+              }}
             >
               Reply
             </Button>
@@ -92,7 +96,9 @@ const Review = ({ initial, author, rating, content, link, color }) => {
           variant="outline"
           className="w-[75px] hidden md:flex h-[40px] rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
           style={{ lineHeight: "32px" }}
-          onClick={() => window.open(link, "_blank")}
+          onClick={() => { window.open(link, "_blank")
+            onReply
+          }}
         >
           Reply
         </Button>
@@ -108,7 +114,9 @@ export default function Notification() {
     error,
     showMilestoneNotification,
     negativeReviews,
-    milestoneData
+    milestoneData,
+    repliedReviewIds,
+    handleReply
   } = useFilterContext();
 
   if (loading)
@@ -174,6 +182,7 @@ export default function Notification() {
               <CardContent>
                 {negativeReviews.length > 0 ? (
                   negativeReviews.map((review, index) => {
+                    const hasReplied = repliedReviewIds.includes(review.id);
                     return (
                       <Review
                         key={index}
@@ -183,6 +192,8 @@ export default function Notification() {
                         link={review.reviewUrl}
                         initial={review.name.charAt(0).toUpperCase()}
                         color="bg-[#FF3838]"
+                        onReply={handleReply(review.id)}
+                    hasReplied={hasReplied}
                       />
                     );
                   })

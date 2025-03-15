@@ -32,6 +32,7 @@ export const FilterProvider = ({ children }) => {
       previous: null 
     });
     const [places, setPlaces] = useState([]);
+    const [repliedReviewIds, setRepliedReviewIds] = useState([]);
 
     const placeNames = ["Techno India University, West Bengal", "Techno Main Salt Lake", "Salt Pepper"]; 
   useEffect(() => {
@@ -78,7 +79,29 @@ export const FilterProvider = ({ children }) => {
   //     }
     
   // }, []);
+  useEffect(() => {
+    const fetchRepliedReviews = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/replied-reviews");
+        setRepliedReviewIds(response.data);
+      } catch (error) {
+        console.error("Failed to fetch replied reviews:", error);
+      }
+    };
+    fetchRepliedReviews();
+  }, []);
 
+  // Handle reply button click
+  const handleReply = async (reviewId) => {
+    try {
+      // Send the review ID to the backend
+      await axios.post("http://localhost:3000/api/replied-reviews", { reviewId });
+      // Update the local state
+      setRepliedReviewIds((prev) => [...prev, reviewId]);
+    } catch (error) {
+      console.error("Failed to mark review as replied:", error);
+    }
+  };
   const updateMilestone = async (newMilestone) => {
     try {
       const response = await axios.post(
@@ -313,7 +336,9 @@ export const FilterProvider = ({ children }) => {
       showMilestoneNotification,
       setShowMilestoneNotification,
       milestoneData,
-      places
+      places,
+      handleReply,
+      repliedReviewIds
     }}>
       {children}
     </FilterContext.Provider>
