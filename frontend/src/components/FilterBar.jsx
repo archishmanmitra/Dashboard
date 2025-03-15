@@ -24,7 +24,7 @@ const FilterBar = () => {
           Store
         </h1>
         <Select value={selectedPlace} onValueChange={setSelectedPlace}>
-          <SelectTrigger className="w-full rounded-full px-4 sm:w-72 bg-custom-gradient border-neutral-700 text-white">
+          <SelectTrigger className="w-full rounded-full px-4  sm:w-72 bg-custom-gradient border-neutral-700 text-white">
             <div className='flex items-center gap-1 justify-between'>
               <Icon icon="material-symbols:store-outline" width="20" height="20" className="mr-2" />
               <SelectValue placeholder="Simple Bar" />

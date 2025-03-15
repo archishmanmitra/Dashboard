@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { cn } from "../lib/utils";
 import {
   BarChart3,
@@ -7,6 +7,7 @@ import {
   MessageSquare,
   Settings,
   Star,
+  X,
 } from "lucide-react";
 import { Avatar } from "./ui/avatar";
 import { Separator } from "./ui/separator";
@@ -14,6 +15,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import gradientOverlay from '/gradientOverlay.svg';
 import Logout from "./Logout";
 import { Icon } from "@iconify/react";
+import { Button } from "./ui/button";
 
 const SidebarItem = ({ icon, label, to, active }) => {
   return (
@@ -36,10 +38,98 @@ const SidebarItem = ({ icon, label, to, active }) => {
 const Layout = () => {
   const location = useLocation();
   const path = location.pathname;
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className="flex h-screen font-[Open_Sauce_Sans]  bg-black text-white">
+      {/* Mobile Toggle Button */}
+      <Button 
+        variant="ghost" 
+        size="icon" 
+        className="md:hidden fixed top-4 right-4 z-50" 
+        onClick={toggleSidebar}
+      >
+        <Icon 
+          icon="heroicons:bars-3" 
+          width="24" 
+          height="24" 
+          className="text-white" 
+        />
+      </Button>
+
+      {/* Sidebar for mobile (full screen when open) */}
+      <div 
+        className={`md:hidden fixed inset-0 bg-black z-40 transform transition-transform ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="flex flex-col h-full w-full">
+          {/* Close button */}
+          <div className="flex justify-end p-4">
+            <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+              <X className="h-6 w-6 text-white" />
+            </Button>
+          </div>
+
+          {/* Logo */}
+          <div className="px-2 pt-2 flex justify-center items-center">
+            <img src="/starname.png" alt="Logo" className="h-11" />
+          </div>
+
+          <Separator className="my-4 mx-5 bg-neutral-800" />
+
+          {/* Navigation */}
+          <div className="flex-1 px-3 py-2">
+            <nav className="space-y-2">
+              <SidebarItem
+                icon={<Icon icon="material-symbols:star-outline-rounded" width="22" height="22" />}
+                label="Overview"
+                to="/dashboard"
+                active={path === "/dashboard"}
+              />
+              <SidebarItem
+                icon={<Icon icon="ic:baseline-insights" width="20" height="20" />}
+                label="Review Breakdown"
+                to="/breakdown"
+                active={path === "/breakdown"}
+              />
+              <SidebarItem
+                icon={<Icon icon="mdi:performance" width="20" height="20" />}
+                label="Performance"
+                to="/performance"
+                active={path === "/performance"}
+              />
+              <SidebarItem
+                icon={<Icon icon="ri:notification-line" width="20" height="20" />}
+                label="Notification"
+                to="/notification"
+                active={path === "/notification"}
+              />
+            </nav>
+          </div>
+
+          {/* User */}
+          <div className="p-4 border-t flex flex-col items-start gap-5 border-neutral-800">
+            <Logout />
+            <Separator className="bg-neutral-800" />
+            <div className="flex items-center gap-3">
+              <Avatar className="h-8 w-8 border border-neutral-700">
+                <div className="bg-neutral-700 h-full w-full flex items-center justify-center text-xs text-white">
+                  u
+                </div>
+              </Avatar>
+              <div className="flex flex-col items-start">
+                <span className="text-sm text-white">rk360ironjr@gmail.com</span>
+                <span className="text-xs text-neutral-400">Ver. 1.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Sidebar */}
       <div className=" hidden md:flex flex-col h-full w-64 bg-black border-r border-neutral-800">
         {/* Logo */}
