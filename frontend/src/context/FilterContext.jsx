@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import axios from "axios";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 // Create the context
 const FilterContext = createContext();
@@ -8,81 +8,113 @@ const FilterContext = createContext();
 export const FilterProvider = ({ children }) => {
   const [selectedPlace, setSelectedPlace] = useState("simple-bar");
   const [selectedOption, setSelectedOption] = useState("last-7-days");
-  const [url, setUrl] = useState("https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D");
+  const [url, setUrl] = useState(
+    "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D"
+  );
   const [reviews, setReviews] = useState([]);
   const [placeInfo, setPlaceInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-    const [positive, setPositive] = useState(0);
-    const [negative, setNegative] = useState(0);
-    const [posiper, setPosiper] = useState(0);
-    const [negaper, setNegaper] = useState(0);
-    const [chartData, setChartData] = useState([]);
-    const [counts, setCounts] = useState(0);
-    const [click, setClick] = useState(0);
-    const [clickRate, setClickRate] = useState(0);
-    const [countRate, setCountRate] = useState(0);
-    const [analysis, setAnalysis] = useState('');
-    const [milestone, setMilestone] = useState(null);
-    const [previousMilestone, setPreviousMilestone] = useState(null);
-    const [negativeReviews, setNegativeReviews] = useState([]);
-    const [showMilestoneNotification, setShowMilestoneNotification] = useState(false);
-    const [milestoneData, setMilestoneData] = useState({ 
-      current: "Beginner", 
-      previous: null 
-    });
-    const [places, setPlaces] = useState([]);
-    const [repliedReviewIds, setRepliedReviewIds] = useState([]);
+  const [positive, setPositive] = useState(0);
+  const [negative, setNegative] = useState(0);
+  const [posiper, setPosiper] = useState(0);
+  const [negaper, setNegaper] = useState(0);
+  const [chartData, setChartData] = useState([]);
+  const [counts, setCounts] = useState(0);
+  const [click, setClick] = useState(0);
+  const [clickRate, setClickRate] = useState(0);
+  const [countRate, setCountRate] = useState(0);
+  const [analysis, setAnalysis] = useState("");
+  const [milestone, setMilestone] = useState(null);
+  const [previousMilestone, setPreviousMilestone] = useState(null);
+  const [negativeReviews, setNegativeReviews] = useState([]);
+  const [showMilestoneNotification, setShowMilestoneNotification] =
+    useState(false);
+  const [milestoneData, setMilestoneData] = useState({
+    current: "Beginner",
+    previous: null,
+  });
+  const [places, setPlaces] = useState([]);
+  const [repliedReviewIds, setRepliedReviewIds] = useState([]);
+  const [admin, setAdmin] = useState("");
 
-    const placeNames = ["Techno India University, West Bengal", "Techno Main Salt Lake", "Salt Pepper"]; 
+  const placeNames = [
+    "Techno India University, West Bengal",
+    "Techno Main Salt Lake",
+    "Salt Pepper",
+  ];
   useEffect(() => {
     // Fetch counts from the backend
-    axios.get('http://localhost:3000/api/get-counts').then((response) => {
+    axios.get("http://localhost:3000/api/get-counts").then((response) => {
       setCounts(response.data.totalScans);
       setClick(response.data.totalButtonClicks);
       setCountRate(response.data.scanRate);
       setClickRate(response.data.clickRate);
     });
   }, []);
+  useEffect(() => {
+    const fetchAdmin = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/get-admin");
+        const data = await response.json();
+        setAdmin(data.username);
+        if (response.ok) {
+          console.log("Admin username:", data.username);
+        } else {
+          console.error("Error:", data.message);
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+      }
+    };
 
+    // Call the function
+    fetchAdmin();
+  }, []);
   useEffect(() => {
     const fetchPlaces = async () => {
       const placeDetails = await Promise.all(
         placeNames.map(async (placeName) => {
-          const response = await fetch(`http://localhost:3000/api/places?query=${placeName}`);
-        const data = await response.json();
-        return { placeName, details: data.placeDetails };
+          const response = await fetch(
+            `http://localhost:3000/api/places?query=${placeName}`
+          );
+          const data = await response.json();
+          return { placeName, details: data.placeDetails };
         })
       );
-      setPlaces(placeDetails)
+      setPlaces(placeDetails);
       console.log(placeDetails);
-    }
+    };
     fetchPlaces();
-  }, [])
+  }, []);
 
   const fetchMilestone = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/milestone/${selectedPlace}`);
+      const response = await axios.get(
+        `http://localhost:3000/api/milestone/${selectedPlace}`
+      );
       setMilestoneData(response.data);
     } catch (error) {
-      console.error('Failed to fetch milestone:', error);
+      console.error("Failed to fetch milestone:", error);
       setMilestoneData({ current: "Beginner", previous: null });
     }
   };
 
   // Update milestone when placeInfo changes
   // useEffect(() => {
-    
+
   //     const newMilestone = determineMilestone(placeInfo.reviewsCount);
   //     if (newMilestone !== milestoneData.current) {
   //       updateMilestone(newMilestone);
   //     }
-    
+
   // }, []);
   useEffect(() => {
     const fetchRepliedReviews = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/replied-reviews");
+        const response = await axios.get(
+          "http://localhost:3000/api/replied-reviews"
+        );
         setRepliedReviewIds(response.data);
       } catch (error) {
         console.error("Failed to fetch replied reviews:", error);
@@ -95,7 +127,9 @@ export const FilterProvider = ({ children }) => {
   const handleReply = async (reviewId) => {
     try {
       // Send the review ID to the backend
-      await axios.post("http://localhost:3000/api/replied-reviews", { reviewId });
+      await axios.post("http://localhost:3000/api/replied-reviews", {
+        reviewId,
+      });
       // Update the local state
       setRepliedReviewIds((prev) => [...prev, reviewId]);
     } catch (error) {
@@ -108,35 +142,46 @@ export const FilterProvider = ({ children }) => {
         `http://localhost:3000/api/milestone/${selectedPlace}`,
         { newMilestone }
       );
-      
+
       setMilestoneData(response.data);
-      
+
       // Show notification only if milestone changed
       if (response.data.current !== response.data.previous) {
         setShowMilestoneNotification(true);
       }
     } catch (error) {
-      console.error('Failed to update milestone:', error);
+      console.error("Failed to update milestone:", error);
     }
   };
 
   const placeOptions = {
-    "simple-bar": "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
-    "complex-bar": "https://www.google.com/maps/place/Salt+Pepper/@22.6625556,88.3760408,17z/data=!3m1!4b1!4m6!3m5!1s0x39f89d89ebb188b1:0x2211f247268e892d!8m2!3d22.6625556!4d88.3786157!16s%2Fg%2F11qgyvd3pq?hl=en-GB&entry=ttu&g_ep=EgoyMDI1MDMxMC4wIKXMDSoASAFQAw%3D%3D",
-    "bad-bar": "https://www.google.com/maps/place/Techno+Main+Salt+Lake/@22.5760866,88.4251959,17z/data=!4m10!1m2!2m1!1stechno+india+main+salt+lake!3m6!1s0x3a02751a9d9c9e85:0x7fe665c781b10383!8m2!3d22.5761707!4d88.4270293!15sCht0ZWNobm8gaW5kaWEgbWFpbiBzYWx0IGxha2VaHSIbdGVjaG5vIGluZGlhIG1haW4gc2FsdCBsYWtlkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VOeGNuQlhlSHBSUlJBQuABAPoBBQi-AhAt!16s%2Fg%2F11fml2v54k?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
+    "simple-bar":
+      "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
+    "complex-bar":
+      "https://www.google.com/maps/place/Salt+Pepper/@22.6625556,88.3760408,17z/data=!3m1!4b1!4m6!3m5!1s0x39f89d89ebb188b1:0x2211f247268e892d!8m2!3d22.6625556!4d88.3786157!16s%2Fg%2F11qgyvd3pq?hl=en-GB&entry=ttu&g_ep=EgoyMDI1MDMxMC4wIKXMDSoASAFQAw%3D%3D",
+    "bad-bar":
+      "https://www.google.com/maps/place/Techno+Main+Salt+Lake/@22.5760866,88.4251959,17z/data=!4m10!1m2!2m1!1stechno+india+main+salt+lake!3m6!1s0x3a02751a9d9c9e85:0x7fe665c781b10383!8m2!3d22.5761707!4d88.4270293!15sCht0ZWNobm8gaW5kaWEgbWFpbiBzYWx0IGxha2VaHSIbdGVjaG5vIGluZGlhIG1haW4gc2FsdCBsYWtlkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VOeGNuQlhlSHBSUlJBQuABAPoBBQi-AhAt!16s%2Fg%2F11fml2v54k?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
   };
 
   const getStartDate = (option) => {
     const today = new Date();
     switch (option) {
       case "last-7-days":
-        return new Date(today.setDate(today.getDate() - 7)).toISOString().split("T")[0];
+        return new Date(today.setDate(today.getDate() - 7))
+          .toISOString()
+          .split("T")[0];
       case "last-30-days":
-        return new Date(today.setDate(today.getDate() - 30)).toISOString().split("T")[0];
+        return new Date(today.setDate(today.getDate() - 30))
+          .toISOString()
+          .split("T")[0];
       case "last-90-days":
-        return new Date(today.setDate(today.getDate() - 90)).toISOString().split("T")[0];
+        return new Date(today.setDate(today.getDate() - 90))
+          .toISOString()
+          .split("T")[0];
       default:
-        return new Date(today.setDate(today.getDate() - 7)).toISOString().split("T")[0];
+        return new Date(today.setDate(today.getDate() - 7))
+          .toISOString()
+          .split("T")[0];
     }
   };
 
@@ -153,16 +198,18 @@ export const FilterProvider = ({ children }) => {
     });
 
     return { positive, negative };
-  };  
+  };
 
   const fetchReviews = async () => {
     setLoading(true);
     setError(null);
     try {
       const reviewsStartDate = getStartDate(selectedOption);
-      const urlMain = placeOptions[selectedPlace]
+      const urlMain = placeOptions[selectedPlace];
       const response = await fetch(
-        `http://localhost:3000/api/reviews?url=${encodeURIComponent(urlMain)}&reviewsStartDate=${reviewsStartDate}`
+        `http://localhost:3000/api/reviews?url=${encodeURIComponent(
+          urlMain
+        )}&reviewsStartDate=${reviewsStartDate}`
       );
 
       if (!response.ok) {
@@ -173,13 +220,17 @@ export const FilterProvider = ({ children }) => {
         throw new Error("Invalid response format: Expected JSON");
       }
       const data = await response.json();
-      
+
       // Separate place info from reviews
-      const placeData = data.simplifiedReviews.filter((item) => item.type === "placeInfo")[0];
+      const placeData = data.simplifiedReviews.filter(
+        (item) => item.type === "placeInfo"
+      )[0];
       setPlaceInfo(placeData);
-      setAnalysis(data.sentimentAnalysis.rawAnalysis)
+      setAnalysis(data.sentimentAnalysis.rawAnalysis);
       // Set reviews (excluding place info)
-      const reviewsData = data.simplifiedReviews.filter(review => review.type === "placeInfo");
+      const reviewsData = data.simplifiedReviews.filter(
+        (review) => review.type === "placeInfo"
+      );
       setReviews(reviewsData);
       setChartData(data.reviewsChartData);
 
@@ -205,9 +256,9 @@ export const FilterProvider = ({ children }) => {
       }
 
       // Filter negative reviews
-      const negativeReviews = reviewsData.filter(review => review.stars < 3);
+      const negativeReviews = reviewsData.filter((review) => review.stars < 3);
       setNegativeReviews(negativeReviews);
-      
+
       setLoading(false);
       return data;
     } catch (err) {
@@ -218,12 +269,12 @@ export const FilterProvider = ({ children }) => {
 
   // Determine milestone based on reviews count
   const determineMilestone = (reviewsCount) => {
-    if (reviewsCount < 10) return 'Beginner';
-    if (reviewsCount < 50) return 'Amateur';
-    if (reviewsCount < 100) return 'Challenger';
-    if (reviewsCount < 500) return 'Master';
-    if (reviewsCount < 1000) return 'Legend';
-    return 'Grandmaster';
+    if (reviewsCount < 10) return "Beginner";
+    if (reviewsCount < 50) return "Amateur";
+    if (reviewsCount < 100) return "Challenger";
+    if (reviewsCount < 500) return "Master";
+    if (reviewsCount < 1000) return "Legend";
+    return "Grandmaster";
   };
 
   const milestones = [
@@ -300,46 +351,48 @@ export const FilterProvider = ({ children }) => {
   useEffect(() => {
     fetchMilestone();
     fetchReviews();
-  }, [])
- 
+  }, []);
 
   return (
-    <FilterContext.Provider value={{
-      selectedPlace,
-      setSelectedPlace,
-      selectedOption,
-      setSelectedOption,
-      url,
-      setUrl,
-      reviews,
-      placeInfo,
-      loading,
-      error,
-      handleFilterClick,
-      fetchReviews,
-      placeOptions,
-      determineMilestone,
-      chartData,
-      setChartData,
-      posiper,
-      negaper,
-      negative,
-      counts,
-      click,
-      clickRate,
-      countRate,
-      analysis,
-      milestones,
-      milestone,
-      previousMilestone,
-      negativeReviews,
-      showMilestoneNotification,
-      setShowMilestoneNotification,
-      milestoneData,
-      places,
-      handleReply,
-      repliedReviewIds
-    }}>
+    <FilterContext.Provider
+      value={{
+        selectedPlace,
+        setSelectedPlace,
+        selectedOption,
+        setSelectedOption,
+        url,
+        setUrl,
+        reviews,
+        placeInfo,
+        loading,
+        error,
+        handleFilterClick,
+        fetchReviews,
+        placeOptions,
+        determineMilestone,
+        chartData,
+        setChartData,
+        posiper,
+        negaper,
+        negative,
+        counts,
+        click,
+        clickRate,
+        countRate,
+        analysis,
+        milestones,
+        milestone,
+        previousMilestone,
+        negativeReviews,
+        showMilestoneNotification,
+        setShowMilestoneNotification,
+        milestoneData,
+        places,
+        handleReply,
+        repliedReviewIds,
+        admin
+      }}
+    >
       {children}
     </FilterContext.Provider>
   );
@@ -349,7 +402,7 @@ export const FilterProvider = ({ children }) => {
 export const useFilterContext = () => {
   const context = useContext(FilterContext);
   if (!context) {
-    throw new Error('useFilterContext must be used within a FilterProvider');
+    throw new Error("useFilterContext must be used within a FilterProvider");
   }
   return context;
 };

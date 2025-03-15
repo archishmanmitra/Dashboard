@@ -48,6 +48,7 @@ const getReviews = async (req, res) => {
           publishedAtDate: item.publishedAtDate,
           publishAt: item.publishAt,
           reviewUrl: item.reviewUrl,
+          reviewId: item.reviewId
         };
       }
 

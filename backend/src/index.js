@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser'
 import {Admin} from "./models/admin.models.js";
 import {getReviews} from "./api/apify.js";
 import { authenticateAdmin } from "./middleware/auth.middleware.js";
+import reviewsRouter from "./routes/repliedReviews.routes.js"
 import { main } from "./api/placesApi.js";
 ;
 dotenv.config({});
@@ -31,6 +32,7 @@ export const dbName = "starboom";
 // to get reviews : 
 app.get('/api/reviews',getReviews)
 app.get('/api/places',main)
+app.use('/api',reviewsRouter)
 // API to log a scan
 // app.post('/api/log-scan', async (req, res) => {
 //   try {

@@ -5,6 +5,22 @@ import { Admin } from "../models/admin.models.js";
 
 const router = express.Router();
 
+router.get("/get-admin", async (req, res) => {
+  try {
+    const admin = await Admin.findOne();
+    if (!admin) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid username",
+      });
+    }
+    return res.status(200).json({ username: admin.username });
+  } catch (error) {
+    console.log("Error while fetching admin", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -31,7 +47,7 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "development",
       sameSite: "none",
-      maxAge: 3600000*3, // 1 hour
+      maxAge: 3600000 * 3, // 1 hour
     });
 
     res.json({ success: true, message: "Logged in successfully" });
@@ -40,30 +56,29 @@ router.post("/login", async (req, res) => {
   }
 });
 
-
-
 router.post("/logout", (req, res) => {
   res.clearCookie("token");
   res.json({ success: true, message: "Logged out successfully" });
 });
 
 export const authenticateAdmin = async (req, res, next) => {
-  const token = req.cookies?.token || req.header('Authorization')?.replace('Bearer ', '');
+  const token =
+    req.cookies?.token || req.header("Authorization")?.replace("Bearer ", "");
   if (!token) {
     return res.status(401).json({
       success: false,
-      message: 'Authorization required'
+      message: "Authorization required",
     });
   }
-    console.log(token)
+  console.log(token);
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const admin = await Admin.findById(decoded._id).select('-password');
+    const admin = await Admin.findById(decoded._id).select("-password");
 
-    if (!admin || admin.role !== 'admin') {
+    if (!admin || admin.role !== "admin") {
       return res.status(403).json({
         success: false,
-        message: 'Admin privileges required'
+        message: "Admin privileges required",
       });
     }
 
@@ -72,7 +87,7 @@ export const authenticateAdmin = async (req, res, next) => {
   } catch (error) {
     res.status(401).json({
       success: false,
-      message: 'Invalid or expired token'
+      message: "Invalid or expired token",
     });
   }
 };

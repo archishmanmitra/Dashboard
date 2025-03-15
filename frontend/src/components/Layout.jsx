@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { cn } from "../lib/utils";
 import {
   BarChart3,
@@ -12,10 +12,11 @@ import {
 import { Avatar } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import gradientOverlay from '/gradientOverlay.svg';
+import gradientOverlay from "/gradientOverlay.svg";
 import Logout from "./Logout";
 import { Icon } from "@iconify/react";
 import { Button } from "./ui/button";
+import { useFilterContext } from "../context/FilterContext";
 
 const SidebarItem = ({ icon, label, to, active }) => {
   return (
@@ -39,32 +40,39 @@ const Layout = () => {
   const location = useLocation();
   const path = location.pathname;
   const [isOpen, setIsOpen] = useState(false);
+  const{admin,loading,error} = useFilterContext()
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  // if (loading)
+  //   return (
+  //   <>loading</>
+  //   );
+  // if (error)
+  //   return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
   return (
     <div className="flex h-screen font-[Open_Sauce_Sans]  bg-black text-white">
       {/* Mobile Toggle Button */}
-      <Button 
-        variant="ghost" 
-        size="icon" 
-        className="md:hidden fixed top-4 right-4 z-50" 
+      <Button
+        variant="ghost"
+        size="icon"
+        className="md:hidden fixed top-4 right-4 z-50"
         onClick={toggleSidebar}
       >
-        <Icon 
-          icon="heroicons:bars-3" 
-          width="24" 
-          height="24" 
-          className="text-white" 
+        <Icon
+          icon="heroicons:bars-3"
+          width="24"
+          height="24"
+          className="text-white"
         />
       </Button>
 
       {/* Sidebar for mobile (full screen when open) */}
-      <div 
+      <div
         className={`md:hidden fixed inset-0 bg-black z-40 transform transition-transform ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+          isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full w-full">
@@ -86,13 +94,21 @@ const Layout = () => {
           <div className="flex-1 px-3 py-2">
             <nav className="space-y-2">
               <SidebarItem
-                icon={<Icon icon="material-symbols:star-outline-rounded" width="22" height="22" />}
+                icon={
+                  <Icon
+                    icon="material-symbols:star-outline-rounded"
+                    width="22"
+                    height="22"
+                  />
+                }
                 label="Overview"
                 to="/dashboard"
                 active={path === "/dashboard"}
               />
               <SidebarItem
-                icon={<Icon icon="ic:baseline-insights" width="20" height="20" />}
+                icon={
+                  <Icon icon="ic:baseline-insights" width="20" height="20" />
+                }
                 label="Review Breakdown"
                 to="/breakdown"
                 active={path === "/breakdown"}
@@ -104,7 +120,9 @@ const Layout = () => {
                 active={path === "/performance"}
               />
               <SidebarItem
-                icon={<Icon icon="ri:notification-line" width="20" height="20" />}
+                icon={
+                  <Icon icon="ri:notification-line" width="20" height="20" />
+                }
                 label="Notification"
                 to="/notification"
                 active={path === "/notification"}
@@ -119,11 +137,13 @@ const Layout = () => {
             <div className="flex items-center gap-3">
               <Avatar className="h-8 w-8 border border-neutral-700">
                 <div className="bg-neutral-700 h-full w-full flex items-center justify-center text-xs text-white">
-                  u
+                  {/* {admin.charAt(0)} */} S
                 </div>
               </Avatar>
               <div className="flex flex-col items-start">
-                <span className="text-sm text-white">rk360ironjr@gmail.com</span>
+                <span className="text-sm text-white">
+                  {/* {admin} */} Starboomer
+                </span>
                 <span className="text-xs text-neutral-400">Ver. 1.0</span>
               </div>
             </div>
@@ -134,9 +154,7 @@ const Layout = () => {
       <div className=" hidden md:flex flex-col h-full w-64 bg-black border-r border-neutral-800">
         {/* Logo */}
         <div className="px-2 pt-5 flex justify-center items-center">
-          
-            <img src="/starname.png" alt=""  className=" h-11 "/>
-          
+          <img src="/starname.png" alt="" className=" h-11 " />
         </div>
 
         <Separator className="my-4 mx-5 bg-neutral-800 w-50" />
@@ -145,31 +163,58 @@ const Layout = () => {
         <div className="flex-1 px-3 py-2">
           <nav className="space-y-2">
             <SidebarItem
-              icon={<Icon icon="material-symbols:star-outline-rounded" width="22" height="22" className='' />}
+              icon={
+                <Icon
+                  icon="material-symbols:star-outline-rounded"
+                  width="22"
+                  height="22"
+                  className=""
+                />
+              }
               label="Overview"
               to="/dashboard"
               active={path === "/dashboard"}
             />
             <SidebarItem
-              icon={<Icon icon="ic:baseline-insights" width="20" height="20" className='' />}
+              icon={
+                <Icon
+                  icon="ic:baseline-insights"
+                  width="20"
+                  height="20"
+                  className=""
+                />
+              }
               label="Review Breakdown"
               to="/breakdown"
               active={path === "/breakdown"}
             />
             <SidebarItem
-              icon={<Icon icon="mdi:performance" width="20" height="20" className='' />}
+              icon={
+                <Icon
+                  icon="mdi:performance"
+                  width="20"
+                  height="20"
+                  className=""
+                />
+              }
               label="Performance"
               to="/performance"
               active={path === "/performance"}
             />
             <SidebarItem
-              icon={<Icon icon="ri:notification-line" width="20" height="20" className='' />}
+              icon={
+                <Icon
+                  icon="ri:notification-line"
+                  width="20"
+                  height="20"
+                  className=""
+                />
+              }
               label="Notification"
               to="/notification"
               active={path === "/notification"}
             />
           </nav>
-
 
           {/* <nav className="space-y-1">
             <SidebarItem
@@ -189,16 +234,16 @@ const Layout = () => {
 
         {/* User */}
         <div className="p-4 border-t flex flex-col items-start gap-5 border-neutral-800">
-           <Logout/>
+          <Logout />
           <Separator className=" bg-neutral-800" />
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8 border border-neutral-700">
               <div className="bg-neutral-700 h-full w-full flex items-center justify-center text-xs text-white">
-                u
+                {/* {admin.charAt(0)} */}S
               </div>
             </Avatar>
             <div className="flex flex-col items-start">
-              <span className="text-sm text-white">rk360ironjr@gmail.com</span>
+              <span className="text-sm text-white">{admin?admin:'No admin'}</span>
               <span className="text-xs text-neutral-400">Ver. 1.0</span>
             </div>
           </div>
@@ -207,7 +252,7 @@ const Layout = () => {
 
       {/* Main Content */}
       <div className="flex-1 relative overflow-auto ">
-      {/* <img 
+        {/* <img 
           src={gradientOverlay} 
           alt="grad" 
           className="absolute pointer-events-none z-10"
@@ -220,7 +265,7 @@ const Layout = () => {
             zIndex: "10",
           }}
         /> */}
-          {/* <div 
+        {/* <div 
           className="absolute inset-0 pointer-events-none z-10"
           style={{
             background: "radial-gradient(circle at center, rgba(67, 133, 255, 0.26) 0%, rgba(0, 0, 0, 0) 70%)",
@@ -240,8 +285,7 @@ const Layout = () => {
           }}
         /> */}
 
-        <Outlet/>
-        
+        <Outlet />
       </div>
     </div>
   );

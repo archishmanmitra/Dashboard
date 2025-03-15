@@ -200,9 +200,9 @@ export function Dashboard() {
           </div>
 
           {/* Bottom Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 mt-4 gap-4">
+          <div className="flex flex-col md:flex-row mt-4 gap-4">
             {/* Positive vs Negative Rating Ratio */}
-            <Card className="bg-custom-gradient border  border-[var(--color-bodcol)] z-10 text-white">
+            <Card className="bg-custom-gradient md:flex-4/7 border border-[var(--color-bodcol)] z-10 text-white">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
@@ -248,7 +248,7 @@ export function Dashboard() {
             </Card>
 
             {/* Milestone */}
-            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
+            <Card className="bg-custom-gradient md:flex-2/7 border border-[var(--color-bodcol)] z-10 text-white">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
@@ -307,7 +307,7 @@ export function Dashboard() {
             </Card>
 
             {/* Negative Review Alert */}
-            <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
+            <Card className="bg-custom-gradient md:flex-3/7 border border-[var(--color-bodcol)] z-10 text-white">
               <CardHeader className="flex flex-row items-center justify-between pb-11">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
