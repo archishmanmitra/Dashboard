@@ -63,14 +63,24 @@ const Review = ({
   return (
     <div className="flex gap-4 py-4 md:items-center items-start border-b border-neutral-800 last:border-0">
       <div
-        className={`w-12 h-12 md:w-15 md:h-15  rounded-full flex items-center justify-center  text-white ${color}`}
+        className={`w-12 h-12 md:w-15 md:h-15  rounded-full flex items-center justify-center  text-white ${hasReplied? "bg-green-500" : color}`}
       >
+        {hasReplied? (
+          <Icon
+          icon="mdi:tick-all"
+          width="28"
+          height="28"
+          className=""
+        />
+        ) : (
+
         <Icon
           icon="ant-design:alert-filled"
           width="28"
           height="28"
           className=""
         />
+        )}
       </div>
       <div className="flex-1 flex-col">
         <div className="flex justify-start gap-4 items-center mb-1">
@@ -93,7 +103,7 @@ const Review = ({
               />
             ))}
           </div>
-          {hasReplied && <div>replied</div>}
+          {/* {hasReplied && <div>replied</div>} */}
         </div>
         <div className="flex flex-col items-start justify-between md:flex-row  mt-2 md:gap-0 gap-3 ">
           <div className="text-xs text-neutral-500 pr-4">{content}</div>
@@ -102,9 +112,13 @@ const Review = ({
               variant="outline"
               className="w-[75px] h-[40px] md:hidden rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
               style={{ lineHeight: "32px" }}
-              onClick={onReply}
+              onClick={()=> {
+                onReply;
+                window.open(link, '_blank');
+              }}
             >
-              Reply
+              {hasReplied?  "Replied" : 'Reply'}
+              
             </Button>
           </div>
         </div>
@@ -114,9 +128,12 @@ const Review = ({
           variant="outline"
           className="w-[75px] hidden md:flex h-[40px] rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
           style={{ lineHeight: "32px" }}
-          onClick={onReply}
+          onClick={()=> {
+            onReply;
+            window.open(link, '_blank');
+          }}
         >
-          Reply
+          {hasReplied?  "Replied" : 'Reply'}
         </Button>
       </div>
     </div>
@@ -221,7 +238,7 @@ export default function Notification() {
                         link={review.reviewUrl}
                         initial={review.name.charAt(0).toUpperCase()}
                         color="bg-[#FF3838]"
-                        onReply={() => handleReply(review.reviewId)}
+                        onReply={handleReply(review.reviewId)}
                         hasReplied={hasReplied}
                       />
                     );

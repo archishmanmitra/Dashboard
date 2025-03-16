@@ -16,13 +16,13 @@ import { Separator } from "./ui/separator";
 import { Icon } from "@iconify/react";
 import Loader from "./Loader";
 
-const ProgressLine = ({ completed, current, total = 16 }) => {
+const ProgressLine = ({ completed, current, total = 12 }) => {
   return (
     <div className="flex md:flex-row flex-col items-center justify-center gap-1 w-full h-8">
       {[...Array(total)].map((_, index) => (
         <div
           key={index}
-          className={`h-0.5 md:w-1.5   mx-px ${completed
+          className={`h-0.5 md:w-1   mx-px ${completed
             ? "bg-[var(--color-green)]"
             : current && index < Math.floor((current / 100) * (total))
               ? "bg-[var(--color-green)]"
@@ -177,7 +177,7 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
         ))}
       </div>
       {/* Progress indicators row - now separate from badges */}
-      <div className="md:flex hidden items-center justify-between pl-19 pr-20 px-6">
+      <div className="md:flex hidden items-center justify-between pl-19 pr-24 px-6">
         {milestones.map((milestone, index) => (
           <div key={`progress-${index}`} className="flex-1 flex justify-center">
             <ProgressIndicator
@@ -260,7 +260,7 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
                   
                 </div>
               </div>
-              <div className="ml-3 mt-8">
+              <div className="ml-3 mt-11">
                     <div className="font-medium text-sm">{milestone.title}</div>
                     <div className="text-xs text-gray-500">
                       {milestone.reviews}
