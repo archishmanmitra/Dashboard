@@ -156,6 +156,7 @@ export default function Notification() {
     milestoneData,
     repliedReviewIds,
     setRepliedReviewIds,
+    toggleSidebar
     // handleReply,
   } = useFilterContext();
   const handleReply = async (reviewId) => {

@@ -41,7 +41,7 @@ const Review = ({ author, rating, content }) => {
 };
 
 export default function ReviewsBreakdown() {
-  const { reviews, loading, error, analysis } = useFilterContext();
+  const { reviews, loading, error, analysis, toggleSidebar } = useFilterContext();
 
   // Function to get recent reviews
   const getRecentReviews = () => {
@@ -74,7 +74,7 @@ export default function ReviewsBreakdown() {
 
   if (loading)
     return (
-      <Loader/>
+      <Loader />
     );
   if (error)
     return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
@@ -100,9 +100,18 @@ export default function ReviewsBreakdown() {
       />
       <div className="relative z-10">
         <div className="flex items-center justify-between md:mb-8">
-          <div className="flex items-center gap-2">
-          <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
-          <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12"/>
+          <div className="flex items-center w-full md:w-auto justify-between ">
+            <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
+            <div className="flex items-center justify-between w-full md:w-auto">
+              <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12" />
+              <Icon
+                icon="tabler:menu-deep"
+                width="32"
+                height="32"
+                className="text-white md:hidden block z-40"
+                onClick={toggleSidebar}
+              />
+            </div>
           </div>
           {/* <Button
           variant="outline"
@@ -133,7 +142,7 @@ export default function ReviewsBreakdown() {
               <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white h-fit self-start">
                 <CardHeader className="pb-2 flex flex-row justify-between items-start">
                   <CardTitle className="text-sm font-medium">
-                  <div className="flex items-center">
+                    <div className="flex items-center">
                       <Icon icon="ri:chat-ai-fill" width="24" height="24" className="mr-2" />
                       <h1 className="text-lg">Sentiment Analysis</h1>
                     </div>
@@ -196,10 +205,10 @@ export default function ReviewsBreakdown() {
             <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white h-fit self-start">
               <CardHeader className="pb-2 flex flex-row justify-between items-start">
                 <CardTitle className="text-sm font-medium">
-                <div className="flex items-center">
-                      <Icon icon="iconamoon:comment-fill" width="24" height="24" className="mr-2" />
-                      <h1 className="text-lg">Recent Reviews</h1>
-                    </div>
+                  <div className="flex items-center">
+                    <Icon icon="iconamoon:comment-fill" width="24" height="24" className="mr-2" />
+                    <h1 className="text-lg">Recent Reviews</h1>
+                  </div>
                 </CardTitle>
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>

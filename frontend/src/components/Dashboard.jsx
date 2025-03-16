@@ -47,7 +47,8 @@ export function Dashboard() {
     negaper,
     negative,
     determineMilestone,
-    milestones
+    milestones,
+    toggleSidebar
   } = useFilterContext()
 
   const [ina, setIna] = useState(' a week');
