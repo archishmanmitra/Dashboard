@@ -19,7 +19,7 @@ const port = process.env.PORT||3000;
 
 // Enable CORS
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  origin: process.env.CORS_ORIGIN || "https://dashboard-front-e6i9.onrender.com",
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
