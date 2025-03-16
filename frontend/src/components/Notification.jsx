@@ -183,7 +183,7 @@ export default function Notification() {
         }}
       />
       <div className="relative z-10">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between md:mb-8">
           <div className="flex items-center gap-2">
           <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
           <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12"/>

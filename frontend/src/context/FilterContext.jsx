@@ -37,7 +37,11 @@ export const FilterProvider = ({ children }) => {
   const [places, setPlaces] = useState([]);
   const [repliedReviewIds, setRepliedReviewIds] = useState([]);
   const [admin, setAdmin] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
   const placeNames = [
     "Techno India University, West Bengal",
     "Techno Main Salt Lake",
@@ -390,7 +394,10 @@ export const FilterProvider = ({ children }) => {
         places,
         handleReply,
         repliedReviewIds,
-        admin
+        admin,
+        isOpen,
+        setIsOpen,
+        toggleSidebar
       }}
     >
       {children}

@@ -15,8 +15,8 @@ const Logout = () => {
   };
 
   return (
-    <button onClick={handleLogout} className='flex ml-2 gap-2'>
-      <Icon icon="mdi:logout" width="24" height="24" />
+    <button onClick={handleLogout} className='flex ml-2 text-[var(--color-red)] gap-2'>
+      <Icon icon="mdi:logout" width="24" height="24" className='text-[var(--color-red)]' />
       Logout
       </button>
   );

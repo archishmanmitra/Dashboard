@@ -39,12 +39,12 @@ export const SidebarItem = ({ icon, label, to, active }) => {
 const Layout = () => {
   const location = useLocation();
   const path = location.pathname;
-  const [isOpen, setIsOpen] = useState(false);
-  const { admin, loading, error } = useFilterContext()
+  // const [isOpen, setIsOpen] = useState(false);
+  const { admin, loading, error, isOpen, setIsOpen, toggleSidebar } = useFilterContext()
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleSidebar = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   // if (loading)
   //   return (
@@ -85,7 +85,7 @@ const Layout = () => {
 
           {/* Logo */}
           <div className="px-6 pt-2  flex justify-between items-center">
-            <img src="/star.png" alt="logo" />
+            <img src="/star.png" alt="logo" className=" h-14 w-12" />
 
             <X className="h-8 w-8 text-white z-50" onClick={toggleSidebar} />
             {/* </Button> */}
