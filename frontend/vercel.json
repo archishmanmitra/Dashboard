@@ -1,14 +1,13 @@
 {
-    
+    "build": {
+      "env": {
+        "VITE_API_URL": "https://dashboard-lr5c.onrender.com" 
+      }
+    },
     "routes": [
       {
-        "src": "/(.*)",
-        "dest": "/index.html"
+        "src": "/.*",
+        "dest": "/dist/index.html"
       }
-    ],
-    
-    "rewrites": [
-      { "source": "/api/(.*)", "destination": "/api/$1" },
-      { "source": "/(.*)", "destination": "/" }
     ]
   }
