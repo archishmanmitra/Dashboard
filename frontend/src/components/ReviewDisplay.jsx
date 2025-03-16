@@ -8,7 +8,7 @@ const ReviewsDisplay = () => {
 
   useEffect(() => {
     // Fetch from your backend API
-    fetch("http://localhost:3000/api/reviews")
+    fetch("https://dashboard-lr5c.onrender.com/api/reviews")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch reviews");
@@ -62,7 +62,7 @@ const ReviewsDisplay = () => {
       <h3 className="text-2xl font-semibold text-gray-700 border-b pb-2 mb-4">
         Reviews
       </h3>
-      
+
       {placeInfo.length === 0 ? (
         <p className="text-gray-500 text-center">No reviews available.</p>
       ) : (
@@ -74,7 +74,7 @@ const ReviewsDisplay = () => {
               <p className="text-sm text-gray-500">
                 {new Date(review.publishedAtDate).toLocaleDateString()}
               </p>
-              <p className="text-gray-700 mt-2">{review.text??'No text'}</p>
+              <p className="text-gray-700 mt-2">{review.text ?? 'No text'}</p>
             </div>
           ))}
         </div>

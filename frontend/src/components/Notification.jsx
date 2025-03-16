@@ -86,8 +86,8 @@ const Review = ({
                     ? rating > 3
                       ? "fill-[#1EC928]"
                       : rating === 3
-                      ? "fill-[#F7C73B]"
-                      : "fill-[#FF3838]"
+                        ? "fill-[#F7C73B]"
+                        : "fill-[#FF3838]"
                     : "fill-[#393939]"
                 )}
               />
@@ -138,7 +138,7 @@ export default function Notification() {
   const handleReply = async (reviewId) => {
     try {
       // Send the review ID to the backend
-      await axios.post("http://localhost:3000/api/replied-reviews", { reviewId });
+      await axios.post("https://dashboard-lr5c.onrender.com/api/replied-reviews", { reviewId });
       // Update the local state
       setRepliedReviewIds((prev) => [...prev, reviewId]);
     } catch (error) {

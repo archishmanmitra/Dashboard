@@ -5,10 +5,10 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await fetch('http://localhost:3000/api/logout', {
+    await fetch('https://dashboard-lr5c.onrender.com/api/logout', {
       method: 'POST',
       credentials: 'include'
-       // Include cookies
+      // Include cookies
     });
     navigate('/login');
   };

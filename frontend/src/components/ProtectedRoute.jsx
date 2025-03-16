@@ -8,9 +8,9 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const verifyAuth = async () => {
-      const response = await fetch('http://localhost:3000/api/protected', {
+      const response = await fetch('https://dashboard-lr5c.onrender.com/api/protected', {
         method: "GET",
-        credentials:"include",
+        credentials: "include",
       });
 
       if (response.ok) {

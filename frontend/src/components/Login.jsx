@@ -11,7 +11,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:3000/api/login', {
+    const response = await fetch('https://dashboard-lr5c.onrender.com/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -29,7 +29,7 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-lg bg-[#09090b] opacity-80 rounded-lg border border-[var(--color-bodcol)] p-8 relative">
-        <button 
+        <button
           className="absolute right-4 top-4 text-gray-400 hover:text-white transition-colors"
           onClick={() => navigate('/')}
         >
@@ -48,12 +48,12 @@ const Login = () => {
                 Email
               </label>
               <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-3 py-2 bg-black border border-zinc-700 rounded-md text-white shadow-2xl placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                
+
               />
             </div>
 
