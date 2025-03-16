@@ -55,27 +55,22 @@ const Layout = () => {
   return (
     <div className="flex h-screen font-[Open_Sauce_Sans] overflow-x-hidden  bg-black text-white">
       {/* Mobile Toggle Button */}
-      {/* <Button
-        variant="ghost"
-        size="icon"
-        className=""
-        
-      > */}
-      <Icon
+      
+      {/* <Icon
         icon="tabler:menu-deep"
         width="30"
         height="30"
         className="text-white md:hidden fixed top-9 right-5 z-40"
         onClick={toggleSidebar}
-      />
-      {/* </Button> */}
+      /> */}
+    
 
       {/* Sidebar for mobile (full screen when open) */}
       <div
         className={`md:hidden fixed inset-0 bg-black z-40 transform transition-transform ${isOpen ? "translate-x-0" : "translate-x-full"
           }`}
       >
-        <div className="flex flex-col h-full w-full">
+        <div className="flex flex-col mt-4 h-full w-full">
           {/* Close button */}
           {/* <div className="flex justify-end p-4">
             <Button variant="ghost" size="icon" onClick={toggleSidebar}>
@@ -84,17 +79,17 @@ const Layout = () => {
           </div> */}
 
           {/* Logo */}
-          <div className="px-6 pt-2  flex justify-between items-center">
+          <div className="px-8 pt-2  flex justify-between items-center">
             <img src="/star.png" alt="logo" className=" h-14 w-12" />
 
             <X className="h-8 w-8 text-white z-50" onClick={toggleSidebar} />
             {/* </Button> */}
 
           </div>
-<div className="m-4 mx-6">
+          <div className="m-4 mx-6">
 
-          <Separator className="  bg-neutral-800" />
-</div>
+            <Separator className="  bg-neutral-800" />
+          </div>
 
           {/* Navigation */}
           <div className="flex-1 px-3 py-2">
@@ -157,7 +152,7 @@ const Layout = () => {
         </div>
       </div>
       {/* Sidebar */}
-      <div className=" hidden md:flex flex-col h-full w-64 bg-black border-r border-neutral-800">
+      <div className=" hidden lg:flex flex-col h-full w-64 bg-black border-r border-neutral-800">
         {/* Logo */}
         <div className="px-2 pt-5 flex justify-center items-center">
           <img src="/starname.png" alt="" className=" h-11 " />
@@ -239,7 +234,7 @@ const Layout = () => {
         </div>
 
         {/* User */}
-        <div className="p-4 border-t flex flex-col items-start gap-5 border-neutral-800">
+        <div className="p-4 border-t  flex flex-col items-start gap-5 border-neutral-800">
           <Logout />
           <Separator className=" bg-neutral-800" />
           <div className="flex items-center gap-3">

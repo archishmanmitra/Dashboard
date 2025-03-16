@@ -37,9 +37,8 @@ const ProgressLine = ({ completed, current, total = 16 }) => {
 const ProgressBadge = ({ icon, title, reviews, active, width, height }) => {
   return (
     <div
-      className={`flex md:flex-col  items-center ${
-        active ? "text-white" : "text-neutral-600"
-      }`}
+      className={`flex md:flex-col  items-center ${active ? "text-white" : "text-neutral-600"
+        }`}
     >
       {/* Icon Container - Top */}
       <div
@@ -194,7 +193,7 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
         ))}
       </div>
       {/* Mobile view - vertical layout */}
-      
+
       <div className="flex flex-col md:hidden w-full">
         {milestones.map((milestone, index) => (
           <div
@@ -216,27 +215,26 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
                 <div className="mt-6">
                   <div
                     className={`left-1/2 top-1/2 -translate-y-1/2 -translate-x-3 w-6 h-6 rounded-full flex items-center justify-center z-10
-              ${
-                reviewsCount > milestone.maxReviews
-                  ? "bg-[var(--color-green)]"
-                  : currentMilestone === milestone.title
-                  ? "bg-[var(--color-green)]"
-                  : "bg-[var(--color-eclipse)]"
-              }`}
+              ${reviewsCount > milestone.maxReviews
+                        ? "bg-[var(--color-green)]"
+                        : currentMilestone === milestone.title
+                          ? "bg-[var(--color-green)]"
+                          : "bg-[var(--color-eclipse)]"
+                      }`}
                   >
                     {reviewsCount && (
                       <div className=" text-[var(--color-in-tick)]">
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3"
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="3"
                         // className="text-[var(--color-in-tick)]"
-                      >
-                        <path d="M20 6L9 17L4 12" />
-                      </svg>
+                        >
+                          <path d="M20 6L9 17L4 12" />
+                        </svg>
                       </div>
                     )}
 
@@ -247,25 +245,24 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
                           <div
                             key={dotIndex}
                             className={`h-2 w-1 rounded-full
-                    ${
-                      reviewsCount > milestone.maxReviews
-                        ? "bg-[var(--color-green)]"
-                        : "bg-[var(--color-bodcol)]"
-                    }`}
+                    ${reviewsCount > milestone.maxReviews
+                                ? "bg-[var(--color-green)]"
+                                : "bg-[var(--color-bodcol)]"
+                              }`}
                           />
                         ))}
                       </div>
                     )}
                   </div>
-                  
+
                 </div>
               </div>
               <div className="ml-3 mt-11">
-                    <div className="font-medium text-sm">{milestone.title}</div>
-                    <div className="text-xs text-gray-500">
-                      {milestone.reviews}
-                    </div>
-                  </div>
+                <div className="font-medium text-sm">{milestone.title}</div>
+                <div className="text-xs text-gray-500">
+                  {milestone.reviews}
+                </div>
+              </div>
             </div>
           </div>
         ))}
@@ -287,6 +284,7 @@ export default function Performance() {
     countRate,
     milestone,
     places,
+    toggleSidebar
   } = useFilterContext();
 
   // useEffect(() => {
@@ -455,9 +453,18 @@ export default function Performance() {
       />
       <div className="relative z-10">
         <div className="flex items-center justify-between md:mb-8">
-          <div className="flex items-center gap-2">
-          <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
-          <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12"/>
+          <div className="flex items-center w-full md:w-auto justify-between ">
+            <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
+            <div className="flex items-center justify-between w-full md:w-auto">
+              <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12" />
+              <Icon
+                icon="tabler:menu-deep"
+                width="32"
+                height="32"
+                className="text-white md:hidden block z-40"
+                onClick={toggleSidebar}
+              />
+            </div>
           </div>
           {/* <Button
           variant="outline"
@@ -507,7 +514,7 @@ export default function Performance() {
                   <div className=" flex flex-col items-start">
                     <p className="text-sm mb-2 text-neutral-400">Before</p>
                     <div className="flex gap-2 items-end">
-                      <h2 className="text-5xl font-bold">6</h2>
+                      <h2 className="text-4xl font-bold">6</h2>
                       <p className="text-xs mb-1 text-neutral-400">
                         reviews & average <br /> of 4.2 Stars
                       </p>
@@ -521,7 +528,7 @@ export default function Performance() {
                       After
                     </p>
                     <div className="flex gap-2 items-end">
-                      <h2 className="text-5xl font-bold">
+                      <h2 className="text-4xl font-bold">
                         {placeInfo ? placeInfo.reviewsCount : "N/A"}
                       </h2>
                       <p className="text-xs mb-1 text-neutral-400">
@@ -642,7 +649,7 @@ export default function Performance() {
                     Your business
                   </p>
                   <div className="flex gap-2 items-end">
-                    <h2 className="text-5xl font-bold">
+                    <h2 className="text-4xl font-bold">
                       {placeInfo ? placeInfo.reviewsCount : "N/A"}
                     </h2>
                     <p className="text-xs mb-1 text-neutral-400">
@@ -659,7 +666,7 @@ export default function Performance() {
                         {place.placeName}
                       </p>
                       <div className="flex gap-2 items-end">
-                        <h2 className="text-5xl font-bold">
+                        <h2 className="text-4xl font-bold">
                           {place.details.user_ratings_total}
                         </h2>
                         <p className="text-xs mb-1 text-neutral-400">

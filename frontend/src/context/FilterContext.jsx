@@ -162,7 +162,7 @@ export const FilterProvider = ({ children }) => {
     "simple-bar":
       "https://www.google.com/maps/place/Techno+India+University/@22.5760026,88.4259374,17z/data=!3m1!4b1!4m6!3m5!1s0x39f970ae9a2e19b5:0x16c43b9069f4b159!8m2!3d22.5760026!4d88.4285123!16s%2Fm%2F0k3lkpp?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D",
     "complex-bar":
-      "https://www.google.com/maps/place/Salt+Pepper/@22.6625556,88.3760408,17z/data=!3m1!4b1!4m6!3m5!1s0x39f89d89ebb188b1:0x2211f247268e892d!8m2!3d22.6625556!4d88.3786157!16s%2Fg%2F11qgyvd3pq?hl=en-GB&entry=ttu&g_ep=EgoyMDI1MDMxMC4wIKXMDSoASAFQAw%3D%3D",
+      "https://www.google.com/maps/place/Ice+and+Spice/@22.58638,88.150382,12z/data=!4m10!1m2!2m1!1sice+and+spice!3m6!1s0x39f89df5db8af2dd:0x82687ddd6415ff25!8m2!3d22.6160565!4d88.3874674!15sCg1pY2UgYW5kIHNwaWNlWg8iDWljZSBhbmQgc3BpY2WSAQpyZXN0YXVyYW504AEA!16s%2Fg%2F1vxdwq3x?entry=ttu&g_ep=EgoyMDI1MDMxMi4wIKXMDSoASAFQAw%3D%3D",
     "bad-bar":
       "https://www.google.com/maps/place/Techno+Main+Salt+Lake/@22.5760866,88.4251959,17z/data=!4m10!1m2!2m1!1stechno+india+main+salt+lake!3m6!1s0x3a02751a9d9c9e85:0x7fe665c781b10383!8m2!3d22.5761707!4d88.4270293!15sCht0ZWNobm8gaW5kaWEgbWFpbiBzYWx0IGxha2VaHSIbdGVjaG5vIGluZGlhIG1haW4gc2FsdCBsYWtlkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VOeGNuQlhlSHBSUlJBQuABAPoBBQi-AhAt!16s%2Fg%2F11fml2v54k?entry=ttu&g_ep=EgoyMDI1MDMwMi4wIKXMDSoASAFQAw%3D%3D",
   };
@@ -394,6 +394,7 @@ export const FilterProvider = ({ children }) => {
         places,
         handleReply,
         repliedReviewIds,
+        setRepliedReviewIds,
         admin,
         isOpen,
         setIsOpen,

@@ -68,8 +68,8 @@ const Review = ({
         {hasReplied ? (
           <Icon
             icon="mdi:tick-all"
-            width="28"
-            height="28"
+            width="24"
+            height="24"
             className=""
           />
         ) : (
@@ -110,10 +110,13 @@ const Review = ({
           <div className="">
             <Button
               variant="outline"
-              className="w-[75px] h-[40px] md:hidden rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
+              className={`w-[75px] h-[40px] md:hidden rounded-full  ${hasReplied
+                  ? "bg-custom text-white border-white"
+                  : "bg-white border-neutral-700 text-black"
+                } text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors`}
               style={{ lineHeight: "32px" }}
               onClick={() => {
-                onReply;
+                onReply(); // Call the function
                 window.open(link, '_blank');
               }}
             >
@@ -126,10 +129,13 @@ const Review = ({
       <div>
         <Button
           variant="outline"
-          className="w-[75px] hidden md:flex h-[40px] rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
+          className={`w-[75px] hidden md:flex h-[40px] rounded-full ${hasReplied
+              ? "bg-custom text-white border-white"
+              : "bg-white border-neutral-700 text-black"
+            } text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors`}
           style={{ lineHeight: "32px" }}
           onClick={() => {
-            onReply;
+            onReply(); // Call the function
             window.open(link, '_blank');
           }}
         >
@@ -184,9 +190,18 @@ export default function Notification() {
       />
       <div className="relative z-10">
         <div className="flex items-center justify-between md:mb-8">
-          <div className="flex items-center gap-2">
-          <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
-          <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12"/>
+          <div className="flex items-center w-full md:w-auto justify-between ">
+            <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
+            <div className="flex items-center justify-between w-full md:w-auto">
+              <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12" />
+              <Icon
+                icon="tabler:menu-deep"
+                width="32"
+                height="32"
+                className="text-white md:hidden block z-40"
+                onClick={toggleSidebar}
+              />
+            </div>
           </div>
           {/* <Button
           variant="outline"
@@ -239,7 +254,7 @@ export default function Notification() {
                         link={review.reviewUrl}
                         initial={review.name.charAt(0).toUpperCase()}
                         color="bg-[#FF3838]"
-                        onReply={handleReply(review.reviewId)}
+                        onReply={() => handleReply(review.reviewId)}
                         hasReplied={hasReplied}
                       />
                     );
