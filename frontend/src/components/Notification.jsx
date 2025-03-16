@@ -63,23 +63,23 @@ const Review = ({
   return (
     <div className="flex gap-4 py-4 md:items-center items-start border-b border-neutral-800 last:border-0">
       <div
-        className={`w-12 h-12 md:w-15 md:h-15  rounded-full flex items-center justify-center  text-white ${hasReplied? "bg-green-500" : color}`}
+        className={`w-12 h-12 md:w-15 md:h-15  rounded-full flex items-center justify-center  text-white ${hasReplied ? "bg-green-500" : color}`}
       >
-        {hasReplied? (
+        {hasReplied ? (
           <Icon
-          icon="mdi:tick-all"
-          width="28"
-          height="28"
-          className=""
-        />
+            icon="mdi:tick-all"
+            width="28"
+            height="28"
+            className=""
+          />
         ) : (
 
-        <Icon
-          icon="ant-design:alert-filled"
-          width="28"
-          height="28"
-          className=""
-        />
+          <Icon
+            icon="ant-design:alert-filled"
+            width="28"
+            height="28"
+            className=""
+          />
         )}
       </div>
       <div className="flex-1 flex-col">
@@ -112,13 +112,13 @@ const Review = ({
               variant="outline"
               className="w-[75px] h-[40px] md:hidden rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
               style={{ lineHeight: "32px" }}
-              onClick={()=> {
+              onClick={() => {
                 onReply;
                 window.open(link, '_blank');
               }}
             >
-              {hasReplied?  "Replied" : 'Reply'}
-              
+              {hasReplied ? "Replied" : 'Reply'}
+
             </Button>
           </div>
         </div>
@@ -128,12 +128,12 @@ const Review = ({
           variant="outline"
           className="w-[75px] hidden md:flex h-[40px] rounded-full bg-white border border-neutral-700  text-black text-xs font-bold hover:bg-neutral-700 hover:text-white transition-colors"
           style={{ lineHeight: "32px" }}
-          onClick={()=> {
+          onClick={() => {
             onReply;
             window.open(link, '_blank');
           }}
         >
-          {hasReplied?  "Replied" : 'Reply'}
+          {hasReplied ? "Replied" : 'Reply'}
         </Button>
       </div>
     </div>
@@ -155,7 +155,7 @@ export default function Notification() {
   const handleReply = async (reviewId) => {
     try {
       // Send the review ID to the backend
-      await axios.post("https://dashboard-lr5c.onrender.com/api/replied-reviews", { reviewId });
+      await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/api/replied-reviews`, { reviewId });
       // Update the local state
       setRepliedReviewIds((prev) => [...prev, reviewId]);
     } catch (error) {
@@ -185,7 +185,8 @@ export default function Notification() {
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
-            <h1 className="text-4xl  text-white">Dashboard</h1>
+          <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
+          <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12"/>
           </div>
           {/* <Button
           variant="outline"

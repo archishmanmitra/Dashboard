@@ -8,7 +8,7 @@ const ReviewsDisplay = () => {
 
   useEffect(() => {
     // Fetch from your backend API
-    fetch("https://dashboard-lr5c.onrender.com/api/reviews")
+    fetch("import.meta.env.VITE_API_ENDPOINT/api/reviews")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch reviews");

@@ -18,7 +18,7 @@ import { Icon } from "@iconify/react";
 import { Button } from "./ui/button";
 import { useFilterContext } from "../context/FilterContext";
 
-const SidebarItem = ({ icon, label, to, active }) => {
+export const SidebarItem = ({ icon, label, to, active }) => {
   return (
     <Link to={to}>
       <div
@@ -40,7 +40,7 @@ const Layout = () => {
   const location = useLocation();
   const path = location.pathname;
   const [isOpen, setIsOpen] = useState(false);
-  const{admin,loading,error} = useFilterContext()
+  const { admin, loading, error } = useFilterContext()
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -53,46 +53,52 @@ const Layout = () => {
   // if (error)
   //   return <p className="text-center text-red-500 text-lg">Error: {error}</p>;
   return (
-    <div className="flex h-screen font-[Open_Sauce_Sans]  bg-black text-white">
+    <div className="flex h-screen font-[Open_Sauce_Sans] overflow-x-hidden  bg-black text-white">
       {/* Mobile Toggle Button */}
-      <Button
+      {/* <Button
         variant="ghost"
         size="icon"
-        className="md:hidden fixed top-4 right-4 z-50"
+        className=""
+        
+      > */}
+      <Icon
+        icon="tabler:menu-deep"
+        width="30"
+        height="30"
+        className="text-white md:hidden fixed top-9 right-5 z-40"
         onClick={toggleSidebar}
-      >
-        <Icon
-          icon="heroicons:bars-3"
-          width="24"
-          height="24"
-          className="text-white"
-        />
-      </Button>
+      />
+      {/* </Button> */}
 
       {/* Sidebar for mobile (full screen when open) */}
       <div
-        className={`md:hidden fixed inset-0 bg-black z-40 transform transition-transform ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`md:hidden fixed inset-0 bg-black z-40 transform transition-transform ${isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex flex-col h-full w-full">
           {/* Close button */}
-          <div className="flex justify-end p-4">
+          {/* <div className="flex justify-end p-4">
             <Button variant="ghost" size="icon" onClick={toggleSidebar}>
-              <X className="h-6 w-6 text-white" />
+              <X className="h-10 w-10 text-white z-50" />
             </Button>
-          </div>
+          </div> */}
 
           {/* Logo */}
-          <div className="px-2 pt-2 flex justify-center items-center">
-            <img src="/starname.png" alt="Logo" className="h-11" />
-          </div>
+          <div className="px-6 pt-2  flex justify-between items-center">
+            <img src="/star.png" alt="logo" />
 
-          <Separator className="my-4 mx-5 bg-neutral-800" />
+            <X className="h-8 w-8 text-white z-50" onClick={toggleSidebar} />
+            {/* </Button> */}
+
+          </div>
+<div className="m-4 mx-6">
+
+          <Separator className="  bg-neutral-800" />
+</div>
 
           {/* Navigation */}
           <div className="flex-1 px-3 py-2">
-            <nav className="space-y-2">
+            <nav className="space-y-2" onClick={toggleSidebar}>
               <SidebarItem
                 icon={
                   <Icon
@@ -131,7 +137,7 @@ const Layout = () => {
           </div>
 
           {/* User */}
-          <div className="p-4 border-t flex flex-col items-start gap-5 border-neutral-800">
+          <div className="p-4  flex flex-col items-start gap-5 border-neutral-800">
             <Logout />
             <Separator className="bg-neutral-800" />
             <div className="flex items-center gap-3">
@@ -243,7 +249,7 @@ const Layout = () => {
               </div>
             </Avatar>
             <div className="flex flex-col items-start">
-              <span className="text-sm text-white">{admin?admin:'No admin'}</span>
+              <span className="text-sm text-white">{admin ? admin : 'No admin'}</span>
               <span className="text-xs text-neutral-400">Ver. 1.0</span>
             </div>
           </div>
@@ -251,7 +257,7 @@ const Layout = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 relative overflow-auto ">
+      <div className="flex-1 relative overflow-auto overflow-x-hidden">
         {/* <img 
           src={gradientOverlay} 
           alt="grad" 

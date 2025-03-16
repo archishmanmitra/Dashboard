@@ -11,7 +11,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('https://dashboard-lr5c.onrender.com/api/login', {
+    const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -33,7 +33,7 @@ const Login = () => {
           className="absolute right-4 top-4 text-gray-400 hover:text-white transition-colors"
           onClick={() => navigate('/')}
         >
-          <X size={20} />
+
         </button>
 
         <div className="space-y-6">
@@ -45,7 +45,7 @@ const Login = () => {
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-white mb-2">
-                Email
+                Username
               </label>
               <input
                 type="text"

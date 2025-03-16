@@ -45,7 +45,7 @@ export const FilterProvider = ({ children }) => {
   ];
   useEffect(() => {
     // Fetch counts from the backend
-    axios.get("https://dashboard-lr5c.onrender.com/api/get-counts").then((response) => {
+    axios.get(`${import.meta.env.VITE_API_ENDPOINT}/api/get-counts`).then((response) => {
       setCounts(response.data.totalScans);
       setClick(response.data.totalButtonClicks);
       setCountRate(response.data.scanRate);
@@ -55,7 +55,7 @@ export const FilterProvider = ({ children }) => {
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
-        const response = await fetch("https://dashboard-lr5c.onrender.com/api/get-admin");
+        const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/api/get-admin`);
         const data = await response.json();
         setAdmin(data.username);
         if (response.ok) {
@@ -76,7 +76,7 @@ export const FilterProvider = ({ children }) => {
       const placeDetails = await Promise.all(
         placeNames.map(async (placeName) => {
           const response = await fetch(
-            `https://dashboard-lr5c.onrender.com/api/places?query=${placeName}`
+            `${import.meta.env.VITE_API_ENDPOINT}/api/places?query=${placeName}`
           );
           const data = await response.json();
           return { placeName, details: data.placeDetails };
@@ -91,7 +91,7 @@ export const FilterProvider = ({ children }) => {
   const fetchMilestone = async () => {
     try {
       const response = await axios.get(
-        `https://dashboard-lr5c.onrender.com/api/milestone/${selectedPlace}`
+        `${import.meta.env.VITE_API_ENDPOINT}/api/milestone/${selectedPlace}`
       );
       setMilestoneData(response.data);
     } catch (error) {
@@ -113,7 +113,7 @@ export const FilterProvider = ({ children }) => {
     const fetchRepliedReviews = async () => {
       try {
         const response = await axios.get(
-          "https://dashboard-lr5c.onrender.com/api/replied-reviews"
+          `${import.meta.env.VITE_API_ENDPOINT}/api/replied-reviews`
         );
         setRepliedReviewIds(response.data);
       } catch (error) {
@@ -127,7 +127,7 @@ export const FilterProvider = ({ children }) => {
   const handleReply = async (reviewId) => {
     try {
       // Send the review ID to the backend
-      await axios.post("https://dashboard-lr5c.onrender.com/api/replied-reviews", {
+      await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/api/replied-reviews`, {
         reviewId,
       });
       // Update the local state
@@ -139,7 +139,7 @@ export const FilterProvider = ({ children }) => {
   const updateMilestone = async (newMilestone) => {
     try {
       const response = await axios.post(
-        `https://dashboard-lr5c.onrender.com/api/milestone/${selectedPlace}`,
+        `${import.meta.env.VITE_API_ENDPOINT}/api/milestone/${selectedPlace}`,
         { newMilestone }
       );
 
@@ -207,7 +207,7 @@ export const FilterProvider = ({ children }) => {
       const reviewsStartDate = getStartDate(selectedOption);
       const urlMain = placeOptions[selectedPlace];
       const response = await fetch(
-        `https://dashboard-lr5c.onrender.com/api/reviews?url=${encodeURIComponent(
+        `${import.meta.env.VITE_API_ENDPOINT}/api/reviews?url=${encodeURIComponent(
           urlMain
         )}&reviewsStartDate=${reviewsStartDate}`
       );

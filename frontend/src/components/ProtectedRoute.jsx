@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const verifyAuth = async () => {
-      const response = await fetch('https://dashboard-lr5c.onrender.com/api/protected', {
+      const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/api/protected`, {
         method: "GET",
         credentials: "include",
       });

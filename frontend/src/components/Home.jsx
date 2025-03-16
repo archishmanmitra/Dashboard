@@ -6,12 +6,12 @@ import { useEffect } from "react";
 export default function Home() {
   useEffect(() => {
     // Log the scan when the page loads
-    axios.post('https://dashboard-lr5c.onrender.com/api/log-scan');
+    axios.post(`${import.meta.env.VITE_API_ENDPOINT}/api/log-scan`);
   }, []);
 
   const handleReviewClick = () => {
     // Log the button click
-    axios.post('https://dashboard-lr5c.onrender.com/api/log-button-click');
+    axios.post(`${import.meta.env.VITE_API_ENDPOINT}/api/log-button-click`);
     window.open('https://www.google.com/maps?sca_esv=9214e60237169270&rlz=1C1ONGR_en-GBIN1071IN1071&output=search&q=techno+main+salt+lake&source=lnms&fbs=ABzOT_CWdhQLP1FcmU5B0fn3xuWpA-dk4wpBWOGsoR7DG5zJBv10Kbgy3ptSBM6mMfaz8zDVX4b2W1tiDkb3uUgOX2bJ3a5BLG7BkjuQ4GCVNnHDBVV8AikdpKXTHc3QzL9r29OsmnWG9YyUq2HKDk92VPIGBTiroTgAhnMApiY7Y7Ee9UH5_IVpOJ56QvX16CCwZmL-eFirhkCq3ojEZn8tyFPiJegzIg&entry=mc&ved=1t:200715&ictx=111', "_blank");
   };
   return (

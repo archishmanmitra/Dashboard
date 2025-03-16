@@ -16,7 +16,7 @@ import { Separator } from "./ui/separator";
 import { Icon } from "@iconify/react";
 import Loader from "./Loader";
 
-const ProgressLine = ({ completed, current, total = 12 }) => {
+const ProgressLine = ({ completed, current, total = 16 }) => {
   return (
     <div className="flex md:flex-row flex-col items-center justify-center gap-1 w-full h-8">
       {[...Array(total)].map((_, index) => (
@@ -456,7 +456,8 @@ export default function Performance() {
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
-            <h1 className="text-4xl  text-white">Dashboard</h1>
+          <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
+          <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12"/>
           </div>
           {/* <Button
           variant="outline"
