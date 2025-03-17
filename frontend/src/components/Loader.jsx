@@ -6,7 +6,7 @@ const Loader = () => {
   return (
     <div className='h-screen  flex justify-center items-center'>
         
-        <TextShimmerWave className='[--base-color:#ffffff] [--base-gradient-color:#dddddd] text-2xl md:text-3xl  '
+        <TextShimmerWave className='[--base-color:#CB8940] [--base-gradient-color:#CCA478] text-xl md:text-3xl  '
       duration={1}
       spread={1}
       zDistance={1}

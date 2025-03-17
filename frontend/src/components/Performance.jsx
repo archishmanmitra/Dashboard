@@ -22,7 +22,7 @@ const ProgressLine = ({ completed, current, total = 16 }) => {
       {[...Array(total)].map((_, index) => (
         <div
           key={index}
-          className={`h-0.5 md:w-1   mx-px ${completed
+          className={`h-0.5 md:w-0.5   mx-px ${completed
             ? "bg-[var(--color-green)]"
             : current && index < Math.floor((current / 100) * (total))
               ? "bg-[var(--color-green)]"
@@ -553,7 +553,7 @@ export default function Performance() {
                           height="24"
                           className="mr-2"
                         />
-                        <h1 className="text-lg">Visitors</h1>
+                        <h1 className="text-lg">Total Visitors</h1>
                       </div>
                     </div>
                   </CardTitle>
@@ -582,7 +582,7 @@ export default function Performance() {
                           height="24"
                           className="mr-2"
                         />
-                        <h1 className="text-lg">Button Clicks</h1>
+                        <h1 className="text-lg">Total Clicks</h1>
                       </div>
                     </div>
                   </CardTitle>

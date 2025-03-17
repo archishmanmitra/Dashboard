@@ -217,7 +217,7 @@ export function Dashboard() {
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
                     <Icon icon="ix:compare" width="24" height="24" className="mr-2 rotate-90" />
-                    <h1 className="text-lg">Positive vs Negative Rating</h1>
+                    <h1 className="text-lg">Positive vs Negative</h1>
 
                   </div>
                 </CardTitle>
@@ -227,7 +227,7 @@ export function Dashboard() {
                 <div className="space-y-4 mt-3">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm">Positive Review</span>
+                      <span className="text-sm">Positive Rating</span>
                       <span className="text-sm">{posiper}%</span>
                     </div>
                     <Progress
@@ -241,7 +241,7 @@ export function Dashboard() {
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm">Negative Review</span>
+                      <span className="text-sm">Negative Rating</span>
                       <span className="text-sm">{negaper}%</span>
                     </div>
                     <Progress
