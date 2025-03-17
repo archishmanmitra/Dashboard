@@ -49,7 +49,7 @@ export default function Home() {
               alt="SD Fashion Logo"
               className="w-[100px] h-[100px] object-cover rounded-full"
             />
-            <h2 className="text-2xl mt-1 font-bold text-center">S.D. Fashion</h2>
+            <h2 className="text-2xl mt-1 font-medium text-center font-serif">S.D. Fashion</h2>
           </div>
 
           {/* Text and button section at bottom */}
