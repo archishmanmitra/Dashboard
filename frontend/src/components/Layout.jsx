@@ -80,7 +80,7 @@ const Layout = () => {
 
           {/* Logo */}
           <div className="px-8 pt-2  flex justify-between items-center">
-            <img src="/star.png" alt="logo" className=" h-14 w-12" />
+            <img src="/starboom.png" alt="logo" className=" h-14 w-12" />
 
             <X className="h-8 w-8 text-white z-50" onClick={toggleSidebar} />
             {/* </Button> */}
@@ -155,7 +155,7 @@ const Layout = () => {
       <div className=" hidden lg:flex flex-col h-full w-64 bg-black border-r border-neutral-800">
         {/* Logo */}
         <div className="px-2 pt-5 flex justify-center items-center">
-          <img src="/starname.png" alt="" className=" h-11 " />
+          <img src="/boomboom.png" alt="" className=" h-11 " />
         </div>
 
         <Separator className="my-4 mx-4 bg-neutral-800 w-56" />

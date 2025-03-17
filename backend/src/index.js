@@ -129,9 +129,12 @@ app.get('/api/get-counts', async (req, res) => {
     const previousWeekScans = previousWeekEvents.filter((e) => e.type === 'scan').length;
     const previousWeekClicks = previousWeekEvents.filter((e) => e.type === 'buttonClick').length;
 
-    const scanRate = ((currentWeekScans - previousWeekScans) / previousWeekScans) * 100;
-    const clickRate = ((currentWeekClicks - previousWeekClicks) / previousWeekClicks) * 100;
+    const redOrGreen = currentWeekClicks > previousWeekClicks;
+    const redOrGreenScan = currentWeekScans > previousWeekScans;
 
+    const scanRate = redOrGreenScan ? ((currentWeekScans - previousWeekScans) / previousWeekScans) * 100 : ((previousWeekScans - currentWeekScans) / previousWeekScans) * 100;
+    const clickRate = redOrGreen ? ((currentWeekClicks - previousWeekClicks) / previousWeekClicks) * 100 : ((previousWeekClicks - currentWeekClicks) / previousWeekClicks) * 100;
+  
     res.send({
       totalScans,
       totalButtonClicks,
@@ -141,6 +144,8 @@ app.get('/api/get-counts', async (req, res) => {
       previousWeekClicks,
       scanRate: scanRate === Infinity ? 100:  scanRate.toFixed(2),
       clickRate: clickRate === Infinity ? 100:  clickRate.toFixed(2),
+      redOrGreen,
+      redOrGreenScan,
     });
   } catch (error) {
     res.status(500).send({ success: false, error: error.message });

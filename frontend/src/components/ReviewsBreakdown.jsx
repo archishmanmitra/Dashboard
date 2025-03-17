@@ -100,15 +100,15 @@ export default function ReviewsBreakdown() {
       />
       <div className="relative z-10">
         <div className="flex items-center justify-between md:mb-4.5">
-          <div className="flex items-center w-full md:w-auto justify-between ">
-            <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
-            <div className="flex items-center justify-between w-full md:w-auto">
-              <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12" />
+          <div className="flex items-center w-full lg:w-auto justify-between ">
+            <h1 className="text-4xl hidden lg:block text-white">Dashboard</h1>
+            <div className="flex items-center justify-between w-full ">
+              <img src="/starboom.png" alt="logo" className="lg:hidden block h-14 w-12" />
               <Icon
                 icon="tabler:menu-deep"
                 width="32"
                 height="32"
-                className="text-white md:hidden block z-40"
+                className="text-white lg:hidden block z-40"
                 onClick={toggleSidebar}
               />
             </div>

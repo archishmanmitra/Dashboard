@@ -103,15 +103,15 @@ export function Dashboard() {
       />
       <div className="relative z-10">
         <div className="flex items-center justify-between md:mb-4.5">
-          <div className="flex items-center w-full md:w-auto justify-between ">
-            <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
-            <div className="flex items-center justify-between w-full md:w-auto">
-              <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12" />
+          <div className="flex items-center w-full lg:w-auto justify-between ">
+            <h1 className="text-4xl hidden lg:block text-white">Dashboard</h1>
+            <div className="flex items-center justify-between w-full ">
+              <img src="/starboom.png" alt="logo" className="lg:hidden block h-14 w-12" />
               <Icon
                 icon="tabler:menu-deep"
                 width="32"
                 height="32"
-                className="text-white md:hidden block z-40"
+                className="text-white lg:hidden block z-40"
                 onClick={toggleSidebar}
               />
             </div>
@@ -193,7 +193,7 @@ export function Dashboard() {
                   <CardTitle className="text-sm font-medium">
                     <div className="flex items-center">
                       <Icon icon="mdi:people" width="24" height="24" className="mr-2" />
-                      <h1 className="text-lg">Total Reviews Earned</h1>
+                      <h1 className="text-lg">Reviews Earned</h1>
 
                     </div>
                   </CardTitle>
@@ -331,8 +331,8 @@ export function Dashboard() {
                 <div className="flex items-center justify-between ">
                   <div className="flex items-end gap-2">
 
-                  <div className="text-4xl font-bold text-[var(--color-red)]">{negative}</div>
-                  <p className="text-[11px] mb-1 text-[var(--color-secondary)]">Bad review</p>
+                    <div className="text-4xl font-bold text-[var(--color-red)]">{negative}</div>
+                    <p className="text-[11px] mb-1 text-[var(--color-secondary)]">Bad review</p>
                   </div>
                   <Button
                     variant="outline"

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
   AlertTriangle,
+  ArrowDownLeft,
   ArrowUpRight,
   Download,
   Info,
@@ -284,7 +285,9 @@ export default function Performance() {
     countRate,
     milestone,
     places,
-    toggleSidebar
+    toggleSidebar,
+    redOrGreen,
+    redOrGreenScan
   } = useFilterContext();
 
   // useEffect(() => {
@@ -453,15 +456,15 @@ export default function Performance() {
       />
       <div className="relative z-10">
         <div className="flex items-center justify-between md:mb-4.5">
-          <div className="flex items-center w-full md:w-auto justify-between ">
-            <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
-            <div className="flex items-center justify-between w-full md:w-auto">
-              <img src="/star.png" alt="logo" className="md:hidden block h-14 w-12" />
+          <div className="flex items-center w-full lg:w-auto justify-between ">
+            <h1 className="text-4xl hidden lg:block text-white">Dashboard</h1>
+            <div className="flex items-center justify-between w-full ">
+              <img src="/starboom.png" alt="logo" className="lg:hidden block h-14 w-12" />
               <Icon
                 icon="tabler:menu-deep"
                 width="32"
                 height="32"
-                className="text-white md:hidden block z-40"
+                className="text-white lg:hidden block z-40"
                 onClick={toggleSidebar}
               />
             </div>
@@ -510,7 +513,7 @@ export default function Performance() {
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
               <CardContent>
-                <div className="flex-col md:flex-row flex  items-start  pt-4 justify-between mt-2 md:items-center gap-4">
+                <div className="flex-col md:flex-row flex  items-start  pt-6 justify-between mt-2 md:items-center gap-4">
                   <div className=" flex flex-col items-start">
                     <p className="text-sm mb-2 text-neutral-400">Before</p>
                     <div className="flex gap-2 items-end">
@@ -529,7 +532,7 @@ export default function Performance() {
                     </p>
                     <div className="flex gap-2 items-end">
                       <h2 className="text-4xl font-bold">
-                        {placeInfo ? placeInfo.reviewsCount : "N/A"}
+                        {placeInfo ? placeInfo.reviewsCount - 6 : "N/A"}
                       </h2>
                       <p className="text-xs mb-1 text-neutral-400">
                         reviews & average <br /> of{" "}
@@ -561,12 +564,13 @@ export default function Performance() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col items-start mt-2 justify-between gap-5 ">
-                    <div className="text-4xl mt-4 font-bold">{counts}</div>
+                    <div className="text-4xl mt-2 font-bold">{counts}</div>
 
-                    <div className="flex items-center text-[10px] text-[var(--color-green)]">
-                      <ArrowUpRight className="h-3 w-3 mr-1" />
+                    <div className={`flex items-center mt-2 text-[10px] ${redOrGreenScan ? 'text-[var(--color-green)]' : 'text-[var(--color-red)]'} `}>
+                      {redOrGreenScan ? <ArrowUpRight className="h-3 w-3 mr-1" /> : <ArrowDownLeft className="h-3 w-3 mr-1" />}
+                      
                       {countRate} %
-                      <span className="text-white ml-1"> improved from last week</span>
+                      <span className="text-white ml-1"> {redOrGreenScan? 'improved' : 'decreased'} from last week</span>
                     </div>
                   </div>
                 </CardContent>
@@ -590,12 +594,12 @@ export default function Performance() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col items-start mt-2 justify-between gap-5">
-                    <div className="text-4xl mt-4 font-bold">{click}</div>
+                    <div className="text-4xl mt-2 font-bold">{click}</div>
 
-                    <div className="flex items-center text-[10px]  text-[var(--color-green)]">
-                      <ArrowUpRight className="h-3 w-3 mr-1" />
+                    <div className={`flex items-center text-[10px] mt-2 ${redOrGreenScan ? 'text-[var(--color-green)]' : 'text-[var(--color-red)]'} `}>
+                    {redOrGreen ? <ArrowUpRight className="h-3 w-3 mr-1" /> : <ArrowDownLeft className="h-3 w-3 mr-1" />}
                       {clickRate} %
-                      <span className="text-white ml-1"> improved from last week</span>
+                      <span className="text-white ml-1"> {redOrGreen? 'improved' : 'decreased'} from last week</span>
                     </div>
                   </div>
                 </CardContent>
@@ -645,7 +649,7 @@ export default function Performance() {
               <Info className="h-4 w-4 text-neutral-500" />
             </CardHeader>
             <CardContent>
-              <div className="flex-col md:flex-row flex pt-4 gap-5 items-start justify-between mt-2 md:items-center">
+              <div className="flex-col md:flex-row flex pt-6 gap-5 items-start justify-between mt-2 md:items-center">
                 <div className="flex flex-col items-start">
                   <p className="text-sm mb-2 text-[var(--color-green)]">
                     Your business

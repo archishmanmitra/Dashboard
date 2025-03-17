@@ -38,6 +38,8 @@ export const FilterProvider = ({ children }) => {
   const [repliedReviewIds, setRepliedReviewIds] = useState([]);
   const [admin, setAdmin] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [redOrGreen, setRedOrGreen] = useState(false);
+  const [redOrGreenScan, setRedOrGreenScan] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -54,6 +56,8 @@ export const FilterProvider = ({ children }) => {
       setClick(response.data.totalButtonClicks);
       setCountRate(response.data.scanRate);
       setClickRate(response.data.clickRate);
+      setRedOrGreen(response.data.redOrGreen);
+      setRedOrGreenScan(response.data.redOrGreenScan);
     });
   }, []);
   useEffect(() => {
@@ -398,7 +402,9 @@ export const FilterProvider = ({ children }) => {
         admin,
         isOpen,
         setIsOpen,
-        toggleSidebar
+        toggleSidebar,
+        redOrGreen,
+        redOrGreenScan
       }}
     >
       {children}

@@ -12,12 +12,12 @@ import { useFilterContext } from "../context/FilterContext";
 
 // Helper function to get month name
 const getMonthName = (date) => {
-  return date.toLocaleString("default", { month: "long" });
+  return date.toLocaleString("default", { month: "short" });
 };
 
 // Helper function to get day name
 const getDayName = (date) => {
-  return date.toLocaleString("default", { weekday: "long" });
+  return date.toLocaleString("default", { weekday: "short" });
 };
 
 const ReviewsChart = ({ ina }) => {
