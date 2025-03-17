@@ -168,7 +168,7 @@ export function Dashboard() {
             {/* Stats Cards */}
             <div className="space-y-4">
               <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 row-span-1 text-white">
-                <CardHeader className="flex flex-row items-center justify-between pb-11">
+                <CardHeader className="flex flex-row items-center justify-between pb-7">
                   <CardTitle className="text-sm font-medium">
                     <div className="flex items-center">
                       {/* <Star className="h-4 w-4 mr-2 text-blue-400" /> */}
@@ -182,14 +182,14 @@ export function Dashboard() {
                   <div className="text-4xl font-bold">
                     {placeInfo ? placeInfo.totalScore : 'N/A'}
                   </div>
-                  <div className="flex items-center mt-2 text-xs text-[var(--color-secondary)]">
+                  <div className="flex items-center mt-7 text-xs text-[var(--color-secondary)]">
                     <span>in total</span>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-custom-gradient border border-[var(--color-bodcol)] row-span-1 z-10 text-white">
-                <CardHeader className="flex flex-row items-center justify-between pb-11">
+                <CardHeader className="flex flex-row items-center justify-between pb-7">
                   <CardTitle className="text-sm font-medium">
                     <div className="flex items-center">
                       <Icon icon="mdi:people" width="24" height="24" className="mr-2" />
@@ -201,7 +201,7 @@ export function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">{placeInfo ? placeInfo.reviewsCount : 'N/A'}</div>
-                  <div className="flex items-center mt-2 text-xs text-[var(--color-secondary)]">
+                  <div className="flex items-center mt-7 text-xs text-[var(--color-secondary)]">
                     <span>in total</span>
                   </div>
                 </CardContent>
@@ -217,7 +217,7 @@ export function Dashboard() {
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
                     <Icon icon="ix:compare" width="24" height="24" className="mr-2 rotate-90" />
-                    <h1 className="text-lg">Positive vs Negative Rating Ratio</h1>
+                    <h1 className="text-lg">Positive vs Negative Rating</h1>
 
                   </div>
                 </CardTitle>
@@ -318,7 +318,7 @@ export function Dashboard() {
 
             {/* Negative Review Alert */}
             <Card className="bg-custom-gradient md:flex-3/7 border border-[var(--color-bodcol)] z-10 text-white">
-              <CardHeader className="flex flex-row items-center justify-between pb-11">
+              <CardHeader className="flex flex-row items-center justify-between pb-7">
                 <CardTitle className="text-sm font-medium">
                   <div className="flex items-center">
                     <Icon icon="icon-park-solid:bad-two" width="24" height="24" className="mr-2" />
@@ -328,16 +328,20 @@ export function Dashboard() {
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-between mb-2">
-                  <div className="text-4xl font-bold text-red">{negative}</div>
+                <div className="flex items-center justify-between ">
+                  <div className="flex items-end gap-2">
+
+                  <div className="text-4xl font-bold text-[var(--color-red)]">{negative}</div>
+                  <p className="text-[11px] mb-1 text-[var(--color-secondary)]">Bad review</p>
+                  </div>
                   <Button
                     variant="outline"
-                    className="bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-700"
+                    className="bg-white rounded-full border-neutral-700 text-black hover:bg-neutral-700 h-9 font-bold"
                     onClick={() => navigate('/notification')}>
                     Manage
                   </Button>
                 </div>
-                <div className="flex items-center mt-2 text-xs text-[var(--color-secondary)]">
+                <div className="flex items-center mt-7 text-xs text-[var(--color-secondary)]">
                   <span>in {ina}</span>
                 </div>
               </CardContent>
