@@ -452,7 +452,7 @@ export default function Performance() {
         }}
       />
       <div className="relative z-10">
-        <div className="flex items-center justify-between md:mb-8">
+        <div className="flex items-center justify-between md:mb-4.5">
           <div className="flex items-center w-full md:w-auto justify-between ">
             <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
             <div className="flex items-center justify-between w-full md:w-auto">
@@ -490,7 +490,7 @@ export default function Performance() {
             <FilterBar />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
             {/* Before/After Star Boom */}
             <Card className="bg-custom-gradient border border-[var(--color-bodcol)] text-white">
               <CardHeader className="pb-2 flex flex-row justify-between items-start">
@@ -503,14 +503,14 @@ export default function Performance() {
                       className="mr-2"
                     />
                     <h1 className="text-lg">
-                      Before Star Boom and After Star Boom
+                      Before and After Star Boom
                     </h1>
                   </div>
                 </CardTitle>
                 <Info className="h-4 w-4 text-neutral-500" />
               </CardHeader>
               <CardContent>
-                <div className="flex justify-between mt-2 items-center">
+                <div className="flex-col md:flex-row flex  items-start  pt-4 justify-between mt-2 md:items-center gap-4">
                   <div className=" flex flex-col items-start">
                     <p className="text-sm mb-2 text-neutral-400">Before</p>
                     <div className="flex gap-2 items-end">
@@ -541,7 +541,7 @@ export default function Performance() {
               </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <Card className="bg-custom-gradient border border-[var(--color-bodcol)] z-10 text-white">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-sm font-medium">
@@ -560,12 +560,13 @@ export default function Performance() {
                   <Info className="h-4 w-4 text-neutral-500" />
                 </CardHeader>
                 <CardContent>
-                  <div className="flex flex-col items-start mt-2 justify-between gap-4 ">
-                    <div className="text-4xl font-bold">{counts}</div>
+                  <div className="flex flex-col items-start mt-2 justify-between gap-5 ">
+                    <div className="text-4xl mt-4 font-bold">{counts}</div>
 
-                    <div className="flex items-center text-xs text-[var(--color-green)]">
+                    <div className="flex items-center text-[10px] text-[var(--color-green)]">
                       <ArrowUpRight className="h-3 w-3 mr-1" />
-                      <span>{countRate} % improved from last week</span>
+                      {countRate} %
+                      <span className="text-white ml-1"> improved from last week</span>
                     </div>
                   </div>
                 </CardContent>
@@ -588,12 +589,13 @@ export default function Performance() {
                   <Info className="h-4 w-4 text-neutral-500" />
                 </CardHeader>
                 <CardContent>
-                  <div className="flex flex-col items-start mt-2 justify-between gap-4">
-                    <div className="text-4xl font-bold">{click}</div>
+                  <div className="flex flex-col items-start mt-2 justify-between gap-5">
+                    <div className="text-4xl mt-4 font-bold">{click}</div>
 
-                    <div className="flex items-center text-xs text-[var(--color-green)]">
+                    <div className="flex items-center text-[10px]  text-[var(--color-green)]">
                       <ArrowUpRight className="h-3 w-3 mr-1" />
-                      <span>{clickRate} % improved from last week</span>
+                      {clickRate} %
+                      <span className="text-white ml-1"> improved from last week</span>
                     </div>
                   </div>
                 </CardContent>
@@ -643,7 +645,7 @@ export default function Performance() {
               <Info className="h-4 w-4 text-neutral-500" />
             </CardHeader>
             <CardContent>
-              <div className="flex justify-between mt-3 items-center">
+              <div className="flex-col md:flex-row flex pt-4 gap-5 items-start justify-between mt-2 md:items-center">
                 <div className="flex flex-col items-start">
                   <p className="text-sm mb-2 text-[var(--color-green)]">
                     Your business

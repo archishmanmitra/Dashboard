@@ -135,7 +135,7 @@ const Layout = () => {
           <div className="p-4  flex flex-col items-start gap-5 border-neutral-800">
             <Logout />
             <Separator className="bg-neutral-800" />
-            <div className="flex items-center gap-3">
+            <div className="flex mb-4 items-center gap-3">
               <Avatar className="h-8 w-8 border border-neutral-700">
                 <div className="bg-neutral-700 h-full w-full flex items-center justify-center text-xs text-white">
                   {/* {admin.charAt(0)} */} S
@@ -158,7 +158,7 @@ const Layout = () => {
           <img src="/starname.png" alt="" className=" h-11 " />
         </div>
 
-        <Separator className="my-4 mx-5 bg-neutral-800 w-50" />
+        <Separator className="my-4 mx-4 bg-neutral-800 w-56" />
 
         {/* Navigation */}
         <div className="flex-1 px-3 py-2">

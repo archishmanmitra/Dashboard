@@ -99,7 +99,7 @@ export default function ReviewsBreakdown() {
         }}
       />
       <div className="relative z-10">
-        <div className="flex items-center justify-between md:mb-8">
+        <div className="flex items-center justify-between md:mb-4.5">
           <div className="flex items-center w-full md:w-auto justify-between ">
             <h1 className="text-4xl hidden md:block text-white">Dashboard</h1>
             <div className="flex items-center justify-between w-full md:w-auto">

@@ -34,7 +34,7 @@ export default function Home() {
 
         {/* Bottom gradient overlay */}
         <div
-          className="absolute top-0 left-0 right-0 h-[50vh] pointer-events-none"
+          className="absolute top-2 left-0 right-0 h-[50vh] pointer-events-none"
           style={{
             background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.4) 65%, rgba(0, 0, 0, 0.8) 90%, #000000 100%)'
           }}
@@ -43,7 +43,7 @@ export default function Home() {
         {/* Content container - adjusted for left alignment and bottom positioning */}
         <div className="absolute inset-0 flex flex-col justify-between p-6">
           {/* Logo section at top */}
-          <div className="flex flex-col items-center gap-2 mt-8">
+          <div className="flex flex-col items-center gap-2 lg:mt-12 mt-36">
             <img
               src="/logo.jpg"
               alt="SD Fashion Logo"
@@ -54,9 +54,9 @@ export default function Home() {
 
           {/* Text and button section at bottom */}
           <div className="flex flex-col mb-4">
-            <h1 className="text-4xl md:text-5xl font-medium mb-2 text-left">
-              <span className="text-white">Share Your </span>
-              <span className="text-gradient-gold">Valuable</span>
+            <h1 className="text-6xl md:text-6xl font-medium mb-2 text-left">
+              <span className="text-white">Share Your </span><br className='hidden' />
+              <span className="text-gradient-gold">Valuable</span><br className='hidden' />
               <span className="text-white"> Feedback!</span>
             </h1>
 
