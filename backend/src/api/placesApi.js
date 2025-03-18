@@ -47,7 +47,7 @@ async function getPlaceDetails(placeId) {
 }
 async function main(req, res) {
   try {
-    res.setHeader('Access-Control-Allow-Origin', 'https://dashboard-front-e6i9.onrender.com');
+    res.setHeader('Access-Control-Allow-Origin', 'https://sd-fashion-ubnb.onrender.com');
     const inputText = req.query.query;
     if (!inputText || typeof inputText !== "string") {
       return res
