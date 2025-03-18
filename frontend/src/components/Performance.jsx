@@ -28,8 +28,9 @@ const ProgressLine = ({ completed, current, totalSegments = 16 }) => {
       } else if (width < 1024) {
         setTotal(12);
          // medium number on tablets
-      }else if(width < 1250){
-        setTotal(12)
+      }
+      else if(width < 1250){
+        setTotal(11)
       }
        else {
         setTotal( 18); // full amount on desktop
@@ -50,7 +51,7 @@ const ProgressLine = ({ completed, current, totalSegments = 16 }) => {
       {[...Array(total)].map((_, index) => (
         <div
           key={index}
-          className={`h-0.5 md:w-[3px]   mx-px ${completed
+          className={`h-0.5 md:w-[3px] flex-grow  mx-px ${completed
             ? "bg-[var(--color-green)]"
             : current && index < Math.floor((current / 100) * (total))
               ? "bg-[var(--color-green)]"
@@ -63,6 +64,93 @@ const ProgressLine = ({ completed, current, totalSegments = 16 }) => {
 };
 
 const ProgressBadge = ({ icon, title, reviews, active, width, height }) => {
+  const [dimensions, setDimensions] = React.useState({
+    width: "w-[141px]",
+    height: "h-[158px]",
+    padding: "p-3",
+    textSize: "text-sm",
+    reviewSize: "text-xs",
+    margin: "mb-2"
+  });
+  
+  // Effect to update dimensions based on window width
+  React.useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      
+      if (width < 480) {
+        // Extra small screens
+        setDimensions({
+          width: "w-[80px]",
+          height: "h-[90px]",
+          padding: "p-1",
+          textSize: "text-xs",
+          reviewSize: "text-[10px]",
+          margin: "mb-1"
+        });
+      } else if (width < 640) {
+        // Small screens
+        setDimensions({
+          width: "w-[100px]",
+          height: "h-[110px]",
+          padding: "p-1.5",
+          textSize: "text-xs",
+          reviewSize: "text-xs",
+          margin: "mb-1"
+        });
+      } else if (width < 768) {
+        // Medium-small screens
+        setDimensions({
+          width: "w-[120px]",
+          height: "h-[130px]",
+          padding: "p-2",
+          textSize: "text-sm",
+          reviewSize: "text-xs",
+          margin: "mb-1.5"
+        });
+      } else if (width < 1024) {
+        // Medium screens
+        setDimensions({
+          width: "w-[130px]",
+          height: "h-[145px]",
+          padding: "p-2.5",
+          textSize: "text-sm",
+          reviewSize: "text-xs",
+          margin: "mb-2"
+        });
+      } else if (width < 1224) {
+        // Medium screens
+        setDimensions({
+          width: "w-[130px]",
+          height: "h-[145px]",
+          padding: "p-2.5",
+          textSize: "text-sm",
+          reviewSize: "text-xs",
+          margin: "mb-2"
+        });
+      }
+       else {
+        // Large screens
+        setDimensions({
+          width: "w-[141px]",
+          height: "h-[158px]",
+          padding: "p-3",
+          textSize: "text-sm",
+          reviewSize: "text-xs",
+          margin: "mb-2"
+        });
+      }
+    };
+    
+    // Set initial dimensions
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   return (
     <div
       className={`flex md:flex-col  items-center ${active ? "text-white" : "text-neutral-600"
@@ -70,7 +158,7 @@ const ProgressBadge = ({ icon, title, reviews, active, width, height }) => {
     >
       {/* Icon Container - Top */}
       <div
-        className={`${width} ${height} mb-2  relative flex items-center justify-center overflow-hidden rounded-full bg-none`}
+        className={`${dimensions.width} ${dimensions.height} ${dimensions.margin} mb-2  relative flex items-center justify-center overflow-hidden rounded-full bg-none`}
       >
         <img
           src={icon}
