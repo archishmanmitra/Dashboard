@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
   AlertTriangle,
@@ -17,13 +17,40 @@ import { Separator } from "./ui/separator";
 import { Icon } from "@iconify/react";
 import Loader from "./Loader";
 
-const ProgressLine = ({ completed, current, total = 16 }) => {
+const ProgressLine = ({ completed, current, totalSegments = 16 }) => {
+  const [total, setTotal] = React.useState(totalSegments || 16);
+    useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      // Adjust number of segments based on screen width
+      if (width < 640) {
+        setTotal(8); // fewer segments on mobile
+      } else if (width < 1024) {
+        setTotal(12);
+         // medium number on tablets
+      }else if(width < 1250){
+        setTotal(12)
+      }
+       else {
+        setTotal( 18); // full amount on desktop
+      }
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, [totalSegments]);
   return (
     <div className="flex md:flex-row flex-col items-center justify-center gap-1 w-full h-8">
       {[...Array(total)].map((_, index) => (
         <div
           key={index}
-          className={`h-0.5 md:w-0.5   mx-px ${completed
+          className={`h-0.5 md:w-[3px]   mx-px ${completed
             ? "bg-[var(--color-green)]"
             : current && index < Math.floor((current / 100) * (total))
               ? "bg-[var(--color-green)]"
@@ -43,7 +70,7 @@ const ProgressBadge = ({ icon, title, reviews, active, width, height }) => {
     >
       {/* Icon Container - Top */}
       <div
-        className={`${width} ${height} mb-2 relative flex items-center justify-center overflow-hidden rounded-full bg-none`}
+        className={`${width} ${height} mb-2  relative flex items-center justify-center overflow-hidden rounded-full bg-none`}
       >
         <img
           src={icon}
@@ -203,7 +230,7 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
           >
             <div className="flex">
               {/* Badge and progress circle container */}
-              <div className="flex gap-6  ml-2 items-center justify-between">
+              <div className="flex gap-4  ml-0 items-center justify-between">
                 {/* Badge icon first */}
                 <ProgressBadge
                   width='w-[111px]'
