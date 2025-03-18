@@ -67,7 +67,7 @@ export const FilterProvider = ({ children }) => {
         const data = await response.json();
         setAdmin(data.username);
         if (response.ok) {
-          console.log("Admin username:", data.username);
+          // console.log("Admin username:", data.username);
         } else {
           console.error("Error:", data.message);
         }

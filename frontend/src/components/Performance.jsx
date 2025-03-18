@@ -25,15 +25,46 @@ const ProgressLine = ({ completed, current, totalSegments = 16 }) => {
       // Adjust number of segments based on screen width
       if (width < 640) {
         setTotal(8); // fewer segments on mobile
-      } else if (width < 1024) {
-        setTotal(12);
+      } 
+      else if(width<770){
+        setTotal(7)
+      }
+      else if(width==772){
+        setTotal(8); 
+      }
+      else if(width<864){
+        setTotal(9)
+      }
+      else if(width<924){
+        setTotal(10)
+      }
+      else if(width ==988){
+        setTotal(12)
+      }
+      else if (width < 1040) {
+        setTotal(8);
          // medium number on tablets
       }
+      else if(width<1054){
+        setTotal(8)
+      }
+      else if(width <1192){
+        setTotal(10)
+      }
       else if(width < 1250){
-        setTotal(11)
+        setTotal(12)
+      }
+      else if(width<1300){
+        setTotal(13)
+      }
+      else if(width<1406){
+        setTotal(15)
+      }
+      else if(width<1500){
+        setTotal(17)
       }
        else {
-        setTotal( 18); // full amount on desktop
+        setTotal(18); // full amount on desktop
       }
     };
     
@@ -98,7 +129,7 @@ const ProgressBadge = ({ icon, title, reviews, active, width, height }) => {
           reviewSize: "text-xs",
           margin: "mb-1"
         });
-      } else if (width < 768) {
+      } else if (width <=768) {
         // Medium-small screens
         setDimensions({
           width: "w-[120px]",
@@ -108,11 +139,22 @@ const ProgressBadge = ({ icon, title, reviews, active, width, height }) => {
           reviewSize: "text-xs",
           margin: "mb-1.5"
         });
-      } else if (width < 1024) {
+      } else if (width < 1040) {
         // Medium screens
         setDimensions({
-          width: "w-[130px]",
-          height: "h-[145px]",
+          width: "w-[106px]",
+          height: "h-[110px]",
+          padding: "p-2.5",
+          textSize: "text-sm",
+          reviewSize: "text-xs",
+          margin: "mb-2"
+        });
+      }
+      else if (width < 1184) {
+        // Medium screens
+        setDimensions({
+          width: "w-[106px]",
+          height: "h-[110px]",
           padding: "p-2.5",
           textSize: "text-sm",
           reviewSize: "text-xs",
