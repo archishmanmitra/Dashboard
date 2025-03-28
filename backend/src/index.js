@@ -156,6 +156,10 @@ app.get('/api/get-counts', async (req, res) => {
   app.use('/api', authRouter);
   app.use("/api/milestone", adminRouter);
   app.use("/api",protectedRouter)
+
+  app.get('/api/keep-alive',(req, res)=>{
+    res.status(200).json({message:'Server is awaken !!'})
+  })
 // Database connection Here: 
 
 connectDB()
