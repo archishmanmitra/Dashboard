@@ -21,7 +21,7 @@ export default function Home() {
         <img
           src="/background.jpg"
           alt="Luxury Jewelry Display"
-          className="h-[61vh] w-full object-cover"
+          className="lg:h-[61vh] h-[50px] w-full object-cover"
         />
 
         {/* Top gradient overlay */}
@@ -34,7 +34,7 @@ export default function Home() {
 
         {/* Bottom gradient overlay */}
         <div
-          className="absolute top-2 left-0 right-0 h-[61vh] pointer-events-none"
+          className="absolute top-2 left-0 right-0 lg:h-[61vh] h-[50px] pointer-events-none"
           style={{
             background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.4) 65%, rgba(0, 0, 0, 0.8) 90%, #000000 100%)'
           }}
