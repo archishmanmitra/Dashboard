@@ -19,6 +19,7 @@ import Loader from "./Loader";
 
 const ProgressLine = ({ completed, current, totalSegments = 16 }) => {
   const [total, setTotal] = React.useState(totalSegments || 16);
+  const [isCurrent, setIsCurrent] = React.useState(current);
     useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -63,6 +64,9 @@ const ProgressLine = ({ completed, current, totalSegments = 16 }) => {
       else if(width<1500){
         setTotal(17)
       }
+      else if(width<1600){
+        setTotal(18)
+      }
        else {
         setTotal(18); // full amount on desktop
       }
@@ -82,7 +86,7 @@ const ProgressLine = ({ completed, current, totalSegments = 16 }) => {
       {[...Array(total)].map((_, index) => (
         <div
           key={index}
-          className={`h-0.5 md:w-[3px] flex-grow  mx-px ${completed
+          className={`h-0.5 md:w-[2.8px] flex-grow  mx-px ${completed
             ? "bg-[var(--color-green)]"
             : current && index < Math.floor((current / 100) * (total))
               ? "bg-[var(--color-green)]"
@@ -398,11 +402,11 @@ const ProgressSection = ({ milestones, currentMilestone, reviewsCount }) => {
 
                     {/* Vertical dotted line between badge and text */}
                     {index < milestones.length - 1 && (
-                      <div className="absolute mt-2 left-1/2 top-full flex flex-col gap-2">
+                      <div className="absolute mt-2 left-[42%] top-full flex flex-col gap-2">
                         {[...Array(8)].map((_, dotIndex) => (
                           <div
                             key={dotIndex}
-                            className={`h-2 w-1 rounded-full
+                            className={`h-[4.3px] w-1 rounded-full
                     ${reviewsCount > milestone.maxReviews
                                 ? "bg-[var(--color-green)]"
                                 : "bg-[var(--color-bodcol)]"
