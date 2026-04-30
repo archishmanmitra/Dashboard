@@ -46,7 +46,7 @@ export default function ReviewsBreakdown() {
   // Function to get recent reviews
   const getRecentReviews = () => {
     return reviews.map((review) => ({
-      author: review.name || "Anonymous",
+      author: review.author || "Anonymous",
       rating: review.stars,
       content: review.text || "No text content",
     }));
