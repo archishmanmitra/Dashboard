@@ -234,7 +234,7 @@ export const FilterProvider = ({ children }) => {
         (item) => item.type === "placeInfo"
       )[0];
       setPlaceInfo(placeData);
-      setAnalysis(data.sentimentAnalysis.rawAnalysis);
+      setAnalysis(data.sentimentAnalysis?.rawAnalysis || "");
       // Set reviews (excluding place info)
       const reviewsData = data.simplifiedReviews.filter(
         (review) => review.type === "placeInfo"
